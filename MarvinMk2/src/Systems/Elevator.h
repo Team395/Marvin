@@ -20,7 +20,7 @@ public:
 	Elevator();
 	virtual ~Elevator();
 
-	void driveElevator(double);
+	void driveWinch(double);
 
 	bool topPressed();
 	bool bottomPressed();

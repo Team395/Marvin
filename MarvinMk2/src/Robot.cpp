@@ -32,6 +32,7 @@ class Robot: public frc::IterativeRobot {
 public:
 
 	void RobotInit() {
+
 	}
 
 	void AutonomousInit() override {

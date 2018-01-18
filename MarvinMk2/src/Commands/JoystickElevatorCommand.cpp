@@ -21,12 +21,12 @@ void JoystickElevatorCommand::update(){
 	double speed = oi->GetManipulatorY();
 
 	if((speed > 0 && elevator->topPressed())){
-		elevator->driveElevator(0);
+		elevator->driveWinch(0);
 	}
 	else if((speed < 0 && elevator->bottomPressed())){
-		elevator->driveElevator(0);
+		elevator->driveWinch(0);
 	}
 	else{
-		elevator->driveElevator(speed);
+		elevator->driveWinch(speed);
 	}
 }

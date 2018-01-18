@@ -27,6 +27,6 @@ bool Elevator::bottomPressed(){
 			: bottomLimit.Get();
 }
 
-void Elevator::driveElevator(double speed){
+void Elevator::driveWinch(double speed){
 	winchController.Set(speed);
 }

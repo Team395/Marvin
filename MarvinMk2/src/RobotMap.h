@@ -9,14 +9,14 @@
 
 enum OIMap{
 	kDriveStick = 0
-	, kManipulatorStick = 1
+	,kManipulatorStick = 1
 };
 
 enum DrivebaseMap{
 	kLeft1 = 2
-	, kLeft2 = 3
-	, kRight1 = 0
-	, kRight2 = 1
+	,kLeft2 = 3
+	,kRight1 = 0
+	,kRight2 = 1
 };
 
 enum ElevatorMap{
