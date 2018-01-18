@@ -120,8 +120,6 @@ void ADIS16448_IMU::Sample::AdjustYawAxis(Axis yaw_axis) {
  */
 ADIS16448_IMU::ADIS16448_IMU(Axis yaw_axis, AHRSAlgorithm algorithm)
   : m_algorithm(algorithm), m_yaw_axis(yaw_axis), m_spi(SPI::Port::kMXP) {
-
-  // Force the IMU reset pin to toggle on startup
   //m_reset.reset(new DigitalOutput(18));  // MXP DIO8
   //m_reset->Set(false);
   //Wait(0.1);

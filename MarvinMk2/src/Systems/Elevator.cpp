@@ -8,12 +8,23 @@
 #include <Systems/Elevator.h>
 
 Elevator::Elevator() {
-	// TODO Auto-generated constructor stub
-
+	winchController.SetInverted(ElevatorMap::kWinchInverted);
 }
 
 Elevator::~Elevator() {
 	// TODO Auto-generated destructor stub
+}
+
+bool Elevator::topPressed(){
+	return ElevatorMap::kTopInverted
+			? !topLimit.Get()
+			: topLimit.Get();
+}
+
+bool Elevator::bottomPressed(){
+	return ElevatorMap::kBottomInverted
+			? !bottomLimit.Get()
+			: bottomLimit.Get();
 }
 
 void Elevator::driveElevator(double speed){

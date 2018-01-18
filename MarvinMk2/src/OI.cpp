@@ -24,5 +24,5 @@ double OI::GetDriveZ(){
 }
 
 double OI::GetManipulatorY(){
-	return manipulatorStick.GetY();
+	return -manipulatorStick.GetY();
 }

@@ -21,6 +21,11 @@ enum DrivebaseMap{
 
 enum ElevatorMap{
 	kWinch = 0
+	,kWinchInverted = 0
+	,kLimitTop = 0
+	,kLimitBottom = 1
+	,kTopInverted = 0
+	,kBottomInverted = 0
 };
 
 /**

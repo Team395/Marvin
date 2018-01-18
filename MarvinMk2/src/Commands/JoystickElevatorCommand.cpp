@@ -11,7 +11,6 @@
 
 JoystickElevatorCommand::JoystickElevatorCommand(Elevator* elevator, OI* oi) : elevator(elevator), oi(oi) {
 	// TODO Auto-generated constructor stub
-
 }
 
 JoystickElevatorCommand::~JoystickElevatorCommand() {
@@ -20,5 +19,14 @@ JoystickElevatorCommand::~JoystickElevatorCommand() {
 
 void JoystickElevatorCommand::update(){
 	double speed = oi->GetManipulatorY();
-	elevator->driveElevator(speed);
+
+	if((speed > 0 && elevator->topPressed())){
+		elevator->driveElevator(0);
+	}
+	else if((speed < 0 && elevator->bottomPressed())){
+		elevator->driveElevator(0);
+	}
+	else{
+		elevator->driveElevator(speed);
+	}
 }

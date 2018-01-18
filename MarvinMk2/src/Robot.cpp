@@ -50,6 +50,8 @@ public:
 		arcadeDrive.update();
 		joystickElevator.update();
 		SmartDashboard::PutData("IMU", gyroSystem.getIMU());
+		SmartDashboard::PutBoolean("topLimit", elevator.topPressed());
+		SmartDashboard::PutBoolean("bottomLimit", elevator.bottomPressed());
 	}
 
 	void TestPeriodic() override {
