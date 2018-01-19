@@ -13,10 +13,10 @@
 #include <Talon.h>
 #include <PIDOutput.h>
 
-#include "SubsystemBase.h"
+#include "SystemBase.h"
 #include "../RobotMap.h"
 
-class Drivebase : SubsystemBase, public frc::PIDOutput {
+class Drivebase : SystemBase, public frc::PIDOutput {
 	frc::Talon left1{DrivebaseMap::kLeft1};
 	frc::Talon left2{DrivebaseMap::kLeft2};
 	frc::Talon right1{DrivebaseMap::kRight1};

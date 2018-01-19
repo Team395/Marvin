@@ -5,9 +5,9 @@
  *      Author: JARVIS
  */
 
-#include <Systems/Elevator.h>
+#include "Elevator.h"
 
-Elevator::Elevator() : SubsystemBase("elevator") {
+Elevator::Elevator() : SystemBase("elevator") {
 	winchController.SetInverted(ElevatorMap::kWinchInverted);
 }
 

@@ -1,18 +1,18 @@
 /*
- * SubsystemBase.cpp
+ * SystemBase.cpp
  *
  *  Created on: Jan 19, 2018
  *      Author: JARVIS
  */
 
-#include "Systems/SubsystemBase.h"
+#include "SystemBase.h"
 
-SubsystemBase::SubsystemBase(std::string name) : name{name} {
+SystemBase::SystemBase(std::string name) : name{name} {
 	// TODO Auto-generated constructor stub
 
 }
 
-SubsystemBase::~SubsystemBase() {
+SystemBase::~SystemBase() {
 	// TODO Auto-generated destructor stub
 }
 

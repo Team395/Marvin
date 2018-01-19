@@ -5,9 +5,9 @@
  *      Author: JARVIS
  */
 
-#include <Systems/Gyroscope.h>
+#include "Gyroscope.h"
 
-Gyroscope::Gyroscope() : SubsystemBase("gyroscope"){
+Gyroscope::Gyroscope() : SystemBase("gyroscope"){
 	// TODO Auto-generated constructor stub
 
 }
