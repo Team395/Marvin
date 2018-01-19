@@ -9,12 +9,24 @@
 #define SRC_SYSTEMS_GYROSYSTEM_H_
 #include "../Libraries/ADIS16448_IMU.h"
 
-class GyroSystem {
+#include <PIDSource.h>
+
+class GyroSystem : public frc::PIDSource {
 	ADIS16448_IMU imu{};
 
 public:
+	//PID Gains for Turn
+	const double kP{2};
+	const double kI{0.00};
+	const double kD{0.1};
+
 	GyroSystem();
 	virtual ~GyroSystem();
+
+	double getAngleX();
+
+	frc::PIDSourceType GetPIDSourceType();
+	double PIDGet();
 
 	ADIS16448_IMU* getIMU();
 };

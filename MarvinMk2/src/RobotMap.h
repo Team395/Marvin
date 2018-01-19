@@ -10,6 +10,7 @@
 enum OIMap{
 	kDriveStick = 0
 	,kManipulatorStick = 1
+	,kTurnButton = 1
 };
 
 enum DrivebaseMap{

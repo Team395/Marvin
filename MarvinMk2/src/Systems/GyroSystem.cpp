@@ -19,3 +19,17 @@ GyroSystem::~GyroSystem() {
 ADIS16448_IMU* GyroSystem::getIMU() {
 	return &imu;
 }
+
+double GyroSystem::getAngleX() {
+	return imu.GetAngleX();
+
+}
+
+frc::PIDSourceType GyroSystem::GetPIDSourceType() {
+	return frc::PIDSourceType::kDisplacement;
+}
+
+double GyroSystem::PIDGet() {
+	//Pretty sure its in degrees
+	return getAngleX();
+}

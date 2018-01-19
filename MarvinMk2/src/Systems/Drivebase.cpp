@@ -22,3 +22,7 @@ Drivebase::~Drivebase() {
 void Drivebase::ArcadeDrive(double move, double turn){
 	differentialDrive.ArcadeDrive(move, turn);
 }
+
+void Drivebase::PIDWrite(double output){
+	ArcadeDrive(0, output);
+}

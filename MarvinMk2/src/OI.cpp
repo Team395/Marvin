@@ -26,3 +26,7 @@ double OI::GetDriveZ(){
 double OI::GetManipulatorY(){
 	return -manipulatorStick.GetY();
 }
+
+bool OI::GetTurnButton(){
+	return driveStick.GetRawButton(OIMap::kTurnButton);
+}

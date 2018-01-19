@@ -11,9 +11,11 @@
 #include <SpeedControllerGroup.h>
 #include <Drive/DifferentialDrive.h>
 #include <Talon.h>
+#include <PIDOutput.h>
+
 #include "../RobotMap.h"
 
-class Drivebase {
+class Drivebase : public frc::PIDOutput {
 	frc::Talon left1{DrivebaseMap::kLeft1};
 	frc::Talon left2{DrivebaseMap::kLeft2};
 	frc::Talon right1{DrivebaseMap::kRight1};
@@ -28,6 +30,7 @@ public:
 	Drivebase();
 
 	void ArcadeDrive(double, double);
+	void PIDWrite(double);
 
 	virtual ~Drivebase();
 };

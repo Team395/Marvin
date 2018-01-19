@@ -20,4 +20,5 @@ public:
 
 	double GetManipulatorY();
 
+	bool GetTurnButton();
 };

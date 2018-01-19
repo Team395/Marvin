@@ -9,6 +9,7 @@
 
 #include "Commands/ArcadeDriveCommand.h"
 #include "Commands/JoystickElevatorCommand.h"
+#include "Commands/Turn__DegreesCommand.h"
 
 #include "Systems/Elevator.h"
 #include "Systems/Drivebase.h"
@@ -28,6 +29,7 @@ class Robot: public frc::IterativeRobot {
 
 	ArcadeDriveCommand arcadeDrive{&drivebase, &oi};
 	JoystickElevatorCommand joystickElevator{&elevator, &oi};
+	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &gyroSystem, &oi};
 
 public:
 
@@ -48,7 +50,15 @@ public:
 	}
 
 	void TeleopPeriodic() override {
-		arcadeDrive.update();
+		if(!oi.GetTurnButton()){
+			turn__DegreesCommand.disable();
+			turn__DegreesCommand.startNewturn();
+			arcadeDrive.update();
+		}
+		else{
+			turn__DegreesCommand.update();
+		}
+
 		joystickElevator.update();
 		SmartDashboard::PutData("IMU", gyroSystem.getIMU());
 		SmartDashboard::PutBoolean("topLimit", elevator.topPressed());
