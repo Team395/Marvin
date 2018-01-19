@@ -9,7 +9,10 @@
 #include "../Systems/Drivebase.h"
 #include "../OI.h"
 
-ArcadeDriveCommand::ArcadeDriveCommand(Drivebase* drivebase, OI* oi) : drivebase(drivebase), oi(oi) {
+ArcadeDriveCommand::ArcadeDriveCommand(Drivebase* drivebase, OI* oi) :
+CommandBase("ArcadeDriveCommand"),
+drivebase(drivebase),
+oi(oi) {
 	// TODO Auto-generated constructor stub
 }
 
@@ -17,9 +20,21 @@ ArcadeDriveCommand::~ArcadeDriveCommand() {
 	// TODO Auto-generated destructor stub
 }
 
-void ArcadeDriveCommand::update(){
+void ArcadeDriveCommand::init() {
+
+}
+
+void ArcadeDriveCommand::update() {
 	double move = oi->GetDriveY();
 	double turn = oi->GetDriveZ();
 
 	drivebase->ArcadeDrive(move, turn);
+}
+
+void finished() {
+
+}
+
+bool isFinished() {
+	return false;
 }

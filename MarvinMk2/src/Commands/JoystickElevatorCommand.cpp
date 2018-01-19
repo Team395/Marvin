@@ -9,7 +9,10 @@
 #include "../Systems/Elevator.h"
 #include "../OI.h"
 
-JoystickElevatorCommand::JoystickElevatorCommand(Elevator* elevator, OI* oi) : elevator(elevator), oi(oi) {
+JoystickElevatorCommand::JoystickElevatorCommand(Elevator* elevator, OI* oi) :
+CommandBase("JoystickElevatorCommand"),
+elevator(elevator),
+oi(oi) {
 	// TODO Auto-generated constructor stub
 }
 
@@ -17,7 +20,11 @@ JoystickElevatorCommand::~JoystickElevatorCommand() {
 	// TODO Auto-generated destructor stub
 }
 
-void JoystickElevatorCommand::update(){
+void JoystickElevatorCommand::init() {
+
+}
+
+void JoystickElevatorCommand::update() {
 	double speed = oi->GetManipulatorY();
 
 	if((speed > 0 && elevator->topPressed())){
@@ -29,4 +36,12 @@ void JoystickElevatorCommand::update(){
 	else{
 		elevator->driveWinch(speed);
 	}
+}
+
+void finished() {
+
+}
+
+bool isFinished() {
+	return false;
 }

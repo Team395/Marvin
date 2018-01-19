@@ -11,10 +11,11 @@
 #include "../Systems/Drivebase.h"
 #include "../Systems/GyroSystem.h"
 #include "../OI.h"
+#include "CommandBase.h"
 
 #include <PIDController.h>
 
-class Turn__DegreesCommand {
+class Turn__DegreesCommand : CommandBase {
 	const double PI  =3.141592653589793238463;
 
 	PIDController pidController;
@@ -29,9 +30,14 @@ public:
 	Turn__DegreesCommand(Drivebase*, GyroSystem*, OI*);
 	virtual ~Turn__DegreesCommand();
 
+	void init();
 	void update();
+	void finished();
+	bool isFinished();
+
+/*	void update();
 	void disable();
-	void startNewturn();
+	void startNewturn(); */
 };
 
 #endif /* SRC_COMMANDS_TURN__DEGREESCOMMAND_H_ */
