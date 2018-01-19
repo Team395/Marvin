@@ -1,17 +1,18 @@
 /*
- * GyroSystem.h
+ * Gyroscope.h
  *
  *  Created on: Jan 16, 2018
  *      Author: JARVIS
  */
 
-#ifndef SRC_SYSTEMS_GYROSYSTEM_H_
-#define SRC_SYSTEMS_GYROSYSTEM_H_
+#ifndef SRC_SYSTEMS_GYROSCOPE_H_
+#define SRC_SYSTEMS_GYROSCOPE_H_
 #include "../Libraries/ADIS16448_IMU.h"
+#include "SubsystemBase.h"
 
 #include <PIDSource.h>
 
-class GyroSystem : public frc::PIDSource {
+class Gyroscope : SubsystemBase, public frc::PIDSource {
 	ADIS16448_IMU imu{};
 
 public:
@@ -20,8 +21,8 @@ public:
 	const double kI{0.00};
 	const double kD{0.1};
 
-	GyroSystem();
-	virtual ~GyroSystem();
+	Gyroscope();
+	virtual ~Gyroscope();
 
 	double getAngleX();
 
@@ -31,4 +32,4 @@ public:
 	ADIS16448_IMU* getIMU();
 };
 
-#endif /* SRC_SYSTEMS_GYROSYSTEM_H_ */
+#endif /* SRC_SYSTEMS_GYROSCOPE_H_ */

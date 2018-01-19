@@ -1,35 +1,35 @@
 /*
- * GyroSystem.cpp
+ * Gyroscope.cpp
  *
  *  Created on: Jan 16, 2018
  *      Author: JARVIS
  */
 
-#include <Systems/GyroSystem.h>
+#include <Systems/Gyroscope.h>
 
-GyroSystem::GyroSystem() {
+Gyroscope::Gyroscope() : SubsystemBase("gyroscope"){
 	// TODO Auto-generated constructor stub
 
 }
 
-GyroSystem::~GyroSystem() {
+Gyroscope::~Gyroscope() {
 	// TODO Auto-generated destructor stub
 }
 
-ADIS16448_IMU* GyroSystem::getIMU() {
+ADIS16448_IMU* Gyroscope::getIMU() {
 	return &imu;
 }
 
-double GyroSystem::getAngleX() {
+double Gyroscope::getAngleX() {
 	return imu.GetAngleX();
 
 }
 
-frc::PIDSourceType GyroSystem::GetPIDSourceType() {
+frc::PIDSourceType Gyroscope::GetPIDSourceType() {
 	return frc::PIDSourceType::kDisplacement;
 }
 
-double GyroSystem::PIDGet() {
+double Gyroscope::PIDGet() {
 	//Pretty sure its in degrees
 	return getAngleX();
 }

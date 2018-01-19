@@ -9,17 +9,17 @@
 #define SRC_COMMANDS_TURN__DEGREESCOMMAND_H_
 
 #include "../Systems/Drivebase.h"
-#include "../Systems/GyroSystem.h"
 #include "../OI.h"
 #include "CommandBase.h"
 
 #include <PIDController.h>
+#include <Systems/Gyroscope.h>
 
 class Turn__DegreesCommand : CommandBase {
 	const double PI  =3.141592653589793238463;
 
 	PIDController pidController;
-	GyroSystem* gyroSystem;
+	Gyroscope* gyroscope;
 	OI* oi;
 
 	double kTurnRadians{PI/2};
@@ -27,7 +27,7 @@ class Turn__DegreesCommand : CommandBase {
 	bool turnFinished{false};
 
 public:
-	Turn__DegreesCommand(Drivebase*, GyroSystem*, OI*);
+	Turn__DegreesCommand(Drivebase*, Gyroscope*, OI*);
 	virtual ~Turn__DegreesCommand();
 
 	void init();

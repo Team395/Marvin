@@ -9,12 +9,14 @@
 #define SRC_SYSTEMS_ELEVATOR_H_
 #include "ctre/Phoenix.h"
 #include "../RobotMap.h"
+#include "SubsystemBase.h"
+
 #include <DigitalInput.h>
 
-class Elevator {
+class Elevator : SubsystemBase {
 	WPI_TalonSRX winchController{ElevatorMap::kWinch};
-	DigitalInput topLimit{ElevatorMap::kLimitTop};
-	DigitalInput bottomLimit{ElevatorMap::kLimitBottom};
+	frc::DigitalInput topLimit{ElevatorMap::kLimitTop};
+	frc::DigitalInput bottomLimit{ElevatorMap::kLimitBottom};
 
 public:
 	Elevator();

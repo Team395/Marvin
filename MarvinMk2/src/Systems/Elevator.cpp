@@ -7,7 +7,7 @@
 
 #include <Systems/Elevator.h>
 
-Elevator::Elevator() {
+Elevator::Elevator() : SubsystemBase("elevator") {
 	winchController.SetInverted(ElevatorMap::kWinchInverted);
 }
 
