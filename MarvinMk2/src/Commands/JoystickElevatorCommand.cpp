@@ -21,7 +21,7 @@ JoystickElevatorCommand::~JoystickElevatorCommand() {
 }
 
 void JoystickElevatorCommand::init() {
-
+	CommandBase::init();
 }
 
 void JoystickElevatorCommand::update() {
@@ -39,9 +39,5 @@ void JoystickElevatorCommand::update() {
 }
 
 void JoystickElevatorCommand::finish() {
-
-}
-
-bool JoystickElevatorCommand::isFinished() {
-	return false;
+	CommandBase::finish();
 }

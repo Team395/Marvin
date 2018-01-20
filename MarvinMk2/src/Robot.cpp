@@ -1,8 +1,7 @@
 #include <iostream>
 #include <memory>
 #include <string>
-#include <vector>
-#include <forward_list>
+#include <list>
 
 #include <IterativeRobot.h>
 #include <LiveWindow/LiveWindow.h>
@@ -17,6 +16,7 @@
 #include "Commands/JoystickElevatorCommand.h"
 #include "Commands/ArcadeDriveCommand.h"
 #include "Commands/Turn__DegreesCommand.h"
+#include "Commands/TestCommand.h"
 
 #include "OI.h"
 
@@ -32,7 +32,28 @@ class Robot: public frc::IterativeRobot {
 	JoystickElevatorCommand joystickElevator{&elevator, &oi};
 	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &gyroscope, &oi};
 
-	std::forward_list<CommandBase> commandQueue;
+	std::list<CommandBase*> commandQueue;
+
+	TestCommand fourSeconds{4};
+	TestCommand fiveSeconds{5};
+	TestCommand threeSeconds{3};
+
+	std::list<CommandBase*>::iterator commandQueueIterator;
+
+	void processCommand(CommandBase* command){
+		switch(command->getCommandState()){
+			case CommandState::kNotStarted:
+				command->init();
+				break;
+			case CommandState::kInitialized:
+				command->update();
+				break;
+			case CommandState::kFinished:
+				commandQueueIterator++;
+				break;
+		}
+	}
+
 public:
 
 	void RobotInit() {
@@ -40,11 +61,17 @@ public:
 	}
 
 	void AutonomousInit() override {
+		commandQueue.push_back(&fourSeconds);
+		commandQueue.push_back(&fiveSeconds);
+		commandQueue.push_back(&threeSeconds);
 
+		commandQueueIterator = commandQueue.begin();
 	}
 
 	void AutonomousPeriodic() override {
+		if(commandQueueIterator == commandQueue.end()) return;
 
+		processCommand(*commandQueueIterator);
 	}
 
 	void TeleopInit() override {
@@ -52,20 +79,19 @@ public:
 	}
 
 	void TeleopPeriodic() override {
-		/*
 		if(!oi.GetTurnButton()){
-			//turn__DegreesCommand.disable();
-			//turn__DegreesCommand.startNewturn();
-			//arcadeDrive.update();
+			turn__DegreesCommand.disable();
+			turn__DegreesCommand.startNewturn();
+			arcadeDrive.update();
 		}
 		else{
-			//turn__DegreesCommand.update();
+			turn__DegreesCommand.update();
 		}
 
 		joystickElevator.update();
 		SmartDashboard::PutData("IMU", gyroscope.getIMU());
 		SmartDashboard::PutBoolean("topLimit", elevator.topPressed());
-		SmartDashboard::PutBoolean("bottomLimit", elevator.bottomPressed()); */
+		SmartDashboard::PutBoolean("bottomLimit", elevator.bottomPressed());
 
 
 	}

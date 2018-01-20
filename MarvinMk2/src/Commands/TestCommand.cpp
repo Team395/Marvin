@@ -9,7 +9,7 @@
 #include <Timer.h>
 #include <iostream>
 
-TestCommand::TestCommand(double seconds) : CommandBase("TestCommand"), seconds(seconds), startTime(frc::Timer::GetFPGATimestamp()) {
+TestCommand::TestCommand(double seconds) : CommandBase("TestCommand"), seconds(seconds) {
 	// TODO Auto-generated constructor stub
 
 }
@@ -19,17 +19,27 @@ TestCommand::~TestCommand(){
 }
 
 void TestCommand::init(){
+	CommandBase::init();
 
+	std::cout << getName() << " " << seconds << ": Started\n";
+	startTime = frc::Timer::GetFPGATimestamp();
 }
 
 void TestCommand::update(){
-	std::cout << Timer::GetFPGATimestamp() - startTime << '\n';
+	double currentDelta = Timer::GetFPGATimestamp() - startTime;
+	std::cout << getName() << " " << seconds << ": " << currentDelta << '\n';
+
+	if(currentDelta >= seconds){
+		finish();
+	}
 }
 
 void TestCommand::finish(){
+	CommandBase::finish();
 
+	std::cout << getName() << " " << seconds << ": Finished\n";
 }
 
-bool TestCommand::isFinished(){
-	return (Timer::GetFPGATimestamp() - startTime > seconds);
+double TestCommand::getSeconds(){
+	return seconds;
 }

@@ -47,11 +47,6 @@ void Turn__DegreesCommand::finish() {
 
 }
 
-bool Turn__DegreesCommand::isFinished() {
-	return false;
-}
-
-/*
 void Turn__DegreesCommand::disable() {
 	pidController.Disable();
 	frc::SmartDashboard::PutData("PIDController", &pidController);
@@ -60,4 +55,4 @@ void Turn__DegreesCommand::disable() {
 void Turn__DegreesCommand::startNewturn() {
 	turnFinished = false;
 }
-*/
+

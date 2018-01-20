@@ -22,7 +22,6 @@ public:
 	void init() override;
 	void update() override;
 	void finish() override;
-	bool isFinished() override;
 };
 
 #endif /* SRC_COMMANDS_ARCADEDRIVECOMMAND_H_ */

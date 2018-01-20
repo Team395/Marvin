@@ -33,11 +33,9 @@ public:
 	void init() override;
 	void update() override;
 	void finish() override;
-	bool isFinished() override;
 
-/*	void update();
 	void disable();
-	void startNewturn(); */
+	void startNewturn();
 };
 
 #endif /* SRC_COMMANDS_TURN__DEGREESCOMMAND_H_ */

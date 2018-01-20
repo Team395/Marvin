@@ -12,7 +12,7 @@
 
 class TestCommand: public CommandBase {
 	double seconds;
-	double startTime;
+	double startTime = -1;
 public:
 	TestCommand(double);
 	virtual ~TestCommand();
@@ -20,7 +20,8 @@ public:
 	void init() override;
 	void update() override;
 	void finish() override;
-	bool isFinished() override;
+
+	double getSeconds();
 };
 
 #endif /* SRC_COMMANDS_TESTCOMMAND_H_ */

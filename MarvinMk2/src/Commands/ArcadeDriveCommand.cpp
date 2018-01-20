@@ -34,7 +34,3 @@ void ArcadeDriveCommand::update() {
 void ArcadeDriveCommand::finish() {
 
 }
-
-bool ArcadeDriveCommand::isFinished() {
-	return false;
-}
