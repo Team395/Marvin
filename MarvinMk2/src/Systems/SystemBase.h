@@ -11,13 +11,14 @@
 #include <vector>
 
 class SystemBase {
-	static std::vector<SystemBase*> systemsList{};
+	//static std::vector<SystemBase*> systemsList;
 	std::string name;
 
 public:
 	SystemBase(std::string);
 	virtual ~SystemBase();
 
+	static void initializeSystemsList();
 	static const std::vector<SystemBase*>& getSystemsList();
 };
 

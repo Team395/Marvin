@@ -30,10 +30,10 @@ public:
 	Turn__DegreesCommand(Drivebase*, Gyroscope*, OI*);
 	virtual ~Turn__DegreesCommand();
 
-	void init();
-	void update();
-	void finished();
-	bool isFinished();
+	void init() override;
+	void update() override;
+	void finish() override;
+	bool isFinished() override;
 
 /*	void update();
 	void disable();

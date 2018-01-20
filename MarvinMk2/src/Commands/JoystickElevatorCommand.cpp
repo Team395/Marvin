@@ -38,10 +38,10 @@ void JoystickElevatorCommand::update() {
 	}
 }
 
-void finished() {
+void JoystickElevatorCommand::finish() {
 
 }
 
-bool isFinished() {
+bool JoystickElevatorCommand::isFinished() {
 	return false;
 }

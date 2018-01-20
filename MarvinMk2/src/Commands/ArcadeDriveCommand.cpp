@@ -31,10 +31,10 @@ void ArcadeDriveCommand::update() {
 	drivebase->ArcadeDrive(move, turn);
 }
 
-void finished() {
+void ArcadeDriveCommand::finish() {
 
 }
 
-bool isFinished() {
+bool ArcadeDriveCommand::isFinished() {
 	return false;
 }

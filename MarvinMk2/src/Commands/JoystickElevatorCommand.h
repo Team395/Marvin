@@ -19,10 +19,10 @@ public:
 	JoystickElevatorCommand(Elevator* elevator, OI* oi);
 	virtual ~JoystickElevatorCommand();
 
-	void init();
-	void update();
-	void finished();
-	bool isFinished();
+	void init() override;
+	void update() override;
+	void finish() override;
+	bool isFinished() override;
 };
 
 #endif /* SRC_COMMANDS_JOYSTICKELEVATORCOMMAND_H_ */

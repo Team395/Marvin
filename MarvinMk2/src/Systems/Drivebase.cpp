@@ -11,7 +11,7 @@
 #include <Drive/DifferentialDrive.h>
 #include "../RobotMap.h"
 
-Drivebase::Drivebase(){
+Drivebase::Drivebase() : SystemBase("drivebase"){
 
 }
 

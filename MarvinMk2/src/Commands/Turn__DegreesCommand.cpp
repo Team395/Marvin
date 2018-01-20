@@ -22,7 +22,7 @@ Turn__DegreesCommand::~Turn__DegreesCommand() {
 
 }
 
-void init() {
+void Turn__DegreesCommand::init() {
 
 }
 
@@ -43,11 +43,11 @@ void Turn__DegreesCommand::update() {
 	frc::SmartDashboard::PutNumber("XAngle", gyroscope->getAngleX());
 }
 
-void finished() {
+void Turn__DegreesCommand::finish() {
 
 }
 
-bool isFinished() {
+bool Turn__DegreesCommand::isFinished() {
 	return false;
 }
 
