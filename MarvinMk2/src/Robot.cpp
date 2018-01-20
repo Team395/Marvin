@@ -18,6 +18,8 @@
 #include "Commands/Turn__DegreesCommand.h"
 #include "Commands/TestCommand.h"
 
+#include "Sequences/AutonomousSequences.h"
+
 #include "OI.h"
 
 class Robot: public frc::IterativeRobot {
@@ -33,11 +35,6 @@ class Robot: public frc::IterativeRobot {
 	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &gyroscope, &oi};
 
 	std::list<CommandBase*> commandQueue;
-
-	TestCommand fourSeconds{4};
-	TestCommand fiveSeconds{5};
-	TestCommand threeSeconds{3};
-
 	std::list<CommandBase*>::iterator commandQueueIterator;
 
 	void processCommand(CommandBase* command){
@@ -61,9 +58,7 @@ public:
 	}
 
 	void AutonomousInit() override {
-		commandQueue.push_back(&fourSeconds);
-		commandQueue.push_back(&fiveSeconds);
-		commandQueue.push_back(&threeSeconds);
+		commandQueue = auton::Wait1Wait3Wait2().getCommandQueue();
 
 		commandQueueIterator = commandQueue.begin();
 	}
