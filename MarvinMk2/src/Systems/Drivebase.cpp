@@ -24,5 +24,11 @@ void Drivebase::ArcadeDrive(double move, double turn){
 }
 
 void Drivebase::PIDWrite(double output){
+	if(output < 0 && output > -minimumPidOutput) { output = output - minimumPidOutput; }
+	else if (output > 0 && output < minimumPidOutput){ output = output + minimumPidOutput; }
 	ArcadeDrive(0, output);
+}
+
+void Drivebase::setMinimumPidOutput(double minimum){
+	minimumPidOutput = minimum;
 }

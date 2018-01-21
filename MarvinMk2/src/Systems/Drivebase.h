@@ -27,11 +27,13 @@ class Drivebase : SystemBase, public frc::PIDOutput {
 
 	frc::DifferentialDrive differentialDrive{leftSpeedControllers, rightSpeedControllers};
 
+	double minimumPidOutput{0.05};
 public:
 	Drivebase();
 
 	void ArcadeDrive(double, double);
 	void PIDWrite(double);
+	void setMinimumPidOutput(double);
 
 	virtual ~Drivebase();
 };
