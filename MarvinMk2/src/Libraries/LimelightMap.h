@@ -24,6 +24,13 @@ namespace limelightMap {
 		kPipeline0 = 0
 		, kPipeline1
 		, kPipeline2
+		, kPipeline3
+		, kPipeline4
+		, kPipeline5
+		, kPipeline6
+		, kPipeline7
+		, kPipeline8
+		, kPipeline9
 	};
 };
 
