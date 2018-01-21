@@ -3,7 +3,7 @@
 #include <string>
 #include <list>
 
-#include <IterativeRobot.h>
+#include <TimedRobot.h>
 #include <LiveWindow/LiveWindow.h>
 #include <SmartDashboard/SmartDashboard.h>
 
@@ -26,7 +26,7 @@
 
 #include "OI.h"
 
-class Robot: public frc::IterativeRobot {
+class Robot: public frc::TimedRobot {
 	frc::LiveWindow& m_lw = *LiveWindow::GetInstance();
 	Elevator elevator{};
 	Drivebase drivebase{};
