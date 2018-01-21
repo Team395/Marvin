@@ -103,7 +103,6 @@ public:
 		SmartDashboard::PutBoolean("topLimit", elevator.topPressed());
 		SmartDashboard::PutBoolean("bottomLimit", elevator.bottomPressed());
 
-		limelight.setPipeline(limelightMap::PipeLine::kPipeline0);
 		limelight.refreshNetworkTableValues();
 		limelight.printToSmartDashboard();
 	}

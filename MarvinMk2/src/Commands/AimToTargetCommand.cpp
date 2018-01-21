@@ -43,6 +43,9 @@ void AimToTargetCommand::update(){
 
 		pidController.Enable();
 	}
+	else if(pidController.IsEnabled() && !limelight->getHasValidTargets()){
+		pidController.Disable();
+	}
 
 	frc::SmartDashboard::PutData("PIDController", &pidController);
 	frc::SmartDashboard::PutBoolean("Finished", pidController.OnTarget());
