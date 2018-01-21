@@ -60,7 +60,7 @@ class Robot: public frc::IterativeRobot {
 public:
 
 	void RobotInit() {
-
+		limelight.setLedMode(limelightMap::LedMode::kOn);
 	}
 
 	void AutonomousInit() override {

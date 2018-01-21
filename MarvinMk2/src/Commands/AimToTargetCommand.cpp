@@ -27,13 +27,12 @@ void AimToTargetCommand::init(){
 	CommandBase::init();
 
 	limelight->setCamMode(limelightMap::CamMode::kVisionProcessor);
-	limelight->setLedMode(limelightMap::LedMode::kOn);
 }
 
 void AimToTargetCommand::update(){
 	limelight->refreshNetworkTableValues();
 
-	if(!pidController.IsEnabled() && !turnFinished){
+	if(!pidController.IsEnabled() && !turnFinished && limelight->getHasValidTargets()){
 		pidController.SetSetpoint(7.8);
 		pidController.SetAbsoluteTolerance(1);
 
@@ -44,14 +43,6 @@ void AimToTargetCommand::update(){
 
 		pidController.Enable();
 	}
-
-	/*double error = limelight->PIDGet();
-	double turn = error * limelight->kP;
-
-	if(error > 1.0){ turn = turn - limelight->kMinRate; }
-	else if (error < 1.0){ turn = turn + limelight->kMinRate; }
-
-	drivebase->ArcadeDrive(0, turn);*/
 
 	frc::SmartDashboard::PutData("PIDController", &pidController);
 	frc::SmartDashboard::PutBoolean("Finished", pidController.OnTarget());
