@@ -44,16 +44,10 @@ class Robot: public frc::TimedRobot {
 	std::list<CommandBase*>::iterator commandQueueIterator;
 
 	void processCommand(CommandBase* command){
-		switch(command->getCommandState()){
-			case CommandState::kNotStarted:
-				command->init();
-				break;
-			case CommandState::kInitialized:
-				command->update();
-				break;
-			case CommandState::kFinished:
-				commandQueueIterator++;
-				break;
+		if(CommandState::kNotStarted) command->init();
+		command->update();
+		if(CommandState::kFinished){
+			commandQueueIterator++;
 		}
 	}
 
@@ -65,7 +59,6 @@ public:
 
 	void AutonomousInit() override {
 		commandQueue = auton::Wait1Wait3Wait2().getCommandQueue();
-
 		commandQueueIterator = commandQueue.begin();
 	}
 
