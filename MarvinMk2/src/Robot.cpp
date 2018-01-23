@@ -44,9 +44,13 @@ class Robot: public frc::TimedRobot {
 	std::list<CommandBase*>::iterator commandQueueIterator;
 
 	void processCommand(CommandBase* command){
-		if(CommandState::kNotStarted) command->init();
+		if(command->getCommandState() == CommandState::kNotStarted) {
+			command->init();
+		}
+
 		command->update();
-		if(CommandState::kFinished){
+
+		if(command->getCommandState() == CommandState::kFinished) {
 			commandQueueIterator++;
 		}
 	}
@@ -67,6 +71,8 @@ public:
 
 		processCommand(*commandQueueIterator);
 	}
+
+	std::list<CommandBase*> currentlyExecuting{};
 
 	void TeleopInit() override {
 
