@@ -11,8 +11,8 @@
 #include <list>
 
 #include "SequenceBase.h"
-#include "../Commands/CommandBase.h"
-#include "../Commands/TestCommand.h"
+#include <Commands/CommandBase.h>
+#include <Commands/TestCommand.h>
 
 namespace auton {
 	class Wait1Wait3Wait2 : public SequenceBase {

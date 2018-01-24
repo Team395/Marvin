@@ -7,9 +7,9 @@
 
 #ifndef SRC_SYSTEMS_GYROSCOPE_H_
 #define SRC_SYSTEMS_GYROSCOPE_H_
-#include "../Libraries/ADIS16448_IMU.h"
+#include <Libraries/ADIS16448_IMU.h>
 #include <PIDSource.h>
-#include "SystemBase.h"
+#include <Systems/SystemBase.h>
 
 class Gyroscope : SystemBase, public frc::PIDSource {
 	ADIS16448_IMU imu{};

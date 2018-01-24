@@ -7,24 +7,22 @@
 #include <LiveWindow/LiveWindow.h>
 #include <SmartDashboard/SmartDashboard.h>
 
-#include "Systems/SystemBase.h"
-#include "Systems/Elevator.h"
-#include "Systems/Drivebase.h"
-#include "Systems/Gyroscope.h"
-#include "Systems/Limelight.h"
+#include <Systems/SystemBase.h>
+#include <Systems/Elevator.h>
+#include <Systems/Drivebase.h>
+#include <Systems/Gyroscope.h>
+#include <Systems/Limelight.h>
 
-#include "Commands/CommandBase.h"
-#include "Commands/JoystickElevatorCommand.h"
-#include "Commands/ArcadeDriveCommand.h"
-#include "Commands/Turn__DegreesCommand.h"
-#include "Commands/TestCommand.h"
-#include "Commands/AimToTargetCommand.h"
+#include <Commands/CommandBase.h>
+#include <Commands/JoystickElevatorCommand.h>
+#include <Commands/ArcadeDriveCommand.h>
+#include <Commands/Turn__DegreesCommand.h>
+#include <Commands/TestCommand.h>
+#include <Commands/AimToTargetCommand.h>
 
-#include "Sequences/AutonomousSequences.h"
-
-#include "Libraries/LimelightMap.h"
-
-#include "OI.h"
+#include <Sequences/AutonomousSequences.h>
+#include <Libraries/LimelightMap.h>
+#include <OI.h>
 
 class Robot: public frc::TimedRobot {
 	frc::LiveWindow& m_lw = *frc::LiveWindow::GetInstance();

@@ -7,11 +7,11 @@
 
 #ifndef SRC_SYSTEMS_ELEVATOR_H_
 #define SRC_SYSTEMS_ELEVATOR_H_
-#include "ctre/Phoenix.h"
-#include "../RobotMap.h"
+#include <ctre/Phoenix.h>
 #include <DigitalInput.h>
 
-#include "SystemBase.h"
+#include <RobotMap.h>
+#include <Systems/SystemBase.h>
 
 class Elevator : SystemBase {
 	WPI_TalonSRX winchController{ElevatorMap::kWinch};

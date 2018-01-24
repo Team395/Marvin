@@ -7,9 +7,9 @@
 
 #ifndef SRC_COMMANDS_ARCADEDRIVECOMMAND_H_
 #define SRC_COMMANDS_ARCADEDRIVECOMMAND_H_
-#include "../Systems/Drivebase.h"
-#include "../OI.h"
-#include "CommandBase.h"
+#include <OI.h>
+#include <Systems/Drivebase.h>
+#include <Commands/CommandBase.h>
 
 class ArcadeDriveCommand : CommandBase {
 	Drivebase* drivebase;

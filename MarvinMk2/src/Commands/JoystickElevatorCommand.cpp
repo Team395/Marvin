@@ -4,10 +4,11 @@
  *  Created on: Jan 15, 2018
  *      Author: JARVIS
  */
+#include <OI.h>
 
-#include <Commands/JoystickElevatorCommand.h>
-#include "../Systems/Elevator.h"
-#include "../OI.h"
+#include <Systems/Elevator.h>
+
+#include "JoystickElevatorCommand.h"
 
 JoystickElevatorCommand::JoystickElevatorCommand(Elevator* elevator, OI* oi) :
 CommandBase("JoystickElevatorCommand"),

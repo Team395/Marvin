@@ -4,9 +4,9 @@
  *  Created on: Jan 20, 2018
  *      Author: JARVIS
  */
-
-#include <Commands/AimToTargetCommand.h>
 #include <SmartDashboard/SmartDashboard.h>
+
+#include "AimToTargetCommand.h"
 
 AimToTargetCommand::AimToTargetCommand(Drivebase* drivebase
 		, Limelight* limelight

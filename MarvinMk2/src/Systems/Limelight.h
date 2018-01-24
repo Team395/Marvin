@@ -10,8 +10,8 @@
 
 #include <string>
 
-#include "SystemBase.h"
-#include "../Libraries/LimelightMap.h"
+#include <Systems/SystemBase.h>
+#include <Libraries/LimelightMap.h>
 
 #include <NetworkTables/NetworkTableInstance.h>
 #include <PIDSource.h>

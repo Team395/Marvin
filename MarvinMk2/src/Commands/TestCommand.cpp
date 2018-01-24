@@ -4,10 +4,11 @@
  *  Created on: Jan 19, 2018
  *      Author: JARVIS
  */
-
-#include <Commands/TestCommand.h>
-#include <Timer.h>
 #include <iostream>
+
+#include <Timer.h>
+
+#include "TestCommand.h"
 
 TestCommand::TestCommand(double seconds) : CommandBase("TestCommand"), seconds(seconds) {
 	// TODO Auto-generated constructor stub

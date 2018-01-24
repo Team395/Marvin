@@ -7,9 +7,9 @@
 
 #ifndef SRC_COMMANDS_JOYSTICKELEVATORCOMMAND_H_
 #define SRC_COMMANDS_JOYSTICKELEVATORCOMMAND_H_
-#include "../Systems/Elevator.h"
-#include "../OI.h"
-#include "CommandBase.h"
+#include <OI.h>
+#include <Systems/Elevator.h>
+#include <Commands/CommandBase.h>
 
 class JoystickElevatorCommand : CommandBase {
 	Elevator* elevator;

@@ -4,10 +4,10 @@
  *  Created on: Jan 15, 2018
  *      Author: JARVIS
  */
+#include <Systems/Drivebase.h>
+#include <OI.h>
 
-#include <Commands/ArcadeDriveCommand.h>
-#include "../Systems/Drivebase.h"
-#include "../OI.h"
+#include "ArcadeDriveCommand.h"
 
 ArcadeDriveCommand::ArcadeDriveCommand(Drivebase* drivebase, OI* oi) :
 CommandBase("ArcadeDriveCommand"),

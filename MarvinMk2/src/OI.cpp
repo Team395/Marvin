@@ -4,12 +4,11 @@
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
+#include <Joystick.h>
+
+#include <RobotMap.h>
 
 #include "OI.h"
-
-#include <WPILib.h>
-#include "RobotMap.h"
-#include <Joystick.h>
 
 OI::OI(){
 

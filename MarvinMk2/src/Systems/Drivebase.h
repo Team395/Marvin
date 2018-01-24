@@ -13,8 +13,8 @@
 #include <Talon.h>
 #include <PIDOutput.h>
 
-#include "SystemBase.h"
-#include "../RobotMap.h"
+#include <Systems/SystemBase.h>
+#include <RobotMap.h>
 
 class Drivebase : SystemBase, public frc::PIDOutput {
 	frc::Talon left1{DrivebaseMap::kLeft1};

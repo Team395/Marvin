@@ -7,12 +7,11 @@
 
 #ifndef SRC_COMMANDS_TURN__DEGREESCOMMAND_H_
 #define SRC_COMMANDS_TURN__DEGREESCOMMAND_H_
-
-#include "../Systems/Drivebase.h"
-#include "../OI.h"
-#include "CommandBase.h"
-
 #include <PIDController.h>
+
+#include <Commands/CommandBase.h>
+#include <OI.h>
+#include <Systems/Drivebase.h>
 #include <Systems/Gyroscope.h>
 
 class Turn__DegreesCommand : CommandBase {

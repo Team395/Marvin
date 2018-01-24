@@ -8,13 +8,14 @@
 #ifndef SRC_COMMANDS_AIMTOTARGETCOMMAND_H_
 #define SRC_COMMANDS_AIMTOTARGETCOMMAND_H_
 
-#include "CommandBase.h"
-#include "../Libraries/LimelightMap.h"
-
-#include "../Systems/Limelight.h"
-#include "../Systems/Drivebase.h"
-
 #include <PIDController.h>
+
+#include <Commands/CommandBase.h>
+#include <Libraries/LimelightMap.h>
+#include <Systems/Limelight.h>
+#include <Systems/Drivebase.h>
+
+
 
 class AimToTargetCommand : public CommandBase {
 	Drivebase* drivebase;

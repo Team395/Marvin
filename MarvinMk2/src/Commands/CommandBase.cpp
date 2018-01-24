@@ -4,9 +4,10 @@
  *  Created on: Jan 19, 2018
  *      Author: JARVIS
  */
-
-#include "Commands/CommandBase.h"
 #include <string>
+
+#include "CommandBase.h"
+
 CommandBase::CommandBase(std::string name) : name{name} {
 	commandState = CommandState::kNotStarted;
 }

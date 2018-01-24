@@ -4,11 +4,12 @@
  *  Created on: Jan 18, 2018
  *      Author: JARVIS
  */
+#include <SmartDashboard/SmartDashboard.h>
+
+#include <OI.h>
+#include <Commands/CommandBase.h>
 
 #include "Turn__DegreesCommand.h"
-#include <SmartDashboard/SmartDashboard.h>
-#include "../OI.h"
-#include "CommandBase.h"
 
 Turn__DegreesCommand::Turn__DegreesCommand(Drivebase* drivebase, Gyroscope* gyroscope, OI* oi)
 : CommandBase("Turn_DegreesCommand"),

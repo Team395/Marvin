@@ -10,7 +10,7 @@
 
 #include <list>
 
-#include "../Commands/CommandBase.h"
+#include <Commands/CommandBase.h>
 
 namespace auton {
 	class SequenceBase {

@@ -7,7 +7,7 @@
 
 #pragma once
 #include <Joystick.h>
-#include "RobotMap.h"
+#include <RobotMap.h>
 
 class OI {
 	frc::Joystick driveStick{OIMap::kDriveStick};

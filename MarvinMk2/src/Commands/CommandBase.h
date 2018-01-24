@@ -8,7 +8,8 @@
 #ifndef SRC_COMMANDS_COMMANDBASE_H_
 #define SRC_COMMANDS_COMMANDBASE_H_
 #include <string>
-#include "CommandState.h"
+
+#include <Commands/CommandState.h>
 
 class CommandBase {
 	std::string name;

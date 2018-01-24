@@ -15,10 +15,11 @@
 #include <DigitalSource.h>
 #include <DriverStation.h>
 #include <ErrorBase.h>
-#include "ADIS16448_IMU.h"
 #include <SmartDashboard/SendableBuilder.h>
 #include <Timer.h>
 #include <WPIErrors.h>
+
+#include "ADIS16448_IMU.h"
 
 // CRC-16 Look-Up Table
 const uint16_t adiscrc[256] = {
