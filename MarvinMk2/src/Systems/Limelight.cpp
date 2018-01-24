@@ -69,12 +69,12 @@ double Limelight::getLatency(){
 }
 
 void Limelight::printToSmartDashboard(){
-	SmartDashboard::PutBoolean("Limelight::HasValidTargets", getHasValidTargets());
-	SmartDashboard::PutNumber("Limelight::HorizontalOffset", getHorizontalOffset());
-	SmartDashboard::PutNumber("Limelight::VerticalOffset", getVerticalOffset());
-	SmartDashboard::PutNumber("Limelight::TargetArea", getTargetArea());
-	SmartDashboard::PutNumber("Limelight::Skew", getSkew());
-	SmartDashboard::PutNumber("Limelight::Latency", getLatency());
+	frc::SmartDashboard::PutBoolean("Limelight::HasValidTargets", getHasValidTargets());
+	frc::SmartDashboard::PutNumber("Limelight::HorizontalOffset", getHorizontalOffset());
+	frc::SmartDashboard::PutNumber("Limelight::VerticalOffset", getVerticalOffset());
+	frc::SmartDashboard::PutNumber("Limelight::TargetArea", getTargetArea());
+	frc::SmartDashboard::PutNumber("Limelight::Skew", getSkew());
+	frc::SmartDashboard::PutNumber("Limelight::Latency", getLatency());
 }
 
 frc::PIDSourceType Limelight::GetPIDSourceType() {

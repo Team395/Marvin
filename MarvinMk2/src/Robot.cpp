@@ -27,7 +27,7 @@
 #include "OI.h"
 
 class Robot: public frc::TimedRobot {
-	frc::LiveWindow& m_lw = *LiveWindow::GetInstance();
+	frc::LiveWindow& m_lw = *frc::LiveWindow::GetInstance();
 	Elevator elevator{};
 	Drivebase drivebase{};
 	Gyroscope gyroscope{};
@@ -98,7 +98,7 @@ public:
 		}
 
 		joystickElevator.update();
-		SmartDashboard::PutData("IMU", gyroscope.getIMU());
+//		SmartDashboard::PutData("IMU", gyroscope.getIMU());
 		SmartDashboard::PutBoolean("topLimit", elevator.topPressed());
 		SmartDashboard::PutBoolean("bottomLimit", elevator.bottomPressed());
 
