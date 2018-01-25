@@ -7,27 +7,31 @@
 
 #pragma once
 
-enum OIMap{
-	kDriveStick = 0
-	,kManipulatorStick = 1
-	,kTurnButton = 1
+namespace OIMap{
+	const int kDriveStick = 0;
+	const int kManipulatorStick = 1;
+	const int kTurnButton = 1;
 };
 
-enum DrivebaseMap{
-	kLeft1 = 2
-	,kLeft2 = 3
-	,kRight1 = 0
-	,kRight2 = 1
+namespace DrivebaseMap{
+	const int kLeft1 = 2;
+	const int kLeft2 = 3;
+	const int kRight1 = 0;
+	const int kRight2 = 1;
 };
 
-enum ElevatorMap{
-	kWinch = 0
-	,kWinchInverted = 0
-	,kLimitTop = 0
-	,kLimitBottom = 1
-	,kTopInverted = 0
-	,kBottomInverted = 0
+namespace ElevatorMap{
+	const int kWinchInverted = 0;
+	const int kLimitTop = 0;
+	const int kLimitBottom = 1;
+	const int kTopInverted = 0;
+	const int kBottomInverted = 0;
 };
+
+namespace CANMap{
+	const int kWinch = 0;
+	const int kPidgeon = 1;
+}
 
 /**
  * The RobotMap is a mapping from the ports sensors and actuators are wired into

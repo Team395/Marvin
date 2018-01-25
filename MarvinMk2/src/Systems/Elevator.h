@@ -14,7 +14,7 @@
 #include <Systems/SystemBase.h>
 
 class Elevator : SystemBase {
-	WPI_TalonSRX winchController{ElevatorMap::kWinch};
+	WPI_TalonSRX winchController{CANMap::kWinch};
 	frc::DigitalInput topLimit{ElevatorMap::kLimitTop};
 	frc::DigitalInput bottomLimit{ElevatorMap::kLimitBottom};
 
