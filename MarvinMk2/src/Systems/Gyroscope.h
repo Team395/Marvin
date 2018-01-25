@@ -7,12 +7,15 @@
 
 #ifndef SRC_SYSTEMS_GYROSCOPE_H_
 #define SRC_SYSTEMS_GYROSCOPE_H_
-#include <Libraries/ADIS16448_IMU.h>
+#include <ctre/phoenix/Sensors/PigeonIMU.h>
 #include <PIDSource.h>
 #include <Systems/SystemBase.h>
+#include <RobotMap.h>
+
+using PigeonIMU = ctre::phoenix::sensors::PigeonIMU;
 
 class Gyroscope : SystemBase, public frc::PIDSource {
-	ADIS16448_IMU imu{};
+	PigeonIMU imu{CANMap::kPigeon};
 
 public:
 	//PID Gains for Turn
@@ -28,7 +31,7 @@ public:
 	frc::PIDSourceType GetPIDSourceType();
 	double PIDGet();
 
-	ADIS16448_IMU* getIMU();
+	PigeonIMU* getIMU();
 };
 
 #endif /* SRC_SYSTEMS_GYROSCOPE_H_ */

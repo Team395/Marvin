@@ -4,7 +4,7 @@
  *  Created on: Jan 16, 2018
  *      Author: JARVIS
  */
-
+#include <cassert>
 #include "Gyroscope.h"
 
 Gyroscope::Gyroscope() : SystemBase("gyroscope"){
@@ -16,13 +16,15 @@ Gyroscope::~Gyroscope() {
 	// TODO Auto-generated destructor stub
 }
 
-ADIS16448_IMU* Gyroscope::getIMU() {
+PigeonIMU* Gyroscope::getIMU() {
 	return &imu;
 }
 
 double Gyroscope::getAngleX() {
-	return imu.GetAngleX();
-
+	double *returnArray{nullptr};
+	imu.GetAccumGyro(returnArray);
+	assert(returnArray && "Gyro not returning angles properly");
+	return returnArray[0];
 }
 
 frc::PIDSourceType Gyroscope::GetPIDSourceType() {

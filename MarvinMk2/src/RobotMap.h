@@ -30,7 +30,7 @@ namespace ElevatorMap{
 
 namespace CANMap{
 	const int kWinch = 0;
-	const int kPidgeon = 1;
+	const int kPigeon = 1;
 }
 
 /**
