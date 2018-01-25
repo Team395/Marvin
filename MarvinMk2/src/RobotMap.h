@@ -8,29 +8,34 @@
 #pragma once
 
 namespace OIMap{
-	const int kDriveStick = 0;
-	const int kManipulatorStick = 1;
-	const int kTurnButton = 1;
+	constexpr int kDriveStick = 0;
+	constexpr int kManipulatorStick = 1;
+	constexpr int kTurnButton = 1;
 };
 
 namespace DrivebaseMap{
-	const int kLeft1 = 2;
-	const int kLeft2 = 3;
-	const int kRight1 = 0;
-	const int kRight2 = 1;
+	constexpr int kLeft1 = 2;
+	constexpr int kLeft2 = 3;
+	constexpr int kRight1 = 0;
+	constexpr int kRight2 = 1;
 };
 
 namespace ElevatorMap{
-	const int kWinchInverted = 0;
-	const int kLimitTop = 0;
-	const int kLimitBottom = 1;
-	const int kTopInverted = 0;
-	const int kBottomInverted = 0;
+	constexpr int kWinchInverted = 0;
+	constexpr int kLimitTop = 0;
+	constexpr int kLimitBottom = 1;
+	constexpr int kTopInverted = 0;
+	constexpr int kBottomInverted = 0;
 };
 
+namespace IntakeMap{
+	constexpr int kIntakeLeft = 4;
+	constexpr int kIntakeRight = 5;
+}
+
 namespace CANMap{
-	const int kWinch = 0;
-	const int kPigeon = 1;
+	constexpr int kWinch = 0;
+	constexpr int kPigeon = 1;
 }
 
 /**
