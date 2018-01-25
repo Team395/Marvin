@@ -13,19 +13,21 @@
 #include <RobotMap.h>
 #include <Systems/SystemBase.h>
 
+using ControlMode = ctre::phoenix::motorcontrol::ControlMode;
+
 class Elevator : SystemBase {
 	WPI_TalonSRX winchController{CANMap::kWinch};
 	frc::DigitalInput topLimit{ElevatorMap::kLimitTop};
 	frc::DigitalInput bottomLimit{ElevatorMap::kLimitBottom};
-
 public:
 	Elevator();
 	virtual ~Elevator();
 
-	void driveWinch(double);
-
 	bool topPressed();
 	bool bottomPressed();
+
+	void setWinchPercent(double);
+	void setWinchPosition(double);
 };
 
 #endif /* SRC_SYSTEMS_ELEVATOR_H_ */
