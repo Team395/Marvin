@@ -19,9 +19,9 @@ public:
 	CommandBase(std::string);
 	virtual ~CommandBase();
 
-	virtual void init()=0;
+	virtual void init();
 	virtual void update()=0;
-	virtual void finish()=0;
+	virtual void finish();
 
 
 	std::string getName();

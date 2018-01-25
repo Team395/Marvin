@@ -7,7 +7,7 @@
 
 #include "ElevatorSetpointCommand.h"
 
-ElevatorSetpointCommand::ElevatorSetpointCommand() {
+ElevatorSetpointCommand::ElevatorSetpointCommand(Elevator* elevator) : CommandBase("ElevatorSetpointCommand"), elevator{elevator} {
 	// TODO Auto-generated constructor stub
 
 }
@@ -16,3 +16,14 @@ ElevatorSetpointCommand::~ElevatorSetpointCommand() {
 	// TODO Auto-generated destructor stub
 }
 
+void ElevatorSetpointCommand::init(){
+	CommandBase::init();
+}
+
+void ElevatorSetpointCommand::update(){
+
+}
+
+void ElevatorSetpointCommand::finish(){
+	CommandBase::finish();
+}
