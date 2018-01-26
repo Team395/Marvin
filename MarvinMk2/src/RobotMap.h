@@ -8,13 +8,13 @@
 #pragma once
 
 namespace OIMap{
-	const int kDriveStick = 0;
-	const int kXboxController = 1;
-	const int kTurnButton = 1;
-	const int kElevatorUp = 3;
-	const int kElevatorDown = 2;
-	const int kIntakeIn = 6;
-	const int kIntakeOut = 5;
+	constexpr int kDriveStick = 0;
+	constexpr int kXboxController = 1;
+	constexpr int kTurnButton = 1;
+	constexpr int kElevatorUp = 3;
+	constexpr int kElevatorDown = 2;
+	constexpr int kIntakeIn = 6;
+	constexpr int kIntakeOut = 5;
 };
 
 namespace DrivebaseMap{

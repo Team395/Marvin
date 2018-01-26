@@ -12,11 +12,11 @@
 #include <RobotMap.h>
 #include <Systems/SystemBase.h>
 
-class Intake {
+class Intake : SystemBase {
 	Talon leftIntake{IntakeMap::kIntakeLeft};
 	Talon rightIntake{IntakeMap::kIntakeRight};
 
-public : SystemBase:
+public:
 	Intake();
 	virtual ~Intake();
 
