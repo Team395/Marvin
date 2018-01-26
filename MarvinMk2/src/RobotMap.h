@@ -33,10 +33,13 @@ namespace ElevatorMap{
 };
 
 namespace IntakeMap{
-	constexpr int kIntakeLeft = 4;
+	constexpr int kSolenoidOpen = 0;
+	constexpr int kSolenoidClose = 1;
+	/*constexpr int kIntakeLeft = 4;
 	constexpr bool kIntakeLeftInverted = false;
 	constexpr int kIntakeRight = 5;
 	constexpr bool kIntakeRightInverted = false;
+	*/
 }
 
 namespace CANMap{
