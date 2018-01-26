@@ -7,20 +7,10 @@
 #include <LiveWindow/LiveWindow.h>
 #include <SmartDashboard/SmartDashboard.h>
 
-#include <Systems/SystemBase.h>
-#include <Systems/Elevator.h>
-#include <Systems/Drivebase.h>
-#include <Systems/Gyroscope.h>
-#include <Systems/Limelight.h>
+#include <Systems/Systems.h>
+#include <Commands/Commands.h>
+#include <Sequences/Sequences.h>
 
-#include <Commands/CommandBase.h>
-#include <Commands/JoystickElevatorCommand.h>
-#include <Commands/ArcadeDriveCommand.h>
-#include <Commands/Turn__DegreesCommand.h>
-#include <Commands/TestCommand.h>
-#include <Commands/AimToTargetCommand.h>
-
-#include <Sequences/AutonomousSequences.h>
 #include <Libraries/LimelightMap.h>
 #include <OI.h>
 
@@ -86,7 +76,7 @@ public:
 			turn__DegreesCommand.update();
 		}*/
 
-		if(!oi.GetTurnButton()){
+		if(!oi.getTurnButton()){
 			aimToTargetCommand.disable();
 			aimToTargetCommand.startNewTurn();
 			arcadeDrive.update();

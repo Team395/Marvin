@@ -26,7 +26,7 @@ void JoystickElevatorCommand::init() {
 }
 
 void JoystickElevatorCommand::update() {
-	double speed = oi->GetManipulatorY();
+	double speed = oi->getElevatorThrottle();
 
 	if((speed > 0 && elevator->topPressed())){
 		elevator->setWinchPercent(0);

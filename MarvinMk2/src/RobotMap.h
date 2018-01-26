@@ -9,8 +9,12 @@
 
 namespace OIMap{
 	const int kDriveStick = 0;
-	const int kManipulatorStick = 1;
+	const int kXboxController = 1;
 	const int kTurnButton = 1;
+	const int kElevatorUp = 3;
+	const int kElevatorDown = 2;
+	const int kIntakeIn = 6;
+	const int kIntakeOut = 5;
 };
 
 namespace DrivebaseMap{

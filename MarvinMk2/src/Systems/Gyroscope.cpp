@@ -6,6 +6,7 @@
  */
 #include <cassert>
 #include "Gyroscope.h"
+#include <Libraries/GyroMap.h>
 
 Gyroscope::Gyroscope() : SystemBase("gyroscope"){
 	// TODO Auto-generated constructor stub
@@ -24,7 +25,7 @@ double Gyroscope::getAngleX() {
 	double *returnArray{nullptr};
 	imu.GetAccumGyro(returnArray);
 	assert(returnArray && "Gyro not returning angles properly");
-	return returnArray[0];
+	return returnArray[gyroMap::GyroIndex::kXIndex];
 }
 
 frc::PIDSourceType Gyroscope::GetPIDSourceType() {
