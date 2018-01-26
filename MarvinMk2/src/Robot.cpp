@@ -12,6 +12,7 @@
 #include <Systems/Drivebase.h>
 #include <Systems/Gyroscope.h>
 #include <Systems/Limelight.h>
+#include <Systems/PneumaticSystem.h>
 
 #include <Commands/CommandBase.h>
 #include <Commands/JoystickElevatorCommand.h>
