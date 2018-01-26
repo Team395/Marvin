@@ -86,7 +86,7 @@ public:
 			turn__DegreesCommand.update();
 		}*/
 
-		if(!oi.GetTurnButton()){
+		if(!oi.getTurnButton()){
 			aimToTargetCommand.disable();
 			aimToTargetCommand.startNewTurn();
 			arcadeDrive.update();

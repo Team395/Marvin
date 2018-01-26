@@ -14,18 +14,41 @@ OI::OI(){
 
 }
 
-double OI::GetDriveY(){
+double OI::getDriveY(){
 	return driveStick.GetY();
 }
 
-double OI::GetDriveZ(){
+double OI::getDriveZ(){
 	return driveStick.GetZ();
 }
 
-double OI::GetManipulatorY(){
-	return -manipulatorStick.GetY();
+bool OI::getTurnButton(){
+	return driveStick.GetRawButton(OIMap::kTurnButton);
 }
 
-bool OI::GetTurnButton(){
-	return driveStick.GetRawButton(OIMap::kTurnButton);
+double OI::getElevatorThrottle(){
+	if(xboxController.GetRawAxis(OIMap::kElevatorUp) > 0 && xboxController.GetRawAxis(OIMap::kElevatorDown) == 0){
+		return xboxController.GetRawAxis(OIMap::kElevatorUp);
+	}
+	else if(xboxController.GetRawAxis(OIMap::kElevatorDown) > 0 && xboxController.GetRawAxis(OIMap::kElevatorUp) == 0){
+		return -xboxController.GetRawAxis(OIMap::kElevatorDown);
+	}
+	else{
+		return 0;
+	}
+}
+
+double OI::getIntakeThrottle(){
+	if(xboxController.GetRawButton(OIMap::kIntakeIn) && xboxController.GetRawButton(OIMap::kIntakeOut)){
+		return 0;
+	}
+	else if(xboxController.GetRawButton(OIMap::kIntakeIn)){
+		return 1;
+	}
+	else if(xboxController.GetRawButton(OIMap::kIntakeOut)){
+		return -1;
+	}
+	else{
+		return 0;
+	}
 }

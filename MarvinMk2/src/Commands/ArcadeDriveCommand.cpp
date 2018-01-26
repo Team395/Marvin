@@ -25,8 +25,8 @@ void ArcadeDriveCommand::init() {
 }
 
 void ArcadeDriveCommand::update() {
-	double move = oi->GetDriveY();
-	double turn = oi->GetDriveZ();
+	double move = oi->getDriveY();
+	double turn = oi->getDriveZ();
 
 	drivebase->ArcadeDrive(move, turn);
 }
