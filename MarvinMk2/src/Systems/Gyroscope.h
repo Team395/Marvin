@@ -19,6 +19,7 @@ class Gyroscope : SystemBase, public frc::PIDSource {
 
 public:
 	//PID Gains for Turn
+	//TODO: retune loop for degrees
 	const double kP{2};
 	const double kI{0.00};
 	const double kD{0.1};
