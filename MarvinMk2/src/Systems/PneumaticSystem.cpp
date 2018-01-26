@@ -7,7 +7,7 @@
 
 #include <Systems/PneumaticSystem.h>
 
-PneumaticSystem::PneumaticSystem() {
+PneumaticSystem::PneumaticSystem() : SystemBase("PneumaticSystem"){
 	compressor.SetClosedLoopControl(true);
 }
 
