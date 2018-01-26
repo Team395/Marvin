@@ -7,18 +7,20 @@
 
 #pragma once
 #include <Joystick.h>
+#include <XboxController.h>
 #include <RobotMap.h>
 
 class OI {
 	frc::Joystick driveStick{OIMap::kDriveStick};
-	frc::Joystick manipulatorStick{OIMap::kManipulatorStick};
+	frc::XboxController xboxController{OIMap::kXboxController};
 
 public:
 	OI();
-	double GetDriveY();
-	double GetDriveZ();
+	double getDriveY();
+	double getDriveZ();
 
-	double GetManipulatorY();
+	double getElevatorThrottle();
+	double getIntakeThrottle();
 
-	bool GetTurnButton();
+	bool getTurnButton();
 };
