@@ -19,14 +19,14 @@ class Robot: public frc::TimedRobot {
 	Elevator elevator{};
 	Drivebase drivebase{};
 	Gyroscope gyroscope{};
-	Limelight limelight{};
+//	Limelight limelight{};
 
 	OI oi{};
 
 	ArcadeDriveCommand arcadeDrive{&drivebase, &oi};
 	JoystickElevatorCommand joystickElevator{&elevator, &oi};
 	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &gyroscope, &oi};
-	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
+//	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
 
 	std::list<CommandBase*> commandQueue;
 	std::list<CommandBase*>::iterator commandQueueIterator;
@@ -46,7 +46,7 @@ class Robot: public frc::TimedRobot {
 public:
 
 	void RobotInit() {
-		limelight.setLedMode(limelightMap::LedMode::kOn);
+//		limelight.setLedMode(limelightMap::LedMode::kOn);
 	}
 
 	void AutonomousInit() override {
@@ -67,16 +67,16 @@ public:
 	}
 
 	void TeleopPeriodic() override {
-		/*if(!oi.GetTurnButton()){
+		if(oi.getTurnButton()){
+			turn__DegreesCommand.update();
+		}
+		else{
 			turn__DegreesCommand.disable();
 			turn__DegreesCommand.startNewturn();
 			arcadeDrive.update();
 		}
-		else{
-			turn__DegreesCommand.update();
-		}*/
 
-		if(!oi.getTurnButton()){
+/*		if(!oi.getTurnButton()){
 			aimToTargetCommand.disable();
 			aimToTargetCommand.startNewTurn();
 			arcadeDrive.update();
@@ -84,14 +84,14 @@ public:
 		else{
 			aimToTargetCommand.update();
 		}
-
+*/
 		joystickElevator.update();
-//		SmartDashboard::PutData("IMU", gyroscope.getIMU());
+		SmartDashboard::PutNumber("IMU", gyroscope.getAngleX());
 		SmartDashboard::PutBoolean("topLimit", elevator.topPressed());
 		SmartDashboard::PutBoolean("bottomLimit", elevator.bottomPressed());
 
-		limelight.refreshNetworkTableValues();
-		limelight.printToSmartDashboard();
+//		limelight.refreshNetworkTableValues();
+//		limelight.printToSmartDashboard();
 	}
 
 	void TestPeriodic() override {
