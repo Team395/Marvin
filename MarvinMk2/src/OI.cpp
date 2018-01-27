@@ -52,3 +52,7 @@ double OI::getIntakeThrottle(){
 		return 0;
 	}
 }
+
+bool OI::getClawDisable(){
+	return xboxController.GetRawButton(OIMap::kClawRelease);
+}

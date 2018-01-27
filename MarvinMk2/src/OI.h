@@ -22,5 +22,6 @@ public:
 	double getElevatorThrottle();
 	double getIntakeThrottle();
 
+	bool getClawDisable();
 	bool getTurnButton();
 };

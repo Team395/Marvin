@@ -15,6 +15,7 @@ namespace OIMap{
 	constexpr int kElevatorDown = 2;
 	constexpr int kIntakeIn = 6;
 	constexpr int kIntakeOut = 5;
+	constexpr int kClawRelease = 1;
 };
 
 namespace DrivebaseMap{
