@@ -7,7 +7,7 @@
 
 #include <Commands/PneumaticGripperCommand.h>
 
-PneumaticGripperCommand::PneumaticGripperCommand(OI* oi, Intake* intake) : CommandBase("PneumaticgripperCommand"), oi{oi}, intake{intake}{
+PneumaticGripperCommand::PneumaticGripperCommand(Intake* intake, OI* oi) : CommandBase("PneumaticgripperCommand"), intake{intake}, oi{oi}{
 	intake->disable();
 }
 

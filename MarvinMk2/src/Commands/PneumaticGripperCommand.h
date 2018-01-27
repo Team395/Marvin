@@ -13,10 +13,11 @@
 #include <Systems/Intake.h>
 
 class PneumaticGripperCommand: public CommandBase {
-	OI* oi;
 	Intake* intake;
+	OI* oi;
+
 public:
-	PneumaticGripperCommand(OI* oi, Intake* intake);
+	PneumaticGripperCommand(Intake* intake, OI* oi);
 	virtual ~PneumaticGripperCommand();
 
 	void init() override;

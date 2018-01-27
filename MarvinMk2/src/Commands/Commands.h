@@ -14,5 +14,6 @@
 #include <Commands/Turn__DegreesCommand.h>
 #include <Commands/TestCommand.h>
 #include <Commands/AimToTargetCommand.h>
+#include <Commands/PneumaticGripperCommand.h>
 
 #endif /* SRC_COMMANDS_COMMANDS_H_ */

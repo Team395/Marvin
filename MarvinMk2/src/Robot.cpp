@@ -20,6 +20,7 @@ class Robot: public frc::TimedRobot {
 	Drivebase drivebase{};
 	Gyroscope gyroscope{};
 //	Limelight limelight{};
+	Intake intake{};
 
 	OI oi{};
 
@@ -27,6 +28,7 @@ class Robot: public frc::TimedRobot {
 	JoystickElevatorCommand joystickElevator{&elevator, &oi};
 	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &gyroscope, &oi};
 //	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
+	PneumaticGripperCommand pneumaticGripperCommand{&intake, &oi};
 
 	std::list<CommandBase*> commandQueue;
 	std::list<CommandBase*>::iterator commandQueueIterator;
@@ -63,7 +65,10 @@ public:
 	std::list<CommandBase*> currentlyExecuting{};
 
 	void TeleopInit() override {
-
+		turn__DegreesCommand.init();
+		arcadeDrive.init();
+		joystickElevator.init();
+		pneumaticGripperCommand.init();
 	}
 
 	void TeleopPeriodic() override {
@@ -86,6 +91,8 @@ public:
 		}
 */
 		joystickElevator.update();
+		pneumaticGripperCommand.update();
+
 		SmartDashboard::PutNumber("IMU", gyroscope.getAngleX());
 		SmartDashboard::PutBoolean("topLimit", elevator.topPressed());
 		SmartDashboard::PutBoolean("bottomLimit", elevator.bottomPressed());
