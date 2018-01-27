@@ -45,7 +45,7 @@ namespace IntakeMap{
 
 namespace CANMap{
 	constexpr int kWinch = 0;
-	constexpr int kPigeon = 1;
+	constexpr int kPigeon = 0;
 }
 
 /**

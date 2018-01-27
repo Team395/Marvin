@@ -18,9 +18,9 @@ class Robot: public frc::TimedRobot {
 	frc::LiveWindow& m_lw = *frc::LiveWindow::GetInstance();
 	Elevator elevator{};
 	Drivebase drivebase{};
-	Gyroscope gyroscope{};
+	Gyroscope gyroscope{&elevator};
 //	Limelight limelight{};
-	Intake intake{};
+//	Intake intake{};
 
 	OI oi{};
 
@@ -28,7 +28,7 @@ class Robot: public frc::TimedRobot {
 	JoystickElevatorCommand joystickElevator{&elevator, &oi};
 	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &gyroscope, &oi};
 //	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
-	PneumaticGripperCommand pneumaticGripperCommand{&intake, &oi};
+//	PneumaticGripperCommand pneumaticGripperCommand{&intake, &oi};
 
 	std::list<CommandBase*> commandQueue;
 	std::list<CommandBase*>::iterator commandQueueIterator;
@@ -62,12 +62,11 @@ public:
 		processCommand(*commandQueueIterator);
 	}
 
-	std::list<CommandBase*> currentlyExecuting{};
-
 	void TeleopInit() override {
 		turn__DegreesCommand.init();
 		arcadeDrive.init();
 		joystickElevator.init();
+		//aimToTargetCommand.init();
 		//pneumaticGripperCommand.init();
 	}
 

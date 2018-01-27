@@ -28,8 +28,12 @@ void Turn__DegreesCommand::init() {
 }
 
 void Turn__DegreesCommand::update() {
+	//gyroscope->kP = gyroscope->preferences->GetDouble("limelightKp", -.03);
+	//gyroscope->kI = gyroscope->preferences->GetDouble("limelightKi", 0);
+	//gyroscope->kD = gyroscope->preferences->GetDouble("limelightKd", 0);
+
 	if(!pidController.IsEnabled() && !turnFinished){
-		pidController.SetSetpoint(kTurnRadians + gyroscope->getAngleX());
+		pidController.SetSetpoint(gyroscope->getAngleX() + kTurnDegrees);
 		pidController.SetAbsoluteTolerance(kAcceptableError);
 		pidController.Enable();
 	}

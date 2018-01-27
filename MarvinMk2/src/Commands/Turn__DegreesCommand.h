@@ -21,7 +21,7 @@ class Turn__DegreesCommand : CommandBase {
 	Gyroscope* gyroscope;
 	OI* oi;
 
-	double kTurnRadians{PI/2};
+	double kTurnDegrees{90};
 	double kAcceptableError{0.01};
 	bool turnFinished{false};
 

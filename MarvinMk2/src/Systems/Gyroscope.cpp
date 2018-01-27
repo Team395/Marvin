@@ -5,11 +5,11 @@
  *      Author: JARVIS
  */
 #include <cassert>
+#include <iostream>
 #include "Gyroscope.h"
 #include <Libraries/GyroMap.h>
 
-Gyroscope::Gyroscope() : SystemBase("gyroscope"){
-	// TODO Auto-generated constructor stub
+Gyroscope::Gyroscope(Elevator* elevator) : SystemBase("Gyroscope"), imu(getGyroTalon(elevator)){
 
 }
 
@@ -22,9 +22,8 @@ PigeonIMU* Gyroscope::getIMU() {
 }
 
 double Gyroscope::getAngleX() {
-	double *returnArray{nullptr};
+	double* returnArray = new double[3];
 	imu.GetAccumGyro(returnArray);
-	assert(returnArray && "Gyro not returning angles properly");
 	return returnArray[gyroMap::GyroIndex::kXIndex];
 }
 
@@ -35,4 +34,8 @@ frc::PIDSourceType Gyroscope::GetPIDSourceType() {
 double Gyroscope::PIDGet() {
 	//Pretty sure its in degrees
 	return getAngleX();
+}
+
+WPI_TalonSRX* Gyroscope::getGyroTalon(Elevator* elevator){
+	return &(elevator->winchController);
 }
