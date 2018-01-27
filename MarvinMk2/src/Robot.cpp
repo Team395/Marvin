@@ -68,7 +68,7 @@ public:
 		turn__DegreesCommand.init();
 		arcadeDrive.init();
 		joystickElevator.init();
-		pneumaticGripperCommand.init();
+		//pneumaticGripperCommand.init();
 	}
 
 	void TeleopPeriodic() override {
@@ -91,7 +91,7 @@ public:
 		}
 */
 		joystickElevator.update();
-		pneumaticGripperCommand.update();
+		//pneumaticGripperCommand.update();
 
 		SmartDashboard::PutNumber("IMU", gyroscope.getAngleX());
 		SmartDashboard::PutBoolean("topLimit", elevator.topPressed());
