@@ -21,10 +21,10 @@ PigeonIMU* Gyroscope::getIMU() {
 	return &imu;
 }
 
-double Gyroscope::getAngleX() {
+double Gyroscope::getAngleZ() {
 	double* returnArray = new double[3];
 	imu.GetAccumGyro(returnArray);
-	return returnArray[gyroMap::GyroIndex::kXIndex];
+	return returnArray[gyroMap::GyroIndex::kZIndex];
 }
 
 frc::PIDSourceType Gyroscope::GetPIDSourceType() {
@@ -33,7 +33,7 @@ frc::PIDSourceType Gyroscope::GetPIDSourceType() {
 
 double Gyroscope::PIDGet() {
 	//Pretty sure its in degrees
-	return getAngleX();
+	return getAngleZ();
 }
 
 WPI_TalonSRX* Gyroscope::getGyroTalon(Elevator* elevator){

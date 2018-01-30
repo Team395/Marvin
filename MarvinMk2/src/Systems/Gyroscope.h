@@ -36,7 +36,7 @@ public:
 	Gyroscope(Elevator* elevator);
 	virtual ~Gyroscope();
 
-	double getAngleX();
+	double getAngleZ();
 
 	frc::PIDSourceType GetPIDSourceType();
 	double PIDGet();

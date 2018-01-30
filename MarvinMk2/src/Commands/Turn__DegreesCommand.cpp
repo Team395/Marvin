@@ -34,7 +34,7 @@ void Turn__DegreesCommand::update() {
 	frc::SmartDashboard::PutData("PID Controller", &pidController);
 
 	if(!pidController.IsEnabled() && !turnFinished){
-		pidController.SetSetpoint(gyroscope->getAngleX() + kTurnDegrees);
+		pidController.SetSetpoint(gyroscope->getAngleZ() + kTurnDegrees);
 		pidController.SetAbsoluteTolerance(kAcceptableError);
 		pidController.Enable();
 	}
@@ -46,7 +46,7 @@ void Turn__DegreesCommand::update() {
 
 	frc::SmartDashboard::PutData("PIDController", &pidController);
 	frc::SmartDashboard::PutBoolean("Finished", pidController.OnTarget());
-	frc::SmartDashboard::PutNumber("XAngle", gyroscope->getAngleX());
+	frc::SmartDashboard::PutNumber("XAngle", gyroscope->getAngleZ());
 }
 
 void Turn__DegreesCommand::finish() {

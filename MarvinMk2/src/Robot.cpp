@@ -93,7 +93,6 @@ public:
 		joystickElevator.update();
 		pneumaticGripperCommand.update();
 
-		SmartDashboard::PutNumber("IMU", gyroscope.getAngleX());
 		SmartDashboard::PutNumber("Elevator Throttle", oi.getElevatorThrottle());
 		SmartDashboard::PutBoolean("Claw Position", oi.getIntakeThrottle());
 		SmartDashboard::PutBoolean("topLimit", elevator.topPressed());
