@@ -31,6 +31,7 @@ void Turn__DegreesCommand::update() {
 	//gyroscope->kP = gyroscope->preferences->GetDouble("limelightKp", -.03);
 	//gyroscope->kI = gyroscope->preferences->GetDouble("limelightKi", 0);
 	//gyroscope->kD = gyroscope->preferences->GetDouble("limelightKd", 0);
+	frc::SmartDashboard::PutData("PID Controller", &pidController);
 
 	if(!pidController.IsEnabled() && !turnFinished){
 		pidController.SetSetpoint(gyroscope->getAngleX() + kTurnDegrees);

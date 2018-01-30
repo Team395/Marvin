@@ -10,7 +10,7 @@
 
 namespace gyroMap {
 	enum GyroIndex {
-		kXIndex = 0,
+		kXIndex = 2,
 		kYIndex,
 		kZIndex
 	};

@@ -39,10 +39,10 @@ double OI::getElevatorThrottle(){
 }
 
 double OI::getIntakeThrottle(){
-	if(xboxController.GetRawButton(OIMap::kIntakeIn) && xboxController.GetRawButton(OIMap::kIntakeOut)){
+	/*if(xboxController.GetRawButton(OIMap::kIntakeIn) && xboxController.GetRawButton(OIMap::kIntakeOut)){
 		return 0;
 	}
-	else if(xboxController.GetRawButton(OIMap::kIntakeIn)){
+	else */if(xboxController.GetRawButton(OIMap::kIntakeIn)){
 		return 1;
 	}
 	else if(xboxController.GetRawButton(OIMap::kIntakeOut)){
