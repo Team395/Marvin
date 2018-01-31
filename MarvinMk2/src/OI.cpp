@@ -14,16 +14,16 @@ OI::OI(){
 
 }
 
-double OI::getDriveY(){
-	return driveStick.GetY();
+double OI::getDriveLeft(){
+	return driveStickLeft.GetY();
 }
 
-double OI::getDriveZ(){
-	return driveStick.GetZ();
+double OI::getDriveRight(){
+	return driveStickRight.GetY();
 }
 
 bool OI::getTurnButton(){
-	return driveStick.GetRawButton(OIMap::kTurnButton);
+	return driveStickLeft.GetRawButton(OIMap::kTurnButton);
 }
 
 double OI::getElevatorThrottle(){

@@ -32,6 +32,7 @@ public:
 	Drivebase();
 
 	void ArcadeDrive(double, double);
+	void tankDrive(double, double);
 	void PIDWrite(double);
 	void setMinimumPidOutput(double);
 

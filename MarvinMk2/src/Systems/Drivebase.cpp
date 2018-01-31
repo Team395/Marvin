@@ -23,6 +23,10 @@ void Drivebase::ArcadeDrive(double move, double turn){
 	differentialDrive.ArcadeDrive(move, turn);
 }
 
+void Drivebase::tankDrive(double left, double right){
+	differentialDrive.TankDrive(left, right);
+}
+
 void Drivebase::PIDWrite(double output){
 	if(output < 0 && output > -minimumPidOutput) { output = output - minimumPidOutput; }
 	else if (output > 0 && output < minimumPidOutput){ output = output + minimumPidOutput; }

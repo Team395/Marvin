@@ -25,7 +25,7 @@ class Robot: public frc::TimedRobot {
 
 	OI oi{};
 
-	ArcadeDriveCommand arcadeDrive{&drivebase, &oi};
+	TankDriveCommand tankDrive{&drivebase, &oi};
 	JoystickElevatorCommand joystickElevator{&elevator, &oi};
 	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &gyroscope, &oi};
 //	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
@@ -65,7 +65,7 @@ public:
 
 	void TeleopInit() override {
 //		turn__DegreesCommand.init();
-		arcadeDrive.init();
+		tankDrive.init();
 		joystickElevator.init();
 //		aimToTargetCommand.init();
 		pneumaticGripperCommand.init();
@@ -78,7 +78,7 @@ public:
 		else{
 			turn__DegreesCommand.disable();
 			turn__DegreesCommand.startNewturn();
-			arcadeDrive.update();
+			tankDrive.update();
 		}
 
 /*		if(!oi.getTurnButton()){

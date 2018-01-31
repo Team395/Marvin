@@ -10,10 +10,10 @@
 
 #include <Commands/CommandBase.h>
 #include <Commands/JoystickElevatorCommand.h>
-#include <Commands/ArcadeDriveCommand.h>
 #include <Commands/Turn__DegreesCommand.h>
 #include <Commands/TestCommand.h>
 #include <Commands/AimToTargetCommand.h>
 #include <Commands/PneumaticGripperCommand.h>
+#include <Commands/TankDriveCommand.h>
 
 #endif /* SRC_COMMANDS_COMMANDS_H_ */
