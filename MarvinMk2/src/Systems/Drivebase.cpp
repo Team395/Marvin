@@ -12,25 +12,23 @@
 #include "Drivebase.h"
 
 Drivebase::Drivebase() : SystemBase("drivebase"){
-
+	leftSlave.Follow(leftMaster);
+	rightSlave.Follow(rightMaster);
 }
 
 Drivebase::~Drivebase() {
 	// TODO Auto-generated destructor stub
 }
 
-void Drivebase::ArcadeDrive(double move, double turn){
-	differentialDrive.ArcadeDrive(move, turn);
-}
-
 void Drivebase::tankDrive(double left, double right){
-	differentialDrive.TankDrive(left, right);
+	leftMaster.Set(ControlMode::PercentOutput, left);
+	rightMaster.Set(ControlMode::PercentOutput, right);
 }
 
 void Drivebase::PIDWrite(double output){
-	if(output < 0 && output > -minimumPidOutput) { output = output - minimumPidOutput; }
-	else if (output > 0 && output < minimumPidOutput){ output = output + minimumPidOutput; }
-	ArcadeDrive(0, output);
+	if(output < 0 && output > -minimumPidOutput) { output = -minimumPidOutput; }
+	else if (output > 0 && output < minimumPidOutput){ output = minimumPidOutput; }
+	tankDrive(output, -output);
 }
 
 void Drivebase::setMinimumPidOutput(double minimum){
