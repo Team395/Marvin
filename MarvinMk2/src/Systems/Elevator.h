@@ -18,7 +18,7 @@ class Gyroscope;
 
 class Elevator : SystemBase {
 	friend Gyroscope;
-	WPI_TalonSRX winchController{CANMap::kWinch};
+	WPI_TalonSRX winchController{ElevatorMap::kWinch};
 	frc::DigitalInput topLimit{ElevatorMap::kLimitTop};
 	frc::DigitalInput bottomLimit{ElevatorMap::kLimitBottom};
 

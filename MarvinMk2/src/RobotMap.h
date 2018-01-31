@@ -11,7 +11,7 @@ namespace OIMap{
 	constexpr int kDriveStickLeft = 0;
 	constexpr int kDriveStickRight = 1;
 	constexpr int kXboxController = 2;
-	constexpr int kTurnButton = 1;
+	constexpr int kTurnButton = 1; //On left stick
 	constexpr int kElevatorUp = 3;
 	constexpr int kElevatorDown = 2;
 	constexpr int kIntakeIn = 6;
@@ -20,10 +20,10 @@ namespace OIMap{
 };
 
 namespace DrivebaseMap{
-	constexpr int kLeft1 = 2;
-	constexpr int kLeft2 = 3;
-	constexpr int kRight1 = 0;
-	constexpr int kRight2 = 1;
+	constexpr int kLeftMaster = 1;
+	constexpr int kLeftSlave = 2;
+	constexpr int kRightMaster = 3;
+	constexpr int kRightSlave = 4;
 };
 
 namespace ElevatorMap{
@@ -32,6 +32,7 @@ namespace ElevatorMap{
 	constexpr int kLimitBottom = 1;
 	constexpr int kTopInverted = 0;
 	constexpr int kBottomInverted = 0;
+	constexpr int kWinch = 0;
 };
 
 namespace IntakeMap{
@@ -45,6 +46,5 @@ namespace IntakeMap{
 }
 
 namespace CANMap{
-	constexpr int kWinch = 0;
 	constexpr int kPigeon = 0;
 }

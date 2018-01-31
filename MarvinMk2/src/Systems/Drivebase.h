@@ -10,22 +10,17 @@
 
 #include <SpeedControllerGroup.h>
 #include <Drive/DifferentialDrive.h>
-#include <Talon.h>
+#include <ctre/Phoenix.h>
 #include <PIDOutput.h>
 
 #include <Systems/SystemBase.h>
 #include <RobotMap.h>
 
 class Drivebase : SystemBase, public frc::PIDOutput {
-	frc::Talon left1{DrivebaseMap::kLeft1};
-	frc::Talon left2{DrivebaseMap::kLeft2};
-	frc::Talon right1{DrivebaseMap::kRight1};
-	frc::Talon right2{DrivebaseMap::kRight2};
-
-	frc::SpeedControllerGroup leftSpeedControllers{left1, left2};
-	frc::SpeedControllerGroup rightSpeedControllers{right1, right2};
-
-	frc::DifferentialDrive differentialDrive{leftSpeedControllers, rightSpeedControllers};
+	WPI_TalonSRX leftMaster{DrivebaseMap::kLeftMaster};
+	WPI_TalonSRX leftSlave{DrivebaseMap::kLeftSlave};
+	WPI_TalonSRX rightMaster{DrivebaseMap::kRightMaster};
+	WPI_TalonSRX rightSlave{DrivebaseMap::kRightSlave};
 
 	double minimumPidOutput{0.05};
 public:
