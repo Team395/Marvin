@@ -11,16 +11,18 @@
 #include <RobotMap.h>
 
 class OI {
-	frc::Joystick driveStick{OIMap::kDriveStick};
+	frc::Joystick driveStickLeft{OIMap::kDriveStickLeft};
+	frc::Joystick driveStickRight{OIMap::kDriveStickRight};
 	frc::XboxController xboxController{OIMap::kXboxController};
 
 public:
 	OI();
-	double getDriveY();
-	double getDriveZ();
+	double getDriveLeft();
+	double getDriveRight();
 
 	double getElevatorThrottle();
 	double getIntakeThrottle();
 
+	bool getClawDisable();
 	bool getTurnButton();
 };

@@ -18,15 +18,18 @@ class Robot: public frc::TimedRobot {
 	frc::LiveWindow& m_lw = *frc::LiveWindow::GetInstance();
 	Elevator elevator{};
 	Drivebase drivebase{};
-	Gyroscope gyroscope{};
-	Limelight limelight{};
+	Gyroscope gyroscope{&elevator};
+//	Limelight limelight{};
+	Intake intake{};
+	PneumaticSystem pneumaticSystem{};
 
 	OI oi{};
 
-	ArcadeDriveCommand arcadeDrive{&drivebase, &oi};
+	TankDriveCommand tankDrive{&drivebase, &oi};
 	JoystickElevatorCommand joystickElevator{&elevator, &oi};
 	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &gyroscope, &oi};
-	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
+//	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
+	PneumaticGripperCommand pneumaticGripperCommand{&intake, &oi};
 
 	std::list<CommandBase*> commandQueue;
 	std::list<CommandBase*>::iterator commandQueueIterator;
@@ -46,7 +49,7 @@ class Robot: public frc::TimedRobot {
 public:
 
 	void RobotInit() {
-		limelight.setLedMode(limelightMap::LedMode::kOn);
+//		limelight.setLedMode(limelightMap::LedMode::kOn);
 	}
 
 	void AutonomousInit() override {
@@ -60,23 +63,25 @@ public:
 		processCommand(*commandQueueIterator);
 	}
 
-	std::list<CommandBase*> currentlyExecuting{};
-
 	void TeleopInit() override {
-
+//		turn__DegreesCommand.init();
+		tankDrive.init();
+		joystickElevator.init();
+//		aimToTargetCommand.init();
+		pneumaticGripperCommand.init();
 	}
 
 	void TeleopPeriodic() override {
-		/*if(!oi.GetTurnButton()){
-			turn__DegreesCommand.disable();
-			turn__DegreesCommand.startNewturn();
-			arcadeDrive.update();
+		if(oi.getTurnButton()){
+			turn__DegreesCommand.update();
 		}
 		else{
-			turn__DegreesCommand.update();
-		}*/
+			turn__DegreesCommand.disable();
+			turn__DegreesCommand.startNewturn();
+			tankDrive.update();
+		}
 
-		if(!oi.getTurnButton()){
+/*		if(!oi.getTurnButton()){
 			aimToTargetCommand.disable();
 			aimToTargetCommand.startNewTurn();
 			arcadeDrive.update();
@@ -84,14 +89,17 @@ public:
 		else{
 			aimToTargetCommand.update();
 		}
-
+*/
 		joystickElevator.update();
-//		SmartDashboard::PutData("IMU", gyroscope.getIMU());
+		pneumaticGripperCommand.update();
+
+		SmartDashboard::PutNumber("Elevator Throttle", oi.getElevatorThrottle());
+		SmartDashboard::PutBoolean("Claw Position", oi.getIntakeThrottle());
 		SmartDashboard::PutBoolean("topLimit", elevator.topPressed());
 		SmartDashboard::PutBoolean("bottomLimit", elevator.bottomPressed());
 
-		limelight.refreshNetworkTableValues();
-		limelight.printToSmartDashboard();
+//		limelight.refreshNetworkTableValues();
+//		limelight.printToSmartDashboard();
 	}
 
 	void TestPeriodic() override {

@@ -12,10 +12,14 @@
 
 #include <RobotMap.h>
 #include <Systems/SystemBase.h>
+#include <Systems/Gyroscope.h>
+
+class Gyroscope;
 
 using ControlMode = ctre::phoenix::motorcontrol::ControlMode;
 
 class Elevator : SystemBase {
+	friend Gyroscope;
 	WPI_TalonSRX winchController{CANMap::kWinch};
 	frc::DigitalInput topLimit{ElevatorMap::kLimitTop};
 	frc::DigitalInput bottomLimit{ElevatorMap::kLimitBottom};

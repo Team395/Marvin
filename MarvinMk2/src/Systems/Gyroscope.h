@@ -10,24 +10,33 @@
 #include <ctre/phoenix/Sensors/PigeonIMU.h>
 #include <PIDSource.h>
 #include <Systems/SystemBase.h>
+#include <Systems/Elevator.h>
+
 #include <RobotMap.h>
+#include <Preferences.h>
+#include <ctre/Phoenix.h>
 
 using PigeonIMU = ctre::phoenix::sensors::PigeonIMU;
 
-class Gyroscope : SystemBase, public frc::PIDSource {
-	PigeonIMU imu{CANMap::kPigeon};
+class Elevator;
 
+class Gyroscope : SystemBase, public frc::PIDSource {
+	friend Elevator;
+	PigeonIMU imu;
+	WPI_TalonSRX* getGyroTalon(Elevator*);
 public:
 	//PID Gains for Turn
 	//TODO: retune loop for degrees
-	const double kP{2};
-	const double kI{0.00};
-	const double kD{0.1};
+	double kP{-0.03};
+	double kI{0.00};
+	double kD{0};
 
-	Gyroscope();
+//	frc::Preferences* preferences = Preferences::GetInstance();
+
+	Gyroscope(Elevator* elevator);
 	virtual ~Gyroscope();
 
-	double getAngleX();
+	double getAngleZ();
 
 	frc::PIDSourceType GetPIDSourceType();
 	double PIDGet();

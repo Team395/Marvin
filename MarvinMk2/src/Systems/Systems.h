@@ -14,5 +14,6 @@
 #include <Systems/Gyroscope.h>
 #include <Systems/Limelight.h>
 #include <Systems/PneumaticSystem.h>
+#include <Systems/Intake.h>
 
 #endif /* SRC_SYSTEMS_SYSTEMS_H_ */

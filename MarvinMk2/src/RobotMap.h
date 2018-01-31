@@ -8,48 +8,43 @@
 #pragma once
 
 namespace OIMap{
-	const int kDriveStick = 0;
-	const int kXboxController = 1;
-	const int kTurnButton = 1;
-	const int kElevatorUp = 3;
-	const int kElevatorDown = 2;
-	const int kIntakeIn = 6;
-	const int kIntakeOut = 5;
+	constexpr int kDriveStickLeft = 0;
+	constexpr int kDriveStickRight = 1;
+	constexpr int kXboxController = 2;
+	constexpr int kTurnButton = 1;
+	constexpr int kElevatorUp = 3;
+	constexpr int kElevatorDown = 2;
+	constexpr int kIntakeIn = 6;
+	constexpr int kIntakeOut = 5;
+	constexpr int kClawRelease = 1;
 };
 
 namespace DrivebaseMap{
-	const int kLeft1 = 2;
-	const int kLeft2 = 3;
-	const int kRight1 = 0;
-	const int kRight2 = 1;
+	constexpr int kLeft1 = 2;
+	constexpr int kLeft2 = 3;
+	constexpr int kRight1 = 0;
+	constexpr int kRight2 = 1;
 };
 
 namespace ElevatorMap{
-	const int kWinchInverted = 0;
-	const int kLimitTop = 0;
-	const int kLimitBottom = 1;
-	const int kTopInverted = 0;
-	const int kBottomInverted = 0;
+	constexpr int kWinchInverted = 0;
+	constexpr int kLimitTop = 0;
+	constexpr int kLimitBottom = 1;
+	constexpr int kTopInverted = 0;
+	constexpr int kBottomInverted = 0;
 };
 
-namespace CANMap{
-	const int kWinch = 0;
-	const int kPigeon = 1;
+namespace IntakeMap{
+	constexpr int kSolenoidOpen = 0;
+	constexpr int kSolenoidClose = 1;
+	/*constexpr int kIntakeLeft = 4;
+	constexpr bool kIntakeLeftInverted = false;
+	constexpr int kIntakeRight = 5;
+	constexpr bool kIntakeRightInverted = false;
+	*/
 }
 
-/**
- * The RobotMap is a mapping from the ports sensors and actuators are wired into
- * to a variable name. This provides flexibility changing wiring, makes checking
- * the wiring easier and significantly reduces the number of magic numbers
- * floating around.
- */
-
-// For example to map the left and right motors, you could define the
-// following variables to use with your drivetrain subsystem.
-// constexpr int kLeftMotor = 1;
-// constexpr int kRightMotor = 2;
-
-// If you are using multiple modules, make sure to define both the port
-// number and the module. For example you with a rangefinder:
-// constexpr int kRangeFinderPort = 1;
-// constexpr int kRangeFinderModule = 1;
+namespace CANMap{
+	constexpr int kWinch = 0;
+	constexpr int kPigeon = 0;
+}

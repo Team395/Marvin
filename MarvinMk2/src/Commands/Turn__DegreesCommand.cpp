@@ -28,8 +28,13 @@ void Turn__DegreesCommand::init() {
 }
 
 void Turn__DegreesCommand::update() {
+	//gyroscope->kP = gyroscope->preferences->GetDouble("limelightKp", -.03);
+	//gyroscope->kI = gyroscope->preferences->GetDouble("limelightKi", 0);
+	//gyroscope->kD = gyroscope->preferences->GetDouble("limelightKd", 0);
+	frc::SmartDashboard::PutData("PID Controller", &pidController);
+
 	if(!pidController.IsEnabled() && !turnFinished){
-		pidController.SetSetpoint(kTurnRadians + gyroscope->getAngleX());
+		pidController.SetSetpoint(gyroscope->getAngleZ() + kTurnDegrees);
 		pidController.SetAbsoluteTolerance(kAcceptableError);
 		pidController.Enable();
 	}
@@ -41,7 +46,7 @@ void Turn__DegreesCommand::update() {
 
 	frc::SmartDashboard::PutData("PIDController", &pidController);
 	frc::SmartDashboard::PutBoolean("Finished", pidController.OnTarget());
-	frc::SmartDashboard::PutNumber("XAngle", gyroscope->getAngleX());
+	frc::SmartDashboard::PutNumber("XAngle", gyroscope->getAngleZ());
 }
 
 void Turn__DegreesCommand::finish() {
