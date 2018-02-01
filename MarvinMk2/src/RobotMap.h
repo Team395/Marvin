@@ -8,15 +8,24 @@
 #pragma once
 
 namespace OIMap{
-	constexpr int kDriveStickLeft = 0;
-	constexpr int kDriveStickRight = 1;
-	constexpr int kXboxController = 2;
-	constexpr int kTurnButton = 1; //On left stick
-	constexpr int kElevatorUp = 3;
-	constexpr int kElevatorDown = 2;
-	constexpr int kIntakeIn = 6;
-	constexpr int kIntakeOut = 5;
-	constexpr int kClawRelease = 1;
+	namespace Xbox{
+		constexpr int kXboxController = 2;
+		constexpr int kElevatorUp = 3;
+		constexpr int kElevatorDown = 2;
+		constexpr int kIntakeIn = 6;
+		constexpr int kIntakeOut = 5;
+		constexpr int kClawRelease = 1;
+	}
+
+	namespace LeftStick{
+		constexpr int kDriveStickLeft = 0;
+		constexpr int kTurnButton = 1; //On left stick
+	}
+
+	namespace RightStick{
+		constexpr int kDriveStickRight = 1;
+		constexpr int kShiftButton = 1;
+	}
 };
 
 namespace DrivebaseMap{
@@ -24,6 +33,8 @@ namespace DrivebaseMap{
 	constexpr int kLeftSlave = 2;
 	constexpr int kRightMaster = 3;
 	constexpr int kRightSlave = 4;
+	constexpr int kLowGear = 3; //Should be extended
+	constexpr int kHighGear = 4; //Should be retracted
 };
 
 namespace ElevatorMap{

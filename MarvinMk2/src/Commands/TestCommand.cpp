@@ -11,12 +11,11 @@
 #include "TestCommand.h"
 
 TestCommand::TestCommand(double seconds) : CommandBase("TestCommand"), seconds(seconds) {
-	// TODO Auto-generated constructor stub
 
 }
 
 TestCommand::~TestCommand(){
-	// TODO Auto-generated destructor stub
+
 }
 
 void TestCommand::init(){

@@ -11,9 +11,9 @@
 #include <RobotMap.h>
 
 class OI {
-	frc::Joystick driveStickLeft{OIMap::kDriveStickLeft};
-	frc::Joystick driveStickRight{OIMap::kDriveStickRight};
-	frc::XboxController xboxController{OIMap::kXboxController};
+	frc::Joystick driveStickLeft{OIMap::LeftStick::kDriveStickLeft};
+	frc::Joystick driveStickRight{OIMap::RightStick::kDriveStickRight};
+	frc::XboxController xboxController{OIMap::Xbox::kXboxController};
 
 public:
 	OI();
@@ -25,4 +25,5 @@ public:
 
 	bool getClawDisable();
 	bool getTurnButton();
+	bool getShiftButton();
 };

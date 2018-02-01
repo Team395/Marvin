@@ -12,7 +12,7 @@ Elevator::Elevator() : SystemBase("elevator") {
 }
 
 Elevator::~Elevator() {
-	// TODO Auto-generated destructor stub
+
 }
 
 bool Elevator::topPressed(){

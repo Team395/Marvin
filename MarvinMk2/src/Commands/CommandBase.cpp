@@ -13,7 +13,7 @@ CommandBase::CommandBase(std::string name) : name{name} {
 }
 
 CommandBase::~CommandBase() {
-	// TODO Auto-generated destructor stub
+
 }
 
 void CommandBase::init(){

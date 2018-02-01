@@ -13,11 +13,11 @@ TankDriveCommand::TankDriveCommand(Drivebase* drivebase, OI* oi) :
 CommandBase("ArcadeDriveCommand"),
 drivebase(drivebase),
 oi(oi) {
-	// TODO Auto-generated constructor stub
+
 }
 
 TankDriveCommand::~TankDriveCommand() {
-	// TODO Auto-generated destructor stub
+
 }
 
 void TankDriveCommand::init() {
@@ -25,9 +25,17 @@ void TankDriveCommand::init() {
 }
 
 void TankDriveCommand::update() {
+	bool shift = oi->getShiftButton();
+	//!= just happens to implement the truth table we want
+	//High(true) x Shift(true) = Low(false)
+	//High(true) x Don't Shift(false) = High(true)
+	//Low(false) x Shift(true) = high(true)
+	//Low(false) x Don't Shift(false) = Low(false)
+
+	drivebase->shiftHighGear(shift != drivebase->isHighGear());
+
 	double left = oi->getDriveLeft();
 	double right = oi->getDriveRight();
-
 	drivebase->tankDrive(left, right);
 }
 

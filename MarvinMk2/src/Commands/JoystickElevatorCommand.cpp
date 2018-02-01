@@ -14,11 +14,11 @@ JoystickElevatorCommand::JoystickElevatorCommand(Elevator* elevator, OI* oi) :
 CommandBase("JoystickElevatorCommand"),
 elevator(elevator),
 oi(oi) {
-	// TODO Auto-generated constructor stub
+
 }
 
 JoystickElevatorCommand::~JoystickElevatorCommand() {
-	// TODO Auto-generated destructor stub
+
 }
 
 void JoystickElevatorCommand::init() {

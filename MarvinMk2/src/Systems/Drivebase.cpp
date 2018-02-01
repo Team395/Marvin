@@ -14,10 +14,13 @@
 Drivebase::Drivebase() : SystemBase("drivebase"){
 	leftSlave.Follow(leftMaster);
 	rightSlave.Follow(rightMaster);
+	highGearSolenoid.Set(true);
+	lowGearSolenoid.Set(false);
+	highGear = true;
 }
 
 Drivebase::~Drivebase() {
-	// TODO Auto-generated destructor stub
+
 }
 
 void Drivebase::tankDrive(double left, double right){
@@ -33,4 +36,21 @@ void Drivebase::PIDWrite(double output){
 
 void Drivebase::setMinimumPidOutput(double minimum){
 	minimumPidOutput = minimum;
+}
+
+void Drivebase::shiftHighGear(bool highGear){
+	if(highGear && !highGear){
+		highGearSolenoid.Set(true);
+		lowGearSolenoid.Set(false);
+		highGear = true;
+	}
+	else if(!highGear && highGear){
+		highGearSolenoid.Set(false);
+		lowGearSolenoid.Set(true);
+		highGear = false;
+	}
+}
+
+bool Drivebase::isHighGear(){
+	return highGear;
 }

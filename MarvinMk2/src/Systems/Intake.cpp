@@ -8,12 +8,11 @@
 #include "Intake.h"
 
 Intake::Intake() : SystemBase("Intake"){
-	// TODO Auto-generated constructor stub
 
 }
 
 Intake::~Intake() {
-	// TODO Auto-generated destructor stub
+
 }
 
 /*

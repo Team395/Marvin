@@ -14,7 +14,7 @@ Gyroscope::Gyroscope(Elevator* elevator) : SystemBase("Gyroscope"), imu(getGyroT
 }
 
 Gyroscope::~Gyroscope() {
-	// TODO Auto-generated destructor stub
+
 }
 
 PigeonIMU* Gyroscope::getIMU() {

@@ -13,7 +13,7 @@ PneumaticGripperCommand::PneumaticGripperCommand(Intake* intake, OI* oi) : Comma
 }
 
 PneumaticGripperCommand::~PneumaticGripperCommand() {
-	// TODO Auto-generated destructor stub
+
 }
 
 void PneumaticGripperCommand::init(){
