@@ -28,7 +28,7 @@ void TankDriveCommand::update() {
 	double left = oi->getDriveLeft();
 	double right = oi->getDriveRight();
 
-	drivebase->tankDrive(left, right);
+	drivebase->tankDrive(left*left, right*right);
 }
 
 void TankDriveCommand::finish() {
