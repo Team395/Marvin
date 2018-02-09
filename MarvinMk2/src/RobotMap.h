@@ -56,6 +56,9 @@ namespace IntakeMap{
 	*/
 }
 
-namespace CANMap{
-	constexpr int kPigeon = 0;
+//Maps out gadgeteer ports on talons
+namespace TalonMap{
+	constexpr int kLeftEncoder = 1;
+	constexpr int kRightEncoder = 3;
+	constexpr int kPigeon = 2;
 }
