@@ -18,7 +18,7 @@ class Robot: public frc::TimedRobot {
 	frc::LiveWindow& m_lw = *frc::LiveWindow::GetInstance();
 	Elevator elevator{};
 	Drivebase drivebase{};
-//	Gyroscope gyroscope{&elevator};
+//	DrivebaseSensors drivebaseSensors{&elevator};
 //	Limelight limelight{};
 //	Intake intake{};
 	PneumaticSystem pneumaticSystem{};
@@ -27,7 +27,7 @@ class Robot: public frc::TimedRobot {
 
 	TankDriveCommand tankDrive{&drivebase, &oi};
 //	JoystickElevatorCommand joystickElevator{&elevator, &oi};
-//	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &gyroscope, &oi};
+//	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &drivebaseSensors, &oi};
 //	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
 //	PneumaticGripperCommand pneumaticGripperCommand{&intake, &oi};
 

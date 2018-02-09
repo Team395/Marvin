@@ -11,13 +11,13 @@
 #include <DigitalInput.h>
 
 #include <RobotMap.h>
+#include <Systems/DrivebaseSensors.h>
 #include <Systems/SystemBase.h>
-#include <Systems/Gyroscope.h>
 
-class Gyroscope;
+class DrivebaseSensors;
 
 class Elevator : SystemBase {
-	friend Gyroscope;
+	friend DrivebaseSensors;
 	WPI_TalonSRX winchController{ElevatorMap::kWinch};
 	frc::DigitalInput topLimit{ElevatorMap::kLimitTop};
 	frc::DigitalInput bottomLimit{ElevatorMap::kLimitBottom};

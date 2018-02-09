@@ -11,10 +11,10 @@
 
 #include "Turn__DegreesCommand.h"
 
-Turn__DegreesCommand::Turn__DegreesCommand(Drivebase* drivebase, Gyroscope* gyroscope, OI* oi)
+Turn__DegreesCommand::Turn__DegreesCommand(Drivebase* drivebase, DrivebaseSensors* drivebaseSensors, OI* oi)
 : CommandBase("Turn_DegreesCommand"),
-  pidController{gyroscope->kP, gyroscope->kI, gyroscope->kD, gyroscope, drivebase},
-  gyroscope{gyroscope},
+  pidController{drivebaseSensors->kP, drivebaseSensors->kI, drivebaseSensors->kD, drivebaseSensors, drivebase},
+  drivebaseSensors{drivebaseSensors},
   oi{oi} {
 
 }
@@ -34,7 +34,7 @@ void Turn__DegreesCommand::update() {
 	frc::SmartDashboard::PutData("PID Controller", &pidController);
 
 	if(!pidController.IsEnabled() && !turnFinished){
-		pidController.SetSetpoint(gyroscope->getAngleZ() + kTurnDegrees);
+		pidController.SetSetpoint(drivebaseSensors->getAngleZ() + kTurnDegrees);
 		pidController.SetAbsoluteTolerance(kAcceptableError);
 		pidController.Enable();
 	}
@@ -46,7 +46,7 @@ void Turn__DegreesCommand::update() {
 
 	frc::SmartDashboard::PutData("PIDController", &pidController);
 	frc::SmartDashboard::PutBoolean("Finished", pidController.OnTarget());
-	frc::SmartDashboard::PutNumber("XAngle", gyroscope->getAngleZ());
+	frc::SmartDashboard::PutNumber("XAngle", drivebaseSensors->getAngleZ());
 }
 
 void Turn__DegreesCommand::finish() {
