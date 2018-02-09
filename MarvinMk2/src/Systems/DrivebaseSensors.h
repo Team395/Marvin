@@ -7,6 +7,8 @@
 
 #ifndef SRC_SYSTEMS_DRIVEBASESENSORS_H_
 #define SRC_SYSTEMS_DRIVEBASESENSORS_H_
+
+
 #include <ctre/phoenix/Sensors/PigeonIMU.h>
 #include <PIDSource.h>
 #include <Systems/SystemBase.h>
@@ -15,15 +17,18 @@
 #include <RobotMap.h>
 #include <Preferences.h>
 #include <ctre/Phoenix.h>
+#include <Systems/Drivebase.h>
 
 using PigeonIMU = ctre::phoenix::sensors::PigeonIMU;
-
-class Elevator;
+class Drivebase;
 
 class DrivebaseSensors : SystemBase, public frc::PIDSource {
-	friend Elevator;
+	Drivebase* drivebase;
 	PigeonIMU imu;
-	WPI_TalonSRX* getGyroTalon(Elevator*);
+	//Talon encoders only exposed through encoder object, these are pointers
+	WPI_TalonSRX* leftEncoderTalon;
+	WPI_TalonSRX* rightEncoderTalon;
+
 public:
 	//PID Gains for Turn
 	//TODO: retune loop for degrees
@@ -33,15 +38,13 @@ public:
 
 //	frc::Preferences* preferences = Preferences::GetInstance();
 
-	DrivebaseSensors(Elevator* elevator);
+	DrivebaseSensors(Drivebase*);
 	virtual ~DrivebaseSensors();
-
 	double getAngleZ();
-
 	frc::PIDSourceType GetPIDSourceType();
 	double PIDGet();
 
-	PigeonIMU* getIMU();
+	WPI_TalonSRX* getTalon(Drivebase*, int);
 };
 
 #endif /* SRC_SYSTEMS_DRIVEBASESENSORS_H_ */

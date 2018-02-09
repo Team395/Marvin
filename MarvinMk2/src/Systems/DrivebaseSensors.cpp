@@ -8,17 +8,20 @@
 #include <iostream>
 #include <Libraries/GyroMap.h>
 #include <Systems/DrivebaseSensors.h>
+#include <RobotMap.h>
+#include <Systems/Drivebase.h>
 
-DrivebaseSensors::DrivebaseSensors(Elevator* elevator) : SystemBase("DrivebaseSensors"), imu(getGyroTalon(elevator)){
+DrivebaseSensors::DrivebaseSensors(Drivebase* drivebasePointer) :
+	SystemBase("DrivebaseSensors"),
+	drivebase(drivebasePointer),
+	imu(getTalon(drivebase, TalonMap::kPigeon)),
+	leftEncoderTalon{getTalon(drivebase, TalonMap::kLeftEncoder)},
+	rightEncoderTalon{getTalon(drivebase, TalonMap::kRightEncoder)} {
 
 }
 
 DrivebaseSensors::~DrivebaseSensors() {
 
-}
-
-PigeonIMU* DrivebaseSensors::getIMU() {
-	return &imu;
 }
 
 double DrivebaseSensors::getAngleZ() {
@@ -36,6 +39,6 @@ double DrivebaseSensors::PIDGet() {
 	return getAngleZ();
 }
 
-WPI_TalonSRX* DrivebaseSensors::getGyroTalon(Elevator* elevator){
-	return &(elevator->winchController);
+WPI_TalonSRX* DrivebaseSensors::getTalon(Drivebase* drivebase, int index){
+	return drivebase->talonIndex[index];
 }
