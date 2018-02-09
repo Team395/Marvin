@@ -18,18 +18,18 @@ class Robot: public frc::TimedRobot {
 	frc::LiveWindow& m_lw = *frc::LiveWindow::GetInstance();
 	Elevator elevator{};
 	Drivebase drivebase{};
-	Gyroscope gyroscope{&elevator};
+//	Gyroscope gyroscope{&elevator};
 //	Limelight limelight{};
-	Intake intake{};
+//	Intake intake{};
 	PneumaticSystem pneumaticSystem{};
 
 	OI oi{};
 
 	TankDriveCommand tankDrive{&drivebase, &oi};
-	JoystickElevatorCommand joystickElevator{&elevator, &oi};
-	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &gyroscope, &oi};
+//	JoystickElevatorCommand joystickElevator{&elevator, &oi};
+//	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &gyroscope, &oi};
 //	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
-	PneumaticGripperCommand pneumaticGripperCommand{&intake, &oi};
+//	PneumaticGripperCommand pneumaticGripperCommand{&intake, &oi};
 
 	std::list<CommandBase*> commandQueue;
 	std::list<CommandBase*>::iterator commandQueueIterator;
@@ -66,20 +66,20 @@ public:
 	void TeleopInit() override {
 //		turn__DegreesCommand.init();
 		tankDrive.init();
-		joystickElevator.init();
+//		joystickElevator.init();
 //		aimToTargetCommand.init();
-		pneumaticGripperCommand.init();
+//		pneumaticGripperCommand.init();
 	}
 
 	void TeleopPeriodic() override {
-		if(oi.getTurnButton()){
-			turn__DegreesCommand.update();
-		}
-		else{
-			turn__DegreesCommand.disable();
-			turn__DegreesCommand.startNewturn();
+//		if(oi.getTurnButton()){
+//			turn__DegreesCommand.update();
+//		}
+//		else{
+//			turn__DegreesCommand.disable();
+//			turn__DegreesCommand.startNewturn();
 			tankDrive.update();
-		}
+//		}
 
 /*		if(!oi.getTurnButton()){
 			aimToTargetCommand.disable();
@@ -90,13 +90,13 @@ public:
 			aimToTargetCommand.update();
 		}
 */
-		joystickElevator.update();
-		pneumaticGripperCommand.update();
+//		joystickElevator.update();
+		//pneumaticGripperCommand.update();
 
 		SmartDashboard::PutNumber("Elevator Throttle", oi.getElevatorThrottle());
 		SmartDashboard::PutBoolean("Claw Position", oi.getIntakeThrottle());
-		SmartDashboard::PutBoolean("topLimit", elevator.topPressed());
-		SmartDashboard::PutBoolean("bottomLimit", elevator.bottomPressed());
+		//SmartDashboard::PutBoolean("topLimit", elevator.topPressed());
+		//SmartDashboard::PutBoolean("bottomLimit", elevator.bottomPressed());
 
 //		limelight.refreshNetworkTableValues();
 //		limelight.printToSmartDashboard();

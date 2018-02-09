@@ -59,5 +59,5 @@ bool OI::getClawDisable(){
 }
 
 bool OI::getShiftButton(){
-	return driveStickRight.GetRawButton(OIMap::RightStick::kShiftButton);
+	return driveStickRight.GetRawButtonPressed(OIMap::RightStick::kShiftButton);
 }

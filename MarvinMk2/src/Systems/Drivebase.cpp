@@ -12,6 +12,8 @@
 #include "Drivebase.h"
 
 Drivebase::Drivebase() : SystemBase("drivebase"){
+	rightMaster.SetInverted(true);
+	rightSlave.SetInverted(true);
 	leftSlave.Follow(leftMaster);
 	rightSlave.Follow(rightMaster);
 	highGearSolenoid.Set(true);
@@ -38,13 +40,13 @@ void Drivebase::setMinimumPidOutput(double minimum){
 	minimumPidOutput = minimum;
 }
 
-void Drivebase::shiftHighGear(bool highGear){
-	if(highGear && !highGear){
+void Drivebase::shiftHighGear(bool gear){
+	if(gear && !highGear){
 		highGearSolenoid.Set(true);
 		lowGearSolenoid.Set(false);
 		highGear = true;
 	}
-	else if(!highGear && highGear){
+	else if(!gear && highGear){
 		highGearSolenoid.Set(false);
 		lowGearSolenoid.Set(true);
 		highGear = false;

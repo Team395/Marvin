@@ -7,7 +7,7 @@
 #include <Commands/TankDriveCommand.h>
 #include <Systems/Drivebase.h>
 #include <OI.h>
-
+#include <SmartDashboard/SmartDashboard.h>
 
 TankDriveCommand::TankDriveCommand(Drivebase* drivebase, OI* oi) :
 CommandBase("ArcadeDriveCommand"),
@@ -24,8 +24,15 @@ void TankDriveCommand::init() {
 
 }
 
+double sgn(double x){
+	return x >= 0.0 ? 1.0: -1.0;
+}
+
 void TankDriveCommand::update() {
 	bool shift = oi->getShiftButton();
+	frc::SmartDashboard::PutBoolean("shift", shift);
+	frc::SmartDashboard::PutBoolean("High gear", drivebase->isHighGear());
+frc::SmartDashboard::PutBoolean("Sent to drivebase", shift != drivebase->isHighGear());
 	//!= just happens to implement the truth table we want
 	//High(true) x Shift(true) = Low(false)
 	//High(true) x Don't Shift(false) = High(true)
@@ -36,7 +43,7 @@ void TankDriveCommand::update() {
 
 	double left = oi->getDriveLeft();
 	double right = oi->getDriveRight();
-	drivebase->tankDrive(left*left, right*right);
+	drivebase->tankDrive(sgn(left) * left*left, sgn(right) * right*right);
 }
 
 void TankDriveCommand::finish() {
