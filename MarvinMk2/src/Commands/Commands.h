@@ -15,5 +15,6 @@
 #include <Commands/AimToTargetCommand.h>
 #include <Commands/PneumaticGripperCommand.h>
 #include <Commands/TankDriveCommand.h>
+#include <Commands/TrackPositionCommand.h>
 
 #endif /* SRC_COMMANDS_COMMANDS_H_ */

@@ -29,17 +29,11 @@ double sgn(double x){
 }
 
 void TankDriveCommand::update() {
-	bool shift = oi->getShiftButton();
-	frc::SmartDashboard::PutBoolean("shift", shift);
-	frc::SmartDashboard::PutBoolean("High gear", drivebase->isHighGear());
-frc::SmartDashboard::PutBoolean("Sent to drivebase", shift != drivebase->isHighGear());
-	//!= just happens to implement the truth table we want
-	//High(true) x Shift(true) = Low(false)
-	//High(true) x Don't Shift(false) = High(true)
-	//Low(false) x Shift(true) = high(true)
-	//Low(false) x Don't Shift(false) = Low(false)
-
-	drivebase->shiftHighGear(shift != drivebase->isHighGear());
+	int shift = oi->getShiftButtons();
+	//1 if high, -1 if low, 0 if nothing
+	if(shift){
+		drivebase->shiftHighGear(shift == 1 ? true : false);
+	}
 
 	double left = oi->getDriveLeft();
 	double right = oi->getDriveRight();

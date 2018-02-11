@@ -25,5 +25,5 @@ public:
 
 	bool getClawDisable();
 	bool getTurnButton();
-	bool getShiftButton();
+	int getShiftButtons();
 };

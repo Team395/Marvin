@@ -18,7 +18,7 @@ class Robot: public frc::TimedRobot {
 	frc::LiveWindow& m_lw = *frc::LiveWindow::GetInstance();
 	Elevator elevator{};
 	Drivebase drivebase{};
-//	DrivebaseSensors drivebaseSensors{&elevator};
+	DrivebaseSensors drivebaseSensors{&drivebase};
 //	Limelight limelight{};
 //	Intake intake{};
 	PneumaticSystem pneumaticSystem{};
@@ -26,6 +26,7 @@ class Robot: public frc::TimedRobot {
 	OI oi{};
 
 	TankDriveCommand tankDrive{&drivebase, &oi};
+	TrackPositionCommand positionCommand{&drivebaseSensors};
 //	JoystickElevatorCommand joystickElevator{&elevator, &oi};
 //	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &drivebaseSensors, &oi};
 //	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
@@ -66,6 +67,7 @@ public:
 	void TeleopInit() override {
 //		turn__DegreesCommand.init();
 		tankDrive.init();
+		positionCommand.init();
 //		joystickElevator.init();
 //		aimToTargetCommand.init();
 //		pneumaticGripperCommand.init();
@@ -79,6 +81,7 @@ public:
 //			turn__DegreesCommand.disable();
 //			turn__DegreesCommand.startNewturn();
 			tankDrive.update();
+			positionCommand.update();
 //		}
 
 /*		if(!oi.getTurnButton()){
@@ -93,8 +96,8 @@ public:
 //		joystickElevator.update();
 		//pneumaticGripperCommand.update();
 
-		SmartDashboard::PutNumber("Elevator Throttle", oi.getElevatorThrottle());
-		SmartDashboard::PutBoolean("Claw Position", oi.getIntakeThrottle());
+//		SmartDashboard::PutNumber("Elevator Throttle", oi.getElevatorThrottle());
+//		SmartDashboard::PutBoolean("Claw Position", oi.getIntakeThrottle());
 		//SmartDashboard::PutBoolean("topLimit", elevator.topPressed());
 		//SmartDashboard::PutBoolean("bottomLimit", elevator.bottomPressed());
 

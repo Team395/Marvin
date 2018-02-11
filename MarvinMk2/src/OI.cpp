@@ -58,6 +58,11 @@ bool OI::getClawDisable(){
 	return xboxController.GetRawButton(OIMap::Xbox::kClawRelease);
 }
 
-bool OI::getShiftButton(){
-	return driveStickRight.GetRawButtonPressed(OIMap::RightStick::kShiftButton);
+int OI::getShiftButtons(){
+	bool low = driveStickRight.GetTriggerPressed();
+	bool high = driveStickLeft.GetTriggerPressed();
+	if(low == high) return 0;
+	else if(high) return 1;
+	else if(low) return -1;
+	else return 0;
 }

@@ -40,5 +40,23 @@ double DrivebaseSensors::PIDGet() {
 }
 
 WPI_TalonSRX* DrivebaseSensors::getTalon(Drivebase* drivebase, int index){
-	return drivebase->talonIndex[index];
+	return drivebase->talonIndex[index-1];
+}
+
+double DrivebaseSensors::getLeftEncoder(returnType type){
+	if(static_cast<int>(type) == 0){
+		return leftEncoderTalon->GetSelectedSensorPosition(0);
+	}
+	else{
+		return leftEncoderTalon->GetSelectedSensorVelocity(0);
+	}
+}
+
+double DrivebaseSensors::getRightEncoder(returnType type){
+	if(static_cast<int>(type) == 0){
+			return rightEncoderTalon->GetSelectedSensorPosition(0);
+		}
+		else{
+			return rightEncoderTalon->GetSelectedSensorVelocity(0);
+		}
 }

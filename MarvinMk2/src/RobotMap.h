@@ -33,8 +33,8 @@ namespace DrivebaseMap{
 	constexpr int kLeftSlave = 2;
 	constexpr int kRightMaster = 3;
 	constexpr int kRightSlave = 4;
-	constexpr int kLowGear = 2; //Should be extended
-	constexpr int kHighGear = 3; //Should be retracted
+	constexpr int kLowGear = 3; //Should be extended
+	constexpr int kHighGear = 2; //Should be retracted
 };
 
 namespace ElevatorMap{

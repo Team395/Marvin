@@ -13,7 +13,6 @@
 #include <PIDSource.h>
 #include <Systems/SystemBase.h>
 #include <Systems/Elevator.h>
-
 #include <RobotMap.h>
 #include <Preferences.h>
 #include <ctre/Phoenix.h>
@@ -36,15 +35,19 @@ public:
 	double kI{0.00};
 	double kD{0};
 
-//	frc::Preferences* preferences = Preferences::GetInstance();
-
 	DrivebaseSensors(Drivebase*);
 	virtual ~DrivebaseSensors();
 	double getAngleZ();
 	frc::PIDSourceType GetPIDSourceType();
 	double PIDGet();
-
 	WPI_TalonSRX* getTalon(Drivebase*, int);
+
+	enum class returnType{
+		kDisplacement,
+		kVelocity
+	};
+	double getLeftEncoder(returnType);
+	double getRightEncoder(returnType);
 };
 
 #endif /* SRC_SYSTEMS_DRIVEBASESENSORS_H_ */
