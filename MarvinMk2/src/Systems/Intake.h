@@ -14,8 +14,8 @@
 #include <Solenoid.h>
 
 class Intake : SystemBase {
-	//Talon leftIntake{IntakeMap::kIntakeLeft};
-	//Talon rightIntake{IntakeMap::kIntakeRight};
+	Talon leftIntake{IntakeMap::kIntakeLeft};
+	Talon rightIntake{IntakeMap::kIntakeRight};
 	Solenoid clawOpen{IntakeMap::kSolenoidOpen};
 	Solenoid clawClose{IntakeMap::kSolenoidClose};
 
@@ -25,8 +25,8 @@ public:
 
 	void actuateClaw(bool);
 	void disable();
-	//void driveLeft(double);
-	//void driveRight(double);
+	void driveLeft(double);
+	void driveRight(double);
 };
 
 #endif /* SRC_SYSTEMS_INTAKE_H_ */

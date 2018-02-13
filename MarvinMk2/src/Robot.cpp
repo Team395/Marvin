@@ -7,8 +7,9 @@
 #include <LiveWindow/LiveWindow.h>
 #include <SmartDashboard/SmartDashboard.h>
 
-#include <Systems/Systems.h>
-#include <Commands/Commands.h>
+#include <Systems/Intake.h>
+#include <Systems/PneumaticSystem.h>
+#include <Commands/PneumaticGripperCommand.h>
 #include <Sequences/Sequences.h>
 
 #include <Libraries/LimelightMap.h>

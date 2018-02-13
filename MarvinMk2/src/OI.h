@@ -19,8 +19,8 @@ public:
 	double getDriveY();
 	double getDriveZ();
 
-	double getElevatorThrottle();
 	double getIntakeThrottle();
+	double getIntakePosition();
 
 	bool getClawDisable();
 	bool getTurnButton();

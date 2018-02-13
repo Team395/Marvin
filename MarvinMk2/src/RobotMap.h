@@ -11,10 +11,10 @@ namespace OIMap{
 	constexpr int kDriveStick = 0;
 	constexpr int kXboxController = 1;
 	constexpr int kTurnButton = 1;
-	constexpr int kElevatorUp = 3;
-	constexpr int kElevatorDown = 2;
-	constexpr int kIntakeIn = 6;
-	constexpr int kIntakeOut = 5;
+	constexpr int kIntakeIn = 3;
+	constexpr int kIntakeOut = 2;
+	constexpr int kIntakeOpen = 6;
+	constexpr int kIntakeClose = 5;
 	constexpr int kClawRelease = 1;
 };
 
@@ -36,11 +36,10 @@ namespace ElevatorMap{
 namespace IntakeMap{
 	constexpr int kSolenoidOpen = 0;
 	constexpr int kSolenoidClose = 1;
-	/*constexpr int kIntakeLeft = 4;
+	constexpr int kIntakeLeft = 4;
 	constexpr bool kIntakeLeftInverted = false;
 	constexpr int kIntakeRight = 5;
 	constexpr bool kIntakeRightInverted = false;
-	*/
 }
 
 namespace CANMap{

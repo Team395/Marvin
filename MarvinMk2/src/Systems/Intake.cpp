@@ -16,7 +16,6 @@ Intake::~Intake() {
 	// TODO Auto-generated destructor stub
 }
 
-/*
 void Intake::driveLeft(double speed){
 	leftIntake.Set(speed);
 }
@@ -24,7 +23,6 @@ void Intake::driveLeft(double speed){
 void Intake::driveRight(double speed){
 	rightIntake.Set(speed);
 }
-*/
 
 void Intake::actuateClaw(bool open){
 	if(open){

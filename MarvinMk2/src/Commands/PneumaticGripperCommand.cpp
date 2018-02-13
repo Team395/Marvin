@@ -25,7 +25,7 @@ void PneumaticGripperCommand::update(){
 		intake->disable();
 	}
 	else{
-		double throttle = (oi->getIntakeThrottle());
+		double throttle = (oi->getIntakePosition());
 		if(throttle == 1){
 			intake->actuateClaw(true);
 			SmartDashboard::PutBoolean("Claw Open", true);
@@ -35,6 +35,9 @@ void PneumaticGripperCommand::update(){
 			SmartDashboard::PutBoolean("Claw Open", false);
 		}
 	}
+
+	intake->driveLeft(oi->getIntakeThrottle()*IntakeMap::kIntakeLeftInverted);
+	intake->driveRight(oi->getIntakeThrottle()*IntakeMap::kIntakeLeftInverted);
 }
 
 void PneumaticGripperCommand::finish(){
