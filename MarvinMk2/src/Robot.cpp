@@ -16,18 +16,18 @@
 
 class Robot: public frc::TimedRobot {
 	frc::LiveWindow& m_lw = *frc::LiveWindow::GetInstance();
-	Elevator elevator{};
-	Drivebase drivebase{};
-	Gyroscope gyroscope{&elevator};
+//	Elevator elevator{};
+//	Drivebase drivebase{};
+//	Gyroscope gyroscope{&elevator};
 //	Limelight limelight{};
 	Intake intake{};
 	PneumaticSystem pneumaticSystem{};
 
 	OI oi{};
 
-	ArcadeDriveCommand arcadeDrive{&drivebase, &oi};
-	JoystickElevatorCommand joystickElevator{&elevator, &oi};
-	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &gyroscope, &oi};
+//	ArcadeDriveCommand arcadeDrive{&drivebase, &oi};
+//	JoystickElevatorCommand joystickElevator{&elevator, &oi};
+//	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &gyroscope, &oi};
 //	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
 	PneumaticGripperCommand pneumaticGripperCommand{&intake, &oi};
 
@@ -53,33 +53,33 @@ public:
 	}
 
 	void AutonomousInit() override {
-		commandQueue = auton::Wait1Wait3Wait2().getCommandQueue();
-		commandQueueIterator = commandQueue.begin();
+//		commandQueue = auton::Wait1Wait3Wait2().getCommandQueue();
+//		commandQueueIterator = commandQueue.begin();
 	}
 
 	void AutonomousPeriodic() override {
-		if(commandQueueIterator == commandQueue.end()) return;
+//		if(commandQueueIterator == commandQueue.end()) return;
 
-		processCommand(*commandQueueIterator);
+//		processCommand(*commandQueueIterator);
 	}
 
 	void TeleopInit() override {
 //		turn__DegreesCommand.init();
-		arcadeDrive.init();
-		joystickElevator.init();
+//		arcadeDrive.init();
+//		joystickElevator.init();
 //		aimToTargetCommand.init();
 		pneumaticGripperCommand.init();
 	}
 
 	void TeleopPeriodic() override {
-		if(oi.getTurnButton()){
-			turn__DegreesCommand.update();
-		}
-		else{
-			turn__DegreesCommand.disable();
-			turn__DegreesCommand.startNewturn();
-			arcadeDrive.update();
-		}
+//		if(oi.getTurnButton()){
+//			turn__DegreesCommand.update();
+//		}
+//		else{
+//			turn__DegreesCommand.disable();
+//			turn__DegreesCommand.startNewturn();
+//			arcadeDrive.update();
+//		}
 
 /*		if(!oi.getTurnButton()){
 			aimToTargetCommand.disable();
@@ -90,14 +90,14 @@ public:
 			aimToTargetCommand.update();
 		}
 */
-		joystickElevator.update();
+//		joystickElevator.update();
 		pneumaticGripperCommand.update();
 
-		SmartDashboard::PutNumber("IMU", gyroscope.getAngleX());
-		SmartDashboard::PutNumber("Elevator Throttle", oi.getElevatorThrottle());
-		SmartDashboard::PutBoolean("Claw Position", oi.getIntakeThrottle());
-		SmartDashboard::PutBoolean("topLimit", elevator.topPressed());
-		SmartDashboard::PutBoolean("bottomLimit", elevator.bottomPressed());
+//		SmartDashboard::PutNumber("IMU", gyroscope.getAngleX());
+//		SmartDashboard::PutNumber("Elevator Throttle", oi.getElevatorThrottle());
+//		SmartDashboard::PutBoolean("Claw Position", oi.getIntakeThrottle());
+//		SmartDashboard::PutBoolean("topLimit", elevator.topPressed());
+//		SmartDashboard::PutBoolean("bottomLimit", elevator.bottomPressed());
 
 //		limelight.refreshNetworkTableValues();
 //		limelight.printToSmartDashboard();
