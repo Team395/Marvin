@@ -7,6 +7,7 @@
 
 #include <Commands/PneumaticGripperCommand.h>
 #include <SmartDashboard/Smartdashboard.h>
+#include <iostream>
 
 PneumaticGripperCommand::PneumaticGripperCommand(Intake* intake, OI* oi) : CommandBase("PneumaticgripperCommand"), intake{intake}, oi{oi}{
 	intake->disable();
@@ -35,9 +36,10 @@ void PneumaticGripperCommand::update(){
 			SmartDashboard::PutBoolean("Claw Open", false);
 		}
 	}
-
-	intake->driveLeft(oi->getIntakeThrottle()*IntakeMap::kIntakeLeftInverted);
-	intake->driveRight(oi->getIntakeThrottle()*IntakeMap::kIntakeLeftInverted);
+	double throttle  = oi->getIntakeThrottle();
+	std::cout << throttle << std::endl;
+	intake->driveLeft(throttle*IntakeMap::kIntakeLeftInverted * 790/860);
+	intake->driveRight(throttle*IntakeMap::kIntakeRightInverted);
 }
 
 void PneumaticGripperCommand::finish(){

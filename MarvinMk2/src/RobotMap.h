@@ -37,9 +37,9 @@ namespace IntakeMap{
 	constexpr int kSolenoidOpen = 0;
 	constexpr int kSolenoidClose = 1;
 	constexpr int kIntakeLeft = 4;
-	constexpr bool kIntakeLeftInverted = false;
+	const int kIntakeLeftInverted = false ? -1 : 1;
 	constexpr int kIntakeRight = 5;
-	constexpr bool kIntakeRightInverted = false;
+	const int kIntakeRightInverted = false ? -1 : 1;
 }
 
 namespace CANMap{
