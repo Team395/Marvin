@@ -20,9 +20,10 @@ public:
 	double getDriveLeft();
 	double getDriveRight();
 
-	double getElevatorThrottle();
 	double getIntakeThrottle();
+	double getIntakePosition();
 
+	double getElevatorThrottle();
 	bool getClawDisable();
 	bool getTurnButton();
 	int getShiftButtons();

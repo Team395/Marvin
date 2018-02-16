@@ -11,8 +11,10 @@ namespace OIMap{
 	namespace Xbox{
 		constexpr int kXboxController = 2;
 		constexpr int kElevator = 1;
-		constexpr int kIntakeIn = 6;
-		constexpr int kIntakeOut = 5;
+		constexpr int kIntakeIn = 3;
+		constexpr int kIntakeOut = 2;
+		constexpr int kIntakeOpen = 5;
+		constexpr int kIntakeClose = 6;
 		constexpr int kClawRelease = 1;
 	}
 
@@ -48,11 +50,10 @@ namespace ElevatorMap{
 namespace IntakeMap{
 	constexpr int kSolenoidOpen = 0;
 	constexpr int kSolenoidClose = 1;
-	/*constexpr int kIntakeLeft = 4;
-	constexpr bool kIntakeLeftInverted = false;
-	constexpr int kIntakeRight = 5;
-	constexpr bool kIntakeRightInverted = false;
-	*/
+	constexpr int kIntakeLeft = 0;
+	const int kIntakeLeftInverted = false ? -1 : 1;
+	constexpr int kIntakeRight = 1;
+	const int kIntakeRightInverted = false ? -1 : 1;
 }
 
 //Maps out gadgeteer ports on talons

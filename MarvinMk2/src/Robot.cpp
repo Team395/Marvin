@@ -20,7 +20,7 @@ class Robot: public frc::TimedRobot {
 	Drivebase drivebase{};
 	DrivebaseSensors drivebaseSensors{&drivebase};
 //	Limelight limelight{};
-//	Intake intake{};
+	Intake intake{};
 	PneumaticSystem pneumaticSystem{};
 
 	OI oi{};
@@ -30,7 +30,7 @@ class Robot: public frc::TimedRobot {
 	JoystickElevatorCommand joystickElevator{&elevator, &oi};
 //	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &drivebaseSensors, &oi};
 //	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
-//	PneumaticGripperCommand pneumaticGripperCommand{&intake, &oi};
+	PneumaticGripperCommand pneumaticGripperCommand{&intake, &oi};
 
 	std::list<CommandBase*> commandQueue;
 	std::list<CommandBase*>::iterator commandQueueIterator;
@@ -54,14 +54,14 @@ public:
 	}
 
 	void AutonomousInit() override {
-		commandQueue = auton::Wait1Wait3Wait2().getCommandQueue();
-		commandQueueIterator = commandQueue.begin();
+//		commandQueue = auton::Wait1Wait3Wait2().getCommandQueue();
+//		commandQueueIterator = commandQueue.begin();
 	}
 
 	void AutonomousPeriodic() override {
-		if(commandQueueIterator == commandQueue.end()) return;
+//		if(commandQueueIterator == commandQueue.end()) return;
 
-		processCommand(*commandQueueIterator);
+//		processCommand(*commandQueueIterator);
 	}
 
 	void TeleopInit() override {
@@ -70,7 +70,7 @@ public:
 		positionCommand.init();
 		joystickElevator.init();
 //		aimToTargetCommand.init();
-//		pneumaticGripperCommand.init();
+		pneumaticGripperCommand.init();
 	}
 
 	void TeleopPeriodic() override {
@@ -92,9 +92,8 @@ public:
 		else{
 			aimToTargetCommand.update();
 		}
-*/
-		joystickElevator.update();
-		//pneumaticGripperCommand.update();
+*/		joystickElevator.update();
+		pneumaticGripperCommand.update();
 
 //		SmartDashboard::PutNumber("Elevator Throttle", oi.getElevatorThrottle());
 //		SmartDashboard::PutBoolean("Claw Position", oi.getIntakeThrottle());
