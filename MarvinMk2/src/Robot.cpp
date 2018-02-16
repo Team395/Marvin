@@ -27,7 +27,7 @@ class Robot: public frc::TimedRobot {
 
 	TankDriveCommand tankDrive{&drivebase, &oi};
 	TrackPositionCommand positionCommand{&drivebaseSensors};
-//	JoystickElevatorCommand joystickElevator{&elevator, &oi};
+	JoystickElevatorCommand joystickElevator{&elevator, &oi};
 //	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &drivebaseSensors, &oi};
 //	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
 //	PneumaticGripperCommand pneumaticGripperCommand{&intake, &oi};
@@ -68,7 +68,7 @@ public:
 //		turn__DegreesCommand.init();
 		tankDrive.init();
 		positionCommand.init();
-//		joystickElevator.init();
+		joystickElevator.init();
 //		aimToTargetCommand.init();
 //		pneumaticGripperCommand.init();
 	}
@@ -93,7 +93,7 @@ public:
 			aimToTargetCommand.update();
 		}
 */
-//		joystickElevator.update();
+		joystickElevator.update();
 		//pneumaticGripperCommand.update();
 
 //		SmartDashboard::PutNumber("Elevator Throttle", oi.getElevatorThrottle());

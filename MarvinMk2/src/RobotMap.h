@@ -10,8 +10,7 @@
 namespace OIMap{
 	namespace Xbox{
 		constexpr int kXboxController = 2;
-		constexpr int kElevatorUp = 3;
-		constexpr int kElevatorDown = 2;
+		constexpr int kElevator = 1;
 		constexpr int kIntakeIn = 6;
 		constexpr int kIntakeOut = 5;
 		constexpr int kClawRelease = 1;
@@ -43,7 +42,7 @@ namespace ElevatorMap{
 	constexpr int kLimitBottom = 1;
 	constexpr int kTopInverted = 0;
 	constexpr int kBottomInverted = 0;
-	constexpr int kWinch = 0;
+	constexpr int kWinch = 5;
 };
 
 namespace IntakeMap{

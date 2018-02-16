@@ -31,8 +31,8 @@ void TrackPositionCommand::init(){
 	lastTheta = initialHeading;
 	lastLeftEncoder = drivebaseSensors->getLeftEncoder(DrivebaseSensors::returnType::kDisplacement);
 	lastRightEncoder = drivebaseSensors->getRightEncoder(DrivebaseSensors::returnType::kDisplacement);
-	this->xPosition = 0;
-	this->yPosition = 0;
+	xPosition = 0.0;
+	yPosition = 0.0;
 	std::cout << "RESET\n";
 }
 
@@ -46,24 +46,29 @@ void TrackPositionCommand::update(){
 	double angularDisplacement{theta - lastTheta};
 
 	SmartDashboard::PutNumber("Angular Displacement", angularDisplacement);
-//	double xDelta;
-//	double yDelta;
+	double xDelta;
+	double yDelta;
 
 	if(leftDisplacement != rightDisplacement){
 		double turnRadius =  (leftDisplacement+rightDisplacement)/(2*angularDisplacement);
+
+		if(std::isinf(turnRadius) || std::isnan(turnRadius)) {turnRadius = 0;}
 		SmartDashboard::PutNumber("Turn Radius", turnRadius);
 
-		this->xPosition += turnRadius * (std::cos(theta * kPi/180) - 1);
-		this->yPosition += turnRadius * std::sin(theta * kPi/180);
+		xDelta = turnRadius * (std::cos((theta + angularDisplacement) * kPi/180) - std::cos(theta * kPi/180));
+		yDelta = turnRadius * (std::sin((theta + angularDisplacement) * kPi/180) - std::sin(theta * kPi/180));
 	}
 	else{
 		SmartDashboard::PutNumber("Turn Radius", -555);
-		this->xPosition += leftDisplacement * std::cos(theta * kPi/180);
-		this->yPosition += leftDisplacement * std::sin(theta * kPi/180);
+		xDelta = leftDisplacement * std::cos(theta * kPi/180);
+		yDelta = leftDisplacement * std::sin(theta * kPi/180);
 	}
 
-//	SmartDashboard::PutNumber("X Delta", xDelta);
-//	SmartDashboard::PutNumber("Y Delta", yDelta);
+	xPosition += xDelta;
+	yPosition += yDelta;
+
+	SmartDashboard::PutNumber("X Delta", xDelta);
+	SmartDashboard::PutNumber("Y Delta", yDelta);
 	SmartDashboard::PutNumber("X Position", xPosition);
 	SmartDashboard::PutNumber("Y Position", yPosition);
 	SmartDashboard::PutNumber("Heading", theta - initialHeading);

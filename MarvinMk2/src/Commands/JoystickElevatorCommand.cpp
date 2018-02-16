@@ -28,15 +28,15 @@ void JoystickElevatorCommand::init() {
 void JoystickElevatorCommand::update() {
 	double speed = oi->getElevatorThrottle();
 
-	if((speed > 0 && elevator->topPressed())){
-		elevator->driveWinch(0);
-	}
-	else if((speed < 0 && elevator->bottomPressed())){
-		elevator->driveWinch(0);
-	}
-	else{
+	//if((speed > 0 && elevator->topPressed())){
+	//	elevator->driveWinch(0);
+	//}
+	//else if((speed < 0 && elevator->bottomPressed())){
+	//	elevator->driveWinch(0);
+	//}
+	//else{
 		elevator->driveWinch(speed);
-	}
+	//}
 }
 
 void JoystickElevatorCommand::finish() {

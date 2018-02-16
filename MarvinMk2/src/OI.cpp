@@ -27,16 +27,7 @@ bool OI::getTurnButton(){
 }
 
 double OI::getElevatorThrottle(){
-	if(xboxController.GetRawAxis(OIMap::Xbox::kElevatorUp) > 0 && xboxController.GetRawAxis(OIMap::Xbox::kElevatorDown) == 0){
-		return xboxController.GetRawAxis(OIMap::Xbox::kElevatorUp);
-	}
-	else if(xboxController.GetRawAxis(OIMap::Xbox::kElevatorDown) > 0
-			&& xboxController.GetRawAxis(OIMap::Xbox::kElevatorUp) == 0){
-		return -xboxController.GetRawAxis(OIMap::Xbox::kElevatorDown);
-	}
-	else{
-		return 0;
-	}
+	return xboxController.GetRawAxis(OIMap::Xbox::kElevator);
 }
 
 double OI::getIntakeThrottle(){

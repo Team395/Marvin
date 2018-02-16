@@ -17,10 +17,9 @@
 class DrivebaseSensors;
 
 class Elevator : SystemBase {
-	friend DrivebaseSensors;
 	WPI_TalonSRX winchController{ElevatorMap::kWinch};
-	frc::DigitalInput topLimit{ElevatorMap::kLimitTop};
-	frc::DigitalInput bottomLimit{ElevatorMap::kLimitBottom};
+	//bfrc::DigitalInput topLimit{ElevatorMap::kLimitTop};
+	//frc::DigitalInput bottomLimit{ElevatorMap::kLimitBottom};
 
 public:
 	Elevator();
@@ -28,8 +27,8 @@ public:
 
 	void driveWinch(double);
 
-	bool topPressed();
-	bool bottomPressed();
+	//bool topPressed();
+	//bool bottomPressed();
 };
 
 #endif /* SRC_SYSTEMS_ELEVATOR_H_ */
