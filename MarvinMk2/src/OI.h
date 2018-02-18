@@ -21,7 +21,7 @@ public:
 	double getDriveRight();
 
 	double getIntakeThrottle();
-	double getIntakePosition();
+	int getIntakePosition();
 
 	double getElevatorThrottle();
 	bool getClawDisable();

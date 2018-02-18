@@ -42,14 +42,14 @@ double OI::getIntakeThrottle(){
 	}
 }
 
-double OI::getIntakePosition(){
+int OI::getIntakePosition(){
 	/*if(xboxController.GetRawButton(OIMap::kIntakeIn) && xboxController.GetRawButton(OIMap::kIntakeOut)){
 		return 0;
 	}
-	else */if(xboxController.GetRawButton(OIMap::Xbox::kIntakeOpen)){
+	else */if(xboxController.GetRawButtonPressed(OIMap::Xbox::kIntakeOpen)){
 		return 1;
 	}
-	else if(xboxController.GetRawButton(OIMap::Xbox::kIntakeClose)){
+	else if(xboxController.GetRawButtonPressed(OIMap::Xbox::kIntakeClose)){
 		return -1;
 	}
 	else{

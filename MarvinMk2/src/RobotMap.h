@@ -48,12 +48,12 @@ namespace ElevatorMap{
 };
 
 namespace IntakeMap{
-	constexpr int kSolenoidOpen = 0;
-	constexpr int kSolenoidClose = 1;
+	constexpr int kSolenoidOpen = 4;
+	constexpr int kSolenoidClose = 5;
 	constexpr int kIntakeLeft = 0;
-	const int kIntakeLeftInverted = false ? -1 : 1;
 	constexpr int kIntakeRight = 1;
-	const int kIntakeRightInverted = false ? -1 : 1;
+	constexpr int kSideBanner = 0;
+	constexpr int kBackBanner = 1;
 }
 
 //Maps out gadgeteer ports on talons

@@ -20,8 +20,8 @@ class Robot: public frc::TimedRobot {
 	Drivebase drivebase{};
 	DrivebaseSensors drivebaseSensors{&drivebase};
 //	Limelight limelight{};
-	Intake intake{};
-	PneumaticSystem pneumaticSystem{};
+//	Intake intake{};
+//	PneumaticSystem pneumaticSystem{};
 
 	OI oi{};
 
@@ -30,10 +30,12 @@ class Robot: public frc::TimedRobot {
 	JoystickElevatorCommand joystickElevator{&elevator, &oi};
 //	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &drivebaseSensors, &oi};
 //	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
-	PneumaticGripperCommand pneumaticGripperCommand{&intake, &oi};
+//	PneumaticGripperCommand pneumaticGripperCommand{&intake, &oi};
 
 	std::list<CommandBase*> commandQueue;
 	std::list<CommandBase*>::iterator commandQueueIterator;
+
+	frc::DigitalInput photoGateInput{8};
 
 	void processCommand(CommandBase* command){
 		if(command->getCommandState() == CommandState::kNotStarted) {
@@ -70,7 +72,7 @@ public:
 		positionCommand.init();
 		joystickElevator.init();
 //		aimToTargetCommand.init();
-		pneumaticGripperCommand.init();
+//		pneumaticGripperCommand.init();
 	}
 
 	void TeleopPeriodic() override {
@@ -92,8 +94,9 @@ public:
 		else{
 			aimToTargetCommand.update();
 		}
-*/		joystickElevator.update();
-		pneumaticGripperCommand.update();
+*/
+			joystickElevator.update();
+//		pneumaticGripperCommand.update();
 
 //		SmartDashboard::PutNumber("Elevator Throttle", oi.getElevatorThrottle());
 //		SmartDashboard::PutBoolean("Claw Position", oi.getIntakeThrottle());
@@ -102,6 +105,8 @@ public:
 
 //		limelight.refreshNetworkTableValues();
 //		limelight.printToSmartDashboard();
+
+		SmartDashboard::PutBoolean("photogate", photoGateInput.Get());
 	}
 
 	void TestPeriodic() override {

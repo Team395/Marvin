@@ -1,5 +1,5 @@
 /*
- * Intake.cpp
+. * Intake.cpp
  *
  *  Created on: Jan 24, 2018
  *      Author: hlewi
@@ -20,21 +20,37 @@ void Intake::driveLeft(double speed){
 }
 
 void Intake::driveRight(double speed){
-	rightIntake.Set(speed);
+	//Scaling factor because different motor on half of the gripper
+	rightIntake.Set(speed * 790/860);
 }
 
 void Intake::actuateClaw(bool open){
 	if(open){
-		clawOpen.Set(true);
-		clawClose.Set(false);
+		clawOpen.Set(open);
+		clawClose.Set(!open);
 	}
 	else{
 		clawOpen.Set(false);
 		clawClose.Set(true);
 	}
+
 }
 
-void Intake::disable(){
-	clawOpen.Set(false);
-	clawClose.Set(false);
+bool Intake::getClawOpen(){
+	return clawOpen.Get();
+}
+bool Intake::getSideBanner(){
+	return sideBannerSensor.Get();
+}
+
+bool Intake::getBackBanner(){
+	return backBannerSensor.Get();
+}
+
+void Intake::setState(IntakeState state){
+	intakeState = state;
+}
+
+IntakeState Intake::getState(){
+	return intakeState;
 }
