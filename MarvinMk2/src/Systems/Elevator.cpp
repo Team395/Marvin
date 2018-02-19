@@ -54,3 +54,23 @@ void Elevator::driveWinch(double speed){
 		}
 	}
 }
+
+double Elevator::getOffset(){
+	return percentOutputOffset;
+}
+
+void Elevator::setOffset(double offset){
+	percentOutputOffset = offset;
+}
+
+double Elevator::PIDGet(){
+	return winchController.GetSelectedSensorPosition(0) * inchesPerTick;
+}
+
+void Elevator::PIDWrite(double throttle){
+	winchController.Set(ControlMode::PercentOutput, throttle * .85 + percentOutputOffset);
+}
+
+void Elevator::homeEncoder(){
+	winchController.SetSelectedSensorPosition(0, 0, 0);
+}
