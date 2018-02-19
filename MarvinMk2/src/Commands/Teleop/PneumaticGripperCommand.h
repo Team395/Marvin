@@ -11,10 +11,18 @@
 #include <Commands/CommandBase.h>
 #include <Oi.h>
 #include <Systems/Intake.h>
+#include <Timer.h>
 
 class PneumaticGripperCommand: public CommandBase {
 	Intake* intake;
 	OI* oi;
+	const double intakeTime = 1;
+	double bannerSensorTrippedTime;
+	bool cubeInIntake = false;
+	bool bannerSensorTripped = false;
+
+	void updateAutomatic(int, double);
+	void updateManual(int, double);
 
 public:
 	PneumaticGripperCommand(Intake* intake, OI* oi);

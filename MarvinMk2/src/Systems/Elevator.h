@@ -17,7 +17,7 @@
 
 class DrivebaseSensors;
 
-class Elevator : SystemBase, PIDOutput {
+class Elevator : SystemBase {
 	WPI_TalonSRX winchController{ElevatorMap::kWinch};
 	//frc::DigitalInput topLimit{ElevatorMap::kLimitTop};
 	//frc::DigitalInput bottomLimit{ElevatorMap::kLimitBottom};
