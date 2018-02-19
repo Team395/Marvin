@@ -14,7 +14,7 @@ Elevator::Elevator() : SystemBase("elevator"), driveUpLastCommand(false) {
 Elevator::~Elevator() {
 
 }
-/*
+
 bool Elevator::topPressed(){
 	return ElevatorMap::kTopInverted
 			? !topLimit.Get()
@@ -26,7 +26,7 @@ bool Elevator::bottomPressed(){
 			? !bottomLimit.Get()
 			: bottomLimit.Get();
 }
-*/
+
 void Elevator::driveWinch(double speed){
 	if(speed > 0.1){
 		driveUpLastCommand = true;

@@ -19,7 +19,7 @@
 
 class DrivebaseSensors;
 
-class Elevator : SystemBase, PIDOutput, PIDSource {
+class Elevator : SystemBase, public PIDOutput, public PIDSource {
 	WPI_TalonSRX winchController{ElevatorMap::kWinch};
 	frc::DigitalInput topLimit{ElevatorMap::kLimitTop};
 	frc::DigitalInput bottomLimit{ElevatorMap::kLimitBottom};
@@ -28,9 +28,9 @@ class Elevator : SystemBase, PIDOutput, PIDSource {
 	double percentOutputOffset = 0;
 
 public:
-	constexpr double inchesPerTick = 0;
-	constexpr double topPosition = 40;
-	constexpr double bottomPosition = 0;
+	const double inchesPerTick = 0;
+	const double topPosition = 40;
+	const double bottomPosition = 0;
 
 	Elevator();
 	virtual ~Elevator();

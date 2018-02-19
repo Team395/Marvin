@@ -28,7 +28,10 @@ void ElevatorPositionCommand::update(){
 	if(elevator->bottomPressed()){
 		elevator->homeEncoder();
 	}
-	if(!setpoint == pidController.GetSetpoint()){
+	if(elevator->topPressed()){
+		setpoint = elevator->PIDGet();
+	}
+	if(setpoint != pidController.GetSetpoint()){
 		pidController.SetSetpoint(setpoint);
 	}
 	if(setpoint == 0 && elevator->bottomPressed() && pidController.IsEnabled()){
