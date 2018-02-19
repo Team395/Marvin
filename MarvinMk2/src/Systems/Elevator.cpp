@@ -7,7 +7,7 @@
 
 #include "Elevator.h"
 
-Elevator::Elevator() : SystemBase("elevator") {
+Elevator::Elevator() : SystemBase("elevator"), driveUpLastCommand(false) {
 	winchController.SetInverted(ElevatorMap::kWinchInverted);
 }
 
@@ -28,5 +28,29 @@ bool Elevator::bottomPressed(){
 }
 */
 void Elevator::driveWinch(double speed){
-	winchController.Set(speed);
+	if(speed > 0.1){
+		driveUpLastCommand = true;
+		winchController.Set(speed); //TODO: move inverted into RobotMap
+	}
+	else {
+		if(driveUpLastCommand){
+			downTimer.Start();
+		}
+
+		if(downTimer.Get() > 0)
+		{
+			if(downTimer.Get() <= 10){
+				winchController.Set(0.10);
+			}
+			else {
+				winchController.Set(0);
+				driveUpLastCommand = false;
+				downTimer.Stop();
+				downTimer.Reset();
+			}
+		}
+		else {
+			winchController.Set(0);
+		}
+	}
 }

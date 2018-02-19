@@ -22,9 +22,8 @@ enum class IntakeState{
 class Intake : SystemBase {
 	Spark leftIntake{IntakeMap::kIntakeLeft};
 	Spark rightIntake{IntakeMap::kIntakeRight};
-	Solenoid clawOpen{IntakeMap::kSolenoidOpen};
-	Solenoid clawClose{IntakeMap::kSolenoidClose};
-	DigitalInput sideBannerSensor{IntakeMap::kSideBanner};
+	Solenoid gripperOpen{IntakeMap::kGripperOpen};
+	Solenoid gripperClose{IntakeMap::kGripperClose};
 	DigitalInput backBannerSensor{IntakeMap::kBackBanner};
 	IntakeState intakeState{IntakeState::automatic};
 
@@ -36,7 +35,6 @@ public:
 	bool getClawOpen();
 	void driveLeft(double);
 	void driveRight(double);
-	bool getSideBanner();
 	bool getBackBanner();
 
 	void setState(IntakeState);

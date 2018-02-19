@@ -12,13 +12,10 @@
 #include "Drivebase.h"
 
 Drivebase::Drivebase() : SystemBase("drivebase"){
-	rightMaster.SetInverted(true);
-	rightSlave.SetInverted(true);
+	leftMaster.SetInverted(true); //move inverted into RobotMap
+	leftSlave.SetInverted(true);
 	leftSlave.Follow(leftMaster);
 	rightSlave.Follow(rightMaster);
-	highGearSolenoid.Set(true);
-	lowGearSolenoid.Set(false);
-	highGear = true;
 }
 
 Drivebase::~Drivebase() {
@@ -38,21 +35,4 @@ void Drivebase::PIDWrite(double output){
 
 void Drivebase::setMinimumPidOutput(double minimum){
 	minimumPidOutput = minimum;
-}
-
-void Drivebase::shiftHighGear(bool gear){
-	if(gear && !highGear){
-		highGearSolenoid.Set(true);
-		lowGearSolenoid.Set(false);
-		highGear = true;
-	}
-	else if(!gear && highGear){
-		highGearSolenoid.Set(false);
-		lowGearSolenoid.Set(true);
-		highGear = false;
-	}
-}
-
-bool Drivebase::isHighGear(){
-	return highGear;
 }

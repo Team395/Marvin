@@ -22,8 +22,6 @@ class Drivebase : SystemBase, public frc::PIDOutput {
 	WPI_TalonSRX rightSlave{DrivebaseMap::kRightSlave};
 	std::array<WPI_TalonSRX*, 4> talonIndex {{&leftMaster, &leftSlave, &rightMaster, &rightSlave}};
 
-	Solenoid lowGearSolenoid{DrivebaseMap::kLowGear};
-	Solenoid highGearSolenoid{DrivebaseMap::kHighGear};
 	bool highGear{true};
 	double minimumPidOutput{0.05};
 	friend class DrivebaseSensors;

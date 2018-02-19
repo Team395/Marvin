@@ -18,19 +18,19 @@ class Robot: public frc::TimedRobot {
 	frc::LiveWindow& m_lw = *frc::LiveWindow::GetInstance();
 	Elevator elevator{};
 	Drivebase drivebase{};
-	DrivebaseSensors drivebaseSensors{&drivebase};
+	//DrivebaseSensors drivebaseSensors{&drivebase};
 //	Limelight limelight{};
-//	Intake intake{};
-//	PneumaticSystem pneumaticSystem{};
+	Intake intake{};
+	PneumaticSystem pneumaticSystem{};
 
 	OI oi{};
 
 	TankDriveCommand tankDrive{&drivebase, &oi};
-	TrackPositionCommand positionCommand{&drivebaseSensors};
+	//TrackPositionCommand positionCommand{&drivebaseSensors};
 	JoystickElevatorCommand joystickElevator{&elevator, &oi};
 //	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &drivebaseSensors, &oi};
 //	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
-//	PneumaticGripperCommand pneumaticGripperCommand{&intake, &oi};
+	PneumaticGripperCommand pneumaticGripperCommand{&intake, &oi};
 
 	std::list<CommandBase*> commandQueue;
 	std::list<CommandBase*>::iterator commandQueueIterator;
@@ -69,10 +69,10 @@ public:
 	void TeleopInit() override {
 //		turn__DegreesCommand.init();
 		tankDrive.init();
-		positionCommand.init();
+		//positionCommand.init();
 		joystickElevator.init();
 //		aimToTargetCommand.init();
-//		pneumaticGripperCommand.init();
+		pneumaticGripperCommand.init();
 	}
 
 	void TeleopPeriodic() override {
@@ -83,7 +83,7 @@ public:
 //			turn__DegreesCommand.disable();
 //			turn__DegreesCommand.startNewturn();
 			tankDrive.update();
-			positionCommand.update();
+			//positionCommand.update();
 //		}
 
 /*		if(!oi.getTurnButton()){
@@ -96,7 +96,7 @@ public:
 		}
 */
 			joystickElevator.update();
-//		pneumaticGripperCommand.update();
+		pneumaticGripperCommand.update();
 
 //		SmartDashboard::PutNumber("Elevator Throttle", oi.getElevatorThrottle());
 //		SmartDashboard::PutBoolean("Claw Position", oi.getIntakeThrottle());

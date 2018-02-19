@@ -31,25 +31,18 @@ double OI::getElevatorThrottle(){
 }
 
 double OI::getIntakeThrottle(){
-	if(xboxController.GetRawAxis(OIMap::Xbox::kIntakeIn) > 0 && xboxController.GetRawAxis(OIMap::Xbox::kIntakeOut) == 0){
-		return xboxController.GetRawAxis(OIMap::Xbox::kIntakeIn);
-	}
-	else if(xboxController.GetRawAxis(OIMap::Xbox::kIntakeOut) > 0 && xboxController.GetRawAxis(OIMap::Xbox::kIntakeIn) == 0){
-		return -xboxController.GetRawAxis(OIMap::Xbox::kIntakeOut);
-	}
-	else{
-		return 0;
-	}
+	return xboxController.GetRawAxis(OIMap::Xbox::kIntakeThrottle);
 }
 
 int OI::getIntakePosition(){
 	/*if(xboxController.GetRawButton(OIMap::kIntakeIn) && xboxController.GetRawButton(OIMap::kIntakeOut)){
 		return 0;
 	}
-	else */if(xboxController.GetRawButtonPressed(OIMap::Xbox::kIntakeOpen)){
+	else */
+	if(xboxController.GetRawAxis(OIMap::Xbox::kIntakeClose) > 0.5){
 		return 1;
 	}
-	else if(xboxController.GetRawButtonPressed(OIMap::Xbox::kIntakeClose)){
+	else if(xboxController.GetRawAxis(OIMap::Xbox::kIntakeOpen) > 0.5){
 		return -1;
 	}
 	else{

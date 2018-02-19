@@ -9,12 +9,12 @@
 #define SRC_COMMANDS_COMMANDS_H_
 
 #include <Commands/CommandBase.h>
-#include <Commands/JoystickElevatorCommand.h>
+#include <Commands/Teleop/JoystickElevatorCommand.h>
 #include <Commands/Turn__DegreesCommand.h>
 #include <Commands/TestCommand.h>
 #include <Commands/AimToTargetCommand.h>
-#include <Commands/PneumaticGripperCommand.h>
-#include <Commands/TankDriveCommand.h>
+#include <Commands/Teleop/PneumaticGripperCommand.h>
+#include <Commands/Teleop/TankDriveCommand.h>
 #include <Commands/TrackPositionCommand.h>
 
 #endif /* SRC_COMMANDS_COMMANDS_H_ */

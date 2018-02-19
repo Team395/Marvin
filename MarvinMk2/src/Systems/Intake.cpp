@@ -8,7 +8,8 @@
 #include "Intake.h"
 
 Intake::Intake() : SystemBase("Intake"){
-
+	leftIntake.SetInverted(true);
+	rightIntake.SetInverted(true);
 }
 
 Intake::~Intake() {
@@ -25,22 +26,12 @@ void Intake::driveRight(double speed){
 }
 
 void Intake::actuateClaw(bool open){
-	if(open){
-		clawOpen.Set(open);
-		clawClose.Set(!open);
-	}
-	else{
-		clawOpen.Set(false);
-		clawClose.Set(true);
-	}
-
+	gripperOpen.Set(open);
+	gripperClose.Set(!open);
 }
 
 bool Intake::getClawOpen(){
-	return clawOpen.Get();
-}
-bool Intake::getSideBanner(){
-	return sideBannerSensor.Get();
+	return gripperOpen.Get();
 }
 
 bool Intake::getBackBanner(){

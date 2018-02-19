@@ -35,7 +35,7 @@ void JoystickElevatorCommand::update() {
 	//	elevator->driveWinch(0);
 	//}
 	//else{
-		elevator->driveWinch(speed);
+		elevator->driveWinch(-1*speed); //TODO: move inverted elsewhere
 	//}
 }
 

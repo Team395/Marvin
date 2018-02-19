@@ -13,19 +13,25 @@
 #include <RobotMap.h>
 #include <Systems/DrivebaseSensors.h>
 #include <Systems/SystemBase.h>
+#include <Timer.h>
 
 class DrivebaseSensors;
 
-class Elevator : SystemBase {
+class Elevator : SystemBase, PIDOutput {
 	WPI_TalonSRX winchController{ElevatorMap::kWinch};
-	//bfrc::DigitalInput topLimit{ElevatorMap::kLimitTop};
+	//frc::DigitalInput topLimit{ElevatorMap::kLimitTop};
 	//frc::DigitalInput bottomLimit{ElevatorMap::kLimitBottom};
+	frc::Timer downTimer{};
+	bool driveUpLastCommand;
+
 
 public:
+
 	Elevator();
 	virtual ~Elevator();
 
 	void driveWinch(double);
+	double setOffset(double);
 
 	//bool topPressed();
 	//bool bottomPressed();

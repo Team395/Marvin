@@ -5,7 +5,7 @@
  *      Author: JARVIS
  */
 
-#include <Commands/PneumaticGripperCommand.h>
+#include <Commands/Teleop/PneumaticGripperCommand.h>
 #include <SmartDashboard/Smartdashboard.h>
 #include <iostream>
 
@@ -22,6 +22,7 @@ void PneumaticGripperCommand::init(){
 }
 
 void PneumaticGripperCommand::update(){
+/*
 	//What mode in
 	int actuate = (oi->getIntakePosition());
 	double throttle= oi->getIntakeThrottle();
@@ -58,6 +59,19 @@ void PneumaticGripperCommand::update(){
 		}
 	}
 
+	switch(actuate){
+		case 1:
+			intake->actuateClaw(true);
+			break;
+
+		case -1:
+			intake->actuateClaw(false);
+			break;
+
+		case 0:
+			break;
+	}
+
 	//Wheel Speed
 	if(intake->getState() == IntakeState::automatic){
 		if(!(intake->getSideBanner() || intake->getBackBanner())){
@@ -76,6 +90,28 @@ void PneumaticGripperCommand::update(){
 	else{
 		intake->driveLeft(throttle);
 		intake->driveRight(throttle);
+	}
+
+	intake->driveLeft(throttle);
+	intake->driveRight(throttle);
+	*/
+
+	double throttle = oi->getIntakeThrottle();
+	intake->driveLeft(throttle);
+	intake->driveRight(throttle);
+
+	int actuate = oi->getIntakePosition();
+	switch(actuate){
+		case 1:
+			intake->actuateClaw(true);
+			break;
+
+		case -1:
+			intake->actuateClaw(false);
+			break;
+
+		case 0:
+			break;
 	}
 }
 
