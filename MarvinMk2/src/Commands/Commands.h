@@ -16,5 +16,6 @@
 #include <Commands/Teleop/PneumaticGripperCommand.h>
 #include <Commands/Teleop/TankDriveCommand.h>
 #include <Commands/TrackPositionCommand.h>
+#include <Commands/ElevatorPositionCommand.h>
 
 #endif /* SRC_COMMANDS_COMMANDS_H_ */

@@ -12,11 +12,13 @@
 #include <PIDController.h>
 #include <Systems/Elevator.h>
 #include <SmartDashboard/SmartDashboard.h>
+#include <Preferences.h>
 
 class ElevatorPositionCommand: public CommandBase {
 	Elevator* elevator;
 	PIDController pidController;
 	double setpoint = 0;
+	Preferences* preferences = Preferences::GetInstance();
 
 public:
 	ElevatorPositionCommand(Elevator*, double, double, double);

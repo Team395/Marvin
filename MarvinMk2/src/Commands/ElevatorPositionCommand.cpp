@@ -6,6 +6,7 @@
  */
 
 #include <Commands/ElevatorPositionCommand.h>
+#include <SmartDashboard/SmartDashboard.h>
 
 ElevatorPositionCommand::ElevatorPositionCommand(Elevator* elevatorSystem, double p, double i, double d)
 : CommandBase("Elevator Position Command"),
@@ -42,6 +43,21 @@ void ElevatorPositionCommand::update(){
 	}
 
 	SmartDashboard::PutData("Elevator PID Controller", &pidController);
+
+	double p = preferences->GetDouble("Elevator p", pidController.GetP());
+	double i = preferences->GetDouble("Elevator i", pidController.GetI());
+	double d = preferences->GetDouble("Elevator d", pidController.GetD());
+	double o = preferences->GetDouble("Elevator o", elevator->getOffset());
+
+	pidController.SetP(p);
+	pidController.SetI(i);
+	pidController.SetD(d);
+	elevator->setOffset(o);
+
+	SmartDashboard::PutNumber("PID P", pidController.GetP());
+	SmartDashboard::PutNumber("PID I", pidController.GetI());
+	SmartDashboard::PutNumber("PID D", pidController.GetD());
+	SmartDashboard::PutNumber("PIDError", pidController.GetError());
 }
 
 void ElevatorPositionCommand::finish(){
@@ -49,8 +65,11 @@ void ElevatorPositionCommand::finish(){
 }
 
 void ElevatorPositionCommand::setSetpoint(double newSetpoint){
-	if(newSetpoint < elevator->bottomPosition || newSetpoint > elevator->topPosition){
-
+	if(newSetpoint > elevator->topPosition){
+		setpoint = elevator->topPosition;
+	}
+	else if(newSetpoint < elevator->bottomPosition){
+		setpoint = elevator->bottomPosition;
 	}
 	else{
 		setpoint = newSetpoint;

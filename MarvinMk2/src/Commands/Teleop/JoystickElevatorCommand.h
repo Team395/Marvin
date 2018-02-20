@@ -10,13 +10,15 @@
 #include <OI.h>
 #include <Systems/Elevator.h>
 #include <Commands/CommandBase.h>
+#include <Commands/ElevatorPositionCommand.h>
 
 class JoystickElevatorCommand : CommandBase {
 	Elevator* elevator;
 	OI* oi;
+	ElevatorPositionCommand* elevatorPositionCommand;
 
 public:
-	JoystickElevatorCommand(Elevator* elevator, OI* oi);
+	JoystickElevatorCommand(Elevator*, OI*, ElevatorPositionCommand*);
 	virtual ~JoystickElevatorCommand();
 
 	void init() override;

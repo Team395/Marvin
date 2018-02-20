@@ -25,11 +25,12 @@ class Elevator : SystemBase, public PIDOutput, public PIDSource {
 	frc::DigitalInput bottomLimit{ElevatorMap::kLimitBottom};
 	frc::Timer downTimer{};
 	bool driveUpLastCommand;
-	double percentOutputOffset = 0;
+	double percentOutputOffset = 0.19;
+	double minimumAcceptableOutput = .07;
 
 public:
-	const double inchesPerTick = 0;
-	const double topPosition = 40;
+	const double inchesPerTick = 0.00182;
+	const double topPosition = 15;
 	const double bottomPosition = 0;
 
 	Elevator();

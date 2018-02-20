@@ -10,10 +10,11 @@
 
 #include "JoystickElevatorCommand.h"
 
-JoystickElevatorCommand::JoystickElevatorCommand(Elevator* elevator, OI* oi) :
+JoystickElevatorCommand::JoystickElevatorCommand(Elevator* elevator, OI* oi, ElevatorPositionCommand* elevatorPositionCommand) :
 CommandBase("JoystickElevatorCommand"),
 elevator(elevator),
-oi(oi) {
+oi(oi),
+elevatorPositionCommand(elevatorPositionCommand){
 
 }
 
@@ -26,17 +27,9 @@ void JoystickElevatorCommand::init() {
 }
 
 void JoystickElevatorCommand::update() {
-	double speed = oi->getElevatorThrottle();
-
-	//if((speed > 0 && elevator->topPressed())){
-	//	elevator->driveWinch(0);
-	//}
-	//else if((speed < 0 && elevator->bottomPressed())){
-	//	elevator->driveWinch(0);
-	//}
-	//else{
-		elevator->driveWinch(-1*speed); //TODO: move inverted elsewhere
-	//}
+	double setpointIncrement = oi->getElevatorThrottle();
+	double setpoint = elevatorPositionCommand->getSetpoint();
+	elevatorPositionCommand->setSetpoint(setpoint += 0.3*setpointIncrement);
 }
 
 void JoystickElevatorCommand::finish() {
