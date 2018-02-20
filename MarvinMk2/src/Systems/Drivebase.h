@@ -34,8 +34,6 @@ public:
 	void tankDrive(double, double);
 	void PIDWrite(double);
 	void setMinimumPidOutput(double);
-	void shiftHighGear(bool);
-	bool isHighGear();
 };
 
 #endif /* SRC_SYSTEMS_DRIVEBASE_H_ */

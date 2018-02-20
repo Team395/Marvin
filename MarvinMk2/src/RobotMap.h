@@ -14,7 +14,14 @@ namespace OIMap{
 		constexpr int kIntakeThrottle = 5;
 		constexpr int kIntakeOpen = 2;
 		constexpr int kIntakeClose = 3;
-		constexpr int kClawRelease = 1;
+
+		constexpr int kHighScalePreset = 4;
+		constexpr int kNormalScalePreset = 2;
+		constexpr int kLowScalePreset = 1;
+		constexpr int kSwitchPreset = 3;
+		constexpr int kBottomPreset = 9 ;
+
+		constexpr int kAutoScore = 10;
 	}
 
 	namespace LeftStick{

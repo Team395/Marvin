@@ -18,11 +18,11 @@ ElevatorPositionCommand::ElevatorPositionCommand(Elevator* elevatorSystem, doubl
 }
 
 ElevatorPositionCommand::~ElevatorPositionCommand() {
-	// TODO Auto-generated destructor stub
+
 }
 
 void ElevatorPositionCommand::init(){
-
+	pidController.Disable();
 }
 
 void ElevatorPositionCommand::update(){
@@ -30,7 +30,7 @@ void ElevatorPositionCommand::update(){
 		elevator->homeEncoder();
 	}
 	if(elevator->topPressed()){
-		setpoint = elevator->PIDGet();
+		setpoint = elevator->PIDGet() - 1; //TODO Verify this value
 	}
 	if(setpoint != pidController.GetSetpoint()){
 		pidController.SetSetpoint(setpoint);
@@ -78,4 +78,8 @@ void ElevatorPositionCommand::setSetpoint(double newSetpoint){
 
 double ElevatorPositionCommand::getSetpoint(){
 	return setpoint;
+}
+
+double ElevatorPositionCommand::getAbsError(){
+	return std::abs(pidController.GetError());
 }

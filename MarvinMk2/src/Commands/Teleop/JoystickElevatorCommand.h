@@ -16,7 +16,12 @@ class JoystickElevatorCommand : CommandBase {
 	Elevator* elevator;
 	OI* oi;
 	ElevatorPositionCommand* elevatorPositionCommand;
-
+	const double highHeight = 15;
+	const double normalHeight = 12;
+	const double lowHeight = 9;
+	const double switchHeight = 6;
+	const double bottomHeight = 0;
+	const double errorThreshold = 3;
 public:
 	JoystickElevatorCommand(Elevator*, OI*, ElevatorPositionCommand*);
 	virtual ~JoystickElevatorCommand();

@@ -22,23 +22,29 @@ double OI::getDriveRight(){
 	return driveStickRight.GetY();
 }
 
-bool OI::getTurnButton(){
-	return driveStickLeft.GetRawButton(OIMap::LeftStick::kTurnButton);
-}
-
 double OI::getElevatorThrottle(){
-	return xboxController.GetRawAxis(OIMap::Xbox::kElevator);
+	double throttle = xboxController.GetRawAxis(OIMap::Xbox::kElevator);
+	double deadband = 0.15;
+	if(std::abs(throttle) < deadband){
+		return 0;
+	}
+	else{
+		return throttle;
+	}
 }
 
 double OI::getIntakeThrottle(){
-	return xboxController.GetRawAxis(OIMap::Xbox::kIntakeThrottle);
+	double throttle = xboxController.GetRawAxis(OIMap::Xbox::kIntakeThrottle);
+	double deadband = 0.15;
+	if(std::abs(throttle) < deadband){
+		return 0;
+	}
+	else{
+		return throttle;
+	}
 }
 
 int OI::getIntakePosition(){
-	/*if(xboxController.GetRawButton(OIMap::kIntakeIn) && xboxController.GetRawButton(OIMap::kIntakeOut)){
-		return 0;
-	}
-	else */
 	if(xboxController.GetRawAxis(OIMap::Xbox::kIntakeClose) > 0.5){
 		return 1;
 	}
@@ -50,15 +56,23 @@ int OI::getIntakePosition(){
 	}
 }
 
-bool OI::getClawDisable(){
-	return xboxController.GetRawButton(OIMap::Xbox::kClawRelease);
-}
-
-int OI::getShiftButtons(){
-	bool low = driveStickRight.GetTriggerPressed();
-	bool high = driveStickLeft.GetTriggerPressed();
-	if(low == high) return 0;
-	else if(high) return 1;
-	else if(low) return -1;
-	else return 0;
+OI::ElevatorPreset OI::getElevatorPreset(){
+	if(xboxController.GetRawButtonPressed(OIMap::Xbox::kHighScalePreset)){
+		return ElevatorPreset::kHighScale;
+	}
+	else if(xboxController.GetRawButtonPressed(OIMap::Xbox::kNormalScalePreset)){
+		return ElevatorPreset::kNormalScale;
+	}
+	else if(xboxController.GetRawButtonPressed(OIMap::Xbox::kLowScalePreset)){
+		return ElevatorPreset::kLowScale;
+	}
+	else if(xboxController.GetRawButtonPressed(OIMap::Xbox::kSwitchPreset)){
+		return ElevatorPreset::kSwitch;
+	}
+	else if(xboxController.GetRawButtonPressed(OIMap::Xbox::kBottomPreset)){
+		return ElevatorPreset::kBottom;
+	}
+	else{
+		return ElevatorPreset::kNone;
+	}
 }

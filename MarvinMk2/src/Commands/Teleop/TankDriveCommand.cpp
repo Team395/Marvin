@@ -24,14 +24,14 @@ void TankDriveCommand::init() {
 
 }
 
-double sgn(double x){
+double sign(double x){
 	return x >= 0.0 ? 1.0: -1.0;
 }
 
 void TankDriveCommand::update() {
 	double left = oi->getDriveLeft();
 	double right = oi->getDriveRight();
-	drivebase->tankDrive(sgn(left) * left*left, sgn(right) * right*right);
+	drivebase->tankDrive(sign(left) * left*left, sign(right) * right*right);
 }
 
 void TankDriveCommand::finish() {

@@ -27,8 +27,31 @@ void JoystickElevatorCommand::init() {
 }
 
 void JoystickElevatorCommand::update() {
-	double setpointIncrement = oi->getElevatorThrottle();
 	double setpoint = elevatorPositionCommand->getSetpoint();
+
+	switch(oi->getElevatorPreset()){
+		case(OI::ElevatorPreset::kHighScale):
+			setpoint = highHeight;
+			break;
+		case(OI::ElevatorPreset::kNormalScale):
+			setpoint = normalHeight;
+			break;
+		case(OI::ElevatorPreset::kLowScale):
+			setpoint = lowHeight;
+			break;
+		case(OI::ElevatorPreset::kSwitch):
+			setpoint = switchHeight;
+			break;
+		case(OI::ElevatorPreset::kBottom):
+			setpoint = bottomHeight;
+			break;
+		case(OI::ElevatorPreset::kNone):
+			break;
+	}
+	double setpointIncrement = 0;
+	if(elevatorPositionCommand->getAbsError() < errorThreshold){
+		setpointIncrement = oi->getElevatorThrottle();
+	}
 	elevatorPositionCommand->setSetpoint(setpoint += 0.3*setpointIncrement);
 }
 

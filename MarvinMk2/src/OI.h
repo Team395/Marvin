@@ -17,6 +17,15 @@ class OI {
 
 public:
 	OI();
+	enum class ElevatorPreset{
+		kHighScale,
+		kNormalScale,
+		kLowScale,
+		kSwitch,
+		kBottom,
+		kNone
+	};
+
 	double getDriveLeft();
 	double getDriveRight();
 
@@ -24,7 +33,6 @@ public:
 	int getIntakePosition();
 
 	double getElevatorThrottle();
-	bool getClawDisable();
-	bool getTurnButton();
-	int getShiftButtons();
+
+	ElevatorPreset getElevatorPreset();
 };

@@ -13,6 +13,7 @@
 #include <Systems/Elevator.h>
 #include <SmartDashboard/SmartDashboard.h>
 #include <Preferences.h>
+#include <cmath>
 
 class ElevatorPositionCommand: public CommandBase {
 	Elevator* elevator;
@@ -29,6 +30,7 @@ public:
 	void finish();
 	void setSetpoint(double);
 	double getSetpoint();
+	double getAbsError();
 };
 
 #endif /* SRC_COMMANDS_ELEVATORPOSITIONCOMMAND_H_ */
