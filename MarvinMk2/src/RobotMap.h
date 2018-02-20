@@ -28,10 +28,10 @@ namespace OIMap{
 };
 
 namespace DrivebaseMap{
-	constexpr int kLeftMaster = 5;
+	constexpr int kLeftMaster = 1;
 	constexpr int kLeftSlave = 2;
 	constexpr int kRightMaster = 3;
-	constexpr int kRightSlave = 1;
+	constexpr int kRightSlave = 4;
 };
 
 namespace ElevatorMap{
@@ -40,7 +40,7 @@ namespace ElevatorMap{
 	constexpr int kLimitBottom = 1;
 	constexpr int kTopInverted = 0;
 	constexpr int kBottomInverted = 0;
-	constexpr int kWinch = 4;
+	constexpr int kWinch = 5;
 };
 
 namespace IntakeMap{
