@@ -17,12 +17,15 @@ class PneumaticGripperCommand: public CommandBase {
 	Intake* intake;
 	OI* oi;
 	const double intakeTime = 1;
-	double bannerSensorTrippedTime;
+	const double scoreTime = 3;
+	double timerStartedTime = 0;
 	bool cubeInIntake = false;
 	bool bannerSensorTripped = false;
+	bool scoreTimerStarted = false;
 
-	void updateAutomatic(int, double);
+	void updateAutomatic(double);
 	void updateManual(int, double);
+	void updateAutoscore();
 
 public:
 	PneumaticGripperCommand(Intake* intake, OI* oi);

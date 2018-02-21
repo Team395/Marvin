@@ -30,7 +30,7 @@ class Robot: public frc::TimedRobot {
 
 //	TankDriveCommand tankDriveCommand{&drivebase, &oi};
 //	PneumaticGripperCommand pneumaticGripperCommand{&intake, &oi};
-	ElevatorPositionCommand elevatorPositionCommand{&elevator, 0.35, 0, 0.1};
+	ElevatorPositionCommand elevatorPositionCommand{&elevator, 0.35, 0, 0.1}; //Magic numbers are PID constants
 	JoystickElevatorCommand joystickElevatorCommand{&elevator, &oi, &elevatorPositionCommand};
 
 //  TrackPositionCommand positionCommand{&drivebaseSensors};

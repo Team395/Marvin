@@ -27,4 +27,7 @@ public:
 	bool getClawDisable();
 	bool getTurnButton();
 	int getShiftButtons();
+	bool getToggleIntakeMode();
+
+	bool getIntakeAutoscore();
 };

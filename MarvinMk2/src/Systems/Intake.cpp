@@ -25,7 +25,7 @@ void Intake::driveRight(double speed){
 	rightIntake.Set(speed * 790/860);
 }
 
-void Intake::actuateClaw(bool open){
+void Intake::setClawOpen(bool open){
 	gripperOpen.Set(open);
 	gripperClose.Set(!open);
 }

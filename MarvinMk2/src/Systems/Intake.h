@@ -15,8 +15,9 @@
 #include <DigitalInput.h>
 
 enum class IntakeState{
-	automatic = 0,
-	manual = 1
+	automatic,
+	manual,
+	autoscore
 };
 
 class Intake : SystemBase {
@@ -32,10 +33,11 @@ public:
 	virtual ~Intake();
 
 	void actuateClaw(bool);
-	bool getClawOpen();
+	void setClawOpen(bool);
 	void driveLeft(double);
 	void driveRight(double);
 	bool getBackBanner();
+	bool getClawOpen();
 
 	void setState(IntakeState);
 	IntakeState getState();

@@ -62,3 +62,11 @@ int OI::getShiftButtons(){
 	else if(low) return -1;
 	else return 0;
 }
+
+bool OI::getToggleIntakeMode(){
+	return xboxController.GetBackButtonPressed();
+}
+
+bool OI::getIntakeAutoscore(){
+	return xboxController.GetRawButtonPressed(OIMap::Xbox::kScore);
+}

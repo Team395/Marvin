@@ -15,6 +15,7 @@ namespace OIMap{
 		constexpr int kIntakeOpen = 2;
 		constexpr int kIntakeClose = 3;
 		constexpr int kClawRelease = 1;
+		constexpr int kScore = 10;
 	}
 
 	namespace LeftStick{
