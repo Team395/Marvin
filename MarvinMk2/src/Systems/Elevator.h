@@ -30,7 +30,7 @@ class Elevator : SystemBase, public PIDOutput, public PIDSource {
 
 public:
 	const double inchesPerTick = 0.00182;
-	const double topPosition = 15;
+	const double topPosition = 44;
 	const double bottomPosition = 0;
 
 	Elevator();

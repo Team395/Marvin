@@ -22,15 +22,15 @@ class Robot: public frc::TimedRobot {
 
 	Elevator elevator{};
 //	Drivebase drivebase{};
-//	Intake intake{};
-//	PneumaticSystem pneumaticSystem{};
+	Intake intake{};
+	PneumaticSystem pneumaticSystem{};
 //	DrivebaseSensors drivebaseSensors{&drivebase};
 //	Limelight limelight{};
 
 
-//	TankDriveCommand tankDriveCommand{&drivebase, &oi};
-//	PneumaticGripperCommand pneumaticGripperCommand{&intake, &oi};
-	ElevatorPositionCommand elevatorPositionCommand{&elevator, 0.35, 0, 0.1};
+	//	TankDriveCommand tankDriveCommand{&drivebase, &oi};
+	PneumaticGripperCommand pneumaticGripperCommand{&intake, &oi};
+	ElevatorPositionCommand elevatorPositionCommand{&elevator, 0.35, 0, 0.15};
 	JoystickElevatorCommand joystickElevatorCommand{&elevator, &oi, &elevatorPositionCommand};
 
 //  TrackPositionCommand positionCommand{&drivebaseSensors};
@@ -75,7 +75,7 @@ public:
 
 	void TeleopInit() override {
 //		tankDriveCommand.init();
-//		pneumaticGripperCommand.init();
+		pneumaticGripperCommand.init();
 		elevatorPositionCommand.init();
 		joystickElevatorCommand.init();
 
@@ -113,7 +113,7 @@ public:
 //		limelight.printToSmartDashboard();
 
 //		tankDriveCommand.update();
-//		pneumaticGripperCommand.update();
+		pneumaticGripperCommand.update();
 		joystickElevatorCommand.update();
 		elevatorPositionCommand.update();
 	}

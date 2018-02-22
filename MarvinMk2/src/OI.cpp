@@ -29,7 +29,7 @@ double OI::getElevatorThrottle(){
 		return 0;
 	}
 	else{
-		return throttle;
+		return -1 * throttle;
 	}
 }
 

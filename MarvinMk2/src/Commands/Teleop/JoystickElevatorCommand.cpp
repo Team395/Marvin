@@ -5,7 +5,7 @@
  *      Author: JARVIS
  */
 #include <OI.h>
-
+#include <iostream>
 #include <Systems/Elevator.h>
 
 #include "JoystickElevatorCommand.h"
@@ -52,7 +52,8 @@ void JoystickElevatorCommand::update() {
 	if(elevatorPositionCommand->getAbsError() < errorThreshold){
 		setpointIncrement = oi->getElevatorThrottle();
 	}
-	elevatorPositionCommand->setSetpoint(setpoint += 0.3*setpointIncrement);
+	elevatorPositionCommand->setSetpoint(setpoint + 0.15*setpointIncrement);
+	std::cout<<setpoint<<std::endl;
 }
 
 void JoystickElevatorCommand::finish() {

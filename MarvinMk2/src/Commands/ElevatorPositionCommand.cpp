@@ -26,6 +26,9 @@ void ElevatorPositionCommand::init(){
 }
 
 void ElevatorPositionCommand::update(){
+	frc::SmartDashboard::PutBoolean("bottomPressed", elevator->bottomPressed());
+	frc::SmartDashboard::PutBoolean("topPressed", elevator->topPressed());
+
 	if(elevator->bottomPressed()){
 		elevator->homeEncoder();
 	}

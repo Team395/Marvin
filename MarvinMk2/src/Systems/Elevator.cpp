@@ -9,7 +9,6 @@
 #include <SmartDashboard/SmartDashboard.h>
 
 Elevator::Elevator() : SystemBase("elevator"), driveUpLastCommand(false) {
-	winchController.SetInverted(ElevatorMap::kWinchInverted);
 	winchController.SetSensorPhase(false);
 	winchController.SetInverted(false);
 }

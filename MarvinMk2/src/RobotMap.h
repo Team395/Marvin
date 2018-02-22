@@ -45,8 +45,8 @@ namespace ElevatorMap{
 	constexpr int kWinchInverted = 1;
 	constexpr int kLimitTop = 0;
 	constexpr int kLimitBottom = 1;
-	constexpr int kTopInverted = 0;
-	constexpr int kBottomInverted = 0;
+	constexpr int kTopInverted = 1;
+	constexpr int kBottomInverted = 1;
 	constexpr int kWinch = 5;
 };
 
