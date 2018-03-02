@@ -76,3 +76,11 @@ OI::ElevatorPreset OI::getElevatorPreset(){
 		return ElevatorPreset::kNone;
 	}
 }
+
+bool OI::getToggleIntakeMode(){
+	return xboxController.GetBackButtonPressed();
+}
+
+bool OI::getIntakeAutoscore(){
+	return xboxController.GetRawButtonPressed(OIMap::Xbox::kScore);
+}

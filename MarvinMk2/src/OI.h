@@ -35,4 +35,8 @@ public:
 	double getElevatorThrottle();
 
 	ElevatorPreset getElevatorPreset();
+	
+	bool getToggleIntakeMode();
+
+	bool getIntakeAutoscore();
 };
