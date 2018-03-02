@@ -82,5 +82,5 @@ bool OI::getToggleIntakeMode(){
 }
 
 bool OI::getIntakeAutoscore(){
-	return xboxController.GetRawButtonPressed(OIMap::Xbox::kScore);
+	return xboxController.GetRawButtonPressed(OIMap::Xbox::kAutoScore);
 }
