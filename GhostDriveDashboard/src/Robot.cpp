@@ -14,6 +14,9 @@
 #include <TimedRobot.h>
 #include <XboxController.h>
 #include <Timer.h>
+#include <Drive/DifferentialDrive.h>
+#include <Talon.h>
+#include <Joystick.h>
 
 enum ElevatorStates{
 	kSwitch = 0
@@ -43,11 +46,21 @@ class Robot : public frc::TimedRobot {
 
 	bool scoreTimerStarted = false;
 	double scoreTimerStartedTime = 0;
+
+	Talon leftTalon{0};
+	Talon rightTalon{1};
+
+	DifferentialDrive differentialDrive{leftTalon, rightTalon};
+	Joystick leftJoystick{0};
+	Joystick rightJoystick{1};
 public:
 	void RobotInit() {
 		m_chooser.AddDefault(kAutoNameDefault, kAutoNameDefault);
 		m_chooser.AddObject(kAutoNameCustom, kAutoNameCustom);
 		frc::SmartDashboard::PutData("Auto Modes", &m_chooser);
+
+		leftTalon.SetInverted(true);
+		rightTalon.SetInverted(true);
 	}
 
 	/*
@@ -88,12 +101,12 @@ public:
 
 	void TeleopPeriodic() {
 		//intake
-		double deadband = 0.15;
+		double deadband = 0.25;
 		double intakeThrottle = xboxController.GetY(frc::GenericHID::JoystickHand::kRightHand);
 		if(std::abs(intakeThrottle) < deadband){
 			intakeThrottle = 0;
 		}
-		intakeOut = intakeOut || intakeThrottle < 0;
+		intakeOut = (scoreTimerStarted && intakeOut) || intakeThrottle < 0;
 		intakeIn = intakeThrottle > 0;
 		frc::SmartDashboard::PutBoolean("Intake Out", intakeOut);
 		frc::SmartDashboard::PutBoolean("Intake In", intakeIn);
@@ -173,6 +186,11 @@ public:
 		frc::SmartDashboard::PutBoolean("DrivingDown", elevatorState == kDrivingDown);
 		frc::SmartDashboard::PutBoolean("DrivingUp", elevatorState == kDrivingUp);
 		frc::SmartDashboard::PutBoolean("Holding", elevatorState == kHolding);
+
+		//drive
+		differentialDrive.TankDrive(leftJoystick.GetY(frc::GenericHID::JoystickHand::kLeftHand)
+				, rightJoystick.GetY(frc::GenericHID::JoystickHand::kRightHand));
+		frc::SmartDashboard::PutData("Drivebase",  &differentialDrive);
 	}
 
 	void TestPeriodic() {}
