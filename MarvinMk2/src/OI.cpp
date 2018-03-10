@@ -84,3 +84,11 @@ frc::Joystick* OI::getLeftStick(){
 bool OI::getTurnButton(){
 	return driveStickRight.GetTrigger();
 }
+
+bool OI::getToggleIntakeMode(){
+	return xboxController.GetBackButtonPressed();
+}
+
+bool OI::getIntakeAutoscore(){
+	return xboxController.GetRawButtonPressed(OIMap::Xbox::kAutoScore);
+}

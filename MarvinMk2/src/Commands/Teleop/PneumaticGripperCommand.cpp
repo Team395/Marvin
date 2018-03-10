@@ -17,101 +17,110 @@ PneumaticGripperCommand::~PneumaticGripperCommand() {
 
 }
 
+void PneumaticGripperCommand::updateAutomatic(double throttle){
+	//Wheel Speed
+	if(!intake->getBackBanner()){
+		intake->driveLeft(throttle);
+		intake->driveRight(throttle);
+		cubeInIntake = false;
+		bannerSensorTripped = false;
+	}
+	else{
+		if(!cubeInIntake){
+			if(!bannerSensorTripped){
+				bannerSensorTripped = true;
+				timerStartedTime = Timer::GetFPGATimestamp();
+			}
+			intake->driveLeft(-1);
+			intake->driveRight(-1);
+			if(Timer::GetFPGATimestamp() - timerStartedTime > intakeTime){
+				cubeInIntake = true;
+			}
+		}
+		else{
+			intake->driveLeft(0);
+			intake->driveRight(0);
+		}
+	}
+
+	//Claw Position
+	if(intake->getBackBanner()){
+		intake->setClawOpen(false);
+	}
+	else{
+		intake->setClawOpen(true);
+	}
+}
+
+void PneumaticGripperCommand::updateManual(int actuate, double throttle){
+	switch(actuate){
+		case 1:
+			intake->setClawOpen(true);
+			break;
+
+		case -1:
+			intake->setClawOpen(false);
+			break;
+
+		case 0:
+			break;
+	}
+
+	intake->driveLeft(throttle);
+	intake->driveRight(throttle);
+}
+
+void PneumaticGripperCommand::updateAutoscore(){
+	if(!scoreTimerStarted){
+		timerStartedTime = Timer::GetFPGATimestamp();
+		scoreTimerStarted = true;
+	}
+	intake->driveLeft(1);
+	intake->driveRight(1);
+	if(Timer::GetFPGATimestamp() - timerStartedTime > scoreTime){
+		intake->setClawOpen(true);
+		intake->driveLeft(0);
+		intake->driveRight(0);
+		intake->setState(IntakeState::automatic);
+		scoreTimerStarted = false;
+		cubeInIntake = false;
+		bannerSensorTripped = false;
+	}
+}
+
 void PneumaticGripperCommand::init(){
 	CommandBase::init();
 }
 
 void PneumaticGripperCommand::update(){
-/*
-	//What mode in
-	int actuate = (oi->getIntakePosition());
+	//Read in inputs
+	int actuate = oi->getIntakePosition();
 	double throttle= oi->getIntakeThrottle();
+	bool autoscore = oi->getIntakeAutoscore();
 
-	if(intake->getState() == IntakeState::automatic && actuate != 0){
+	if(oi->getToggleIntakeMode()){
+		if(intake->getState() == IntakeState::automatic) intake->setState(IntakeState::manual);
+		else if(intake->getState() == IntakeState::manual) intake->setState(IntakeState::automatic);
+	}
+	else if(intake->getState() == IntakeState::automatic && actuate != 0){
 		intake->setState(IntakeState::manual);
 	}
 	else if(intake->getState() == IntakeState::manual && actuate == 1 && intake->getClawOpen()){
 		intake->setState(IntakeState::automatic);
 	}
+	if(autoscore){
+		intake->setState(IntakeState::autoscore);
+	}
 
-	//Claw Position
+	//Update based on mode
 	if(intake->getState() == IntakeState::automatic){
-		if(!(intake->getSideBanner() || intake->getBackBanner())){
-			intake->actuateClaw(false);
-		}
-		else{
-			intake->actuateClaw(true);
-		}
-
+		updateAutomatic(throttle);
 	}
-	else{
-		switch(actuate){
-			case 1:
-				intake->actuateClaw(true);
-				break;
-
-			case -1:
-				intake->actuateClaw(false);
-				break;
-
-			case 0:
-				break;
-		}
+	else if(intake->getState() == IntakeState::manual) {
+		updateManual(actuate, throttle);
 	}
-
-	switch(actuate){
-		case 1:
-			intake->actuateClaw(true);
-			break;
-
-		case -1:
-			intake->actuateClaw(false);
-			break;
-
-		case 0:
-			break;
-	}
-
-	//Wheel Speed
-	if(intake->getState() == IntakeState::automatic){
-		if(!(intake->getSideBanner() || intake->getBackBanner())){
-			intake->driveLeft(throttle);
-			intake->driveRight(throttle);
-		}
-		else if(intake->getSideBanner() && !intake->getBackBanner()){
-			intake->driveLeft(-1);
-			intake->driveRight(-1);
-		}
-		else if(intake->getBackBanner()){
-			intake->driveLeft(0);
-			intake->driveRight(0);
-		}
-	}
-	else{
-		intake->driveLeft(throttle);
-		intake->driveRight(throttle);
-	}
-
-	intake->driveLeft(throttle);
-	intake->driveRight(throttle);
-	*/
-
-	double throttle = oi->getIntakeThrottle();
-	intake->driveLeft(throttle);
-	intake->driveRight(throttle);
-
-	int actuate = oi->getIntakePosition();
-	switch(actuate){
-		case 1:
-			intake->actuateClaw(true);
-			break;
-
-		case -1:
-			intake->actuateClaw(false);
-			break;
-
-		case 0:
-			break;
+	else if(intake->getState() == IntakeState::autoscore){
+		updateAutoscore();
 	}
 }
 

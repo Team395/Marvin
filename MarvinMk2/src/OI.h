@@ -39,4 +39,8 @@ public:
 	Joystick* getLeftStick();
 
 	bool getTurnButton();
+	
+	bool getToggleIntakeMode();
+
+	bool getIntakeAutoscore();
 };
