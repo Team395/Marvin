@@ -35,4 +35,8 @@ public:
 	double getElevatorThrottle();
 
 	ElevatorPreset getElevatorPreset();
+
+	Joystick* getLeftStick();
+
+	bool getTurnButton();
 };

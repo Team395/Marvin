@@ -12,8 +12,8 @@
 #include "Drivebase.h"
 
 Drivebase::Drivebase() : SystemBase("drivebase"){
-	leftMaster.SetInverted(true); //move inverted into RobotMap
-	leftSlave.SetInverted(true);
+	//leftMaster.SetInverted(true); //move inverted into RobotMap
+	//leftSlave.SetInverted(true);
 	leftSlave.Follow(leftMaster);
 	rightSlave.Follow(rightMaster);
 }
@@ -35,4 +35,8 @@ void Drivebase::PIDWrite(double output){
 
 void Drivebase::setMinimumPidOutput(double minimum){
 	minimumPidOutput = minimum;
+}
+
+WPI_TalonSRX* Drivebase::getLeftMaster(){
+	return &leftMaster;
 }

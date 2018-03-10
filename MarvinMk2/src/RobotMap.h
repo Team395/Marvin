@@ -62,5 +62,5 @@ namespace IntakeMap{
 namespace TalonMap{
 	constexpr int kLeftEncoder = 1;
 	constexpr int kRightEncoder = 3;
-	constexpr int kPigeon = 2;
+	constexpr int kPigeon = 4;
 }

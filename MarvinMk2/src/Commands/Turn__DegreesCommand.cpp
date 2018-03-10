@@ -47,6 +47,8 @@ void Turn__DegreesCommand::update() {
 	frc::SmartDashboard::PutData("PIDController", &pidController);
 	frc::SmartDashboard::PutBoolean("Finished", pidController.OnTarget());
 	frc::SmartDashboard::PutNumber("XAngle", drivebaseSensors->getAngleZ());
+	frc::SmartDashboard::PutNumber("PIDError", pidController.GetError());
+	frc::SmartDashboard::PutNumber("PIDSetpoint", pidController.GetSetpoint());
 }
 
 void Turn__DegreesCommand::finish() {

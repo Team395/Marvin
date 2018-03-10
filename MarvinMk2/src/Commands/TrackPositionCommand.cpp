@@ -45,7 +45,7 @@ void TrackPositionCommand::update(){
 	double rightDisplacement{(rightEncoder - lastRightEncoder) * kDistancePerTick};
 	double angularDisplacement{theta - lastTheta};
 
-	SmartDashboard::PutNumber("Angular Displacement", angularDisplacement);
+	frc::SmartDashboard::PutNumber("Angular Displacement", angularDisplacement);
 	double xDelta;
 	double yDelta;
 
@@ -53,13 +53,13 @@ void TrackPositionCommand::update(){
 		double turnRadius =  (leftDisplacement+rightDisplacement)/(2*angularDisplacement);
 
 		if(std::isinf(turnRadius) || std::isnan(turnRadius)) {turnRadius = 0;}
-		SmartDashboard::PutNumber("Turn Radius", turnRadius);
+		frc::SmartDashboard::PutNumber("Turn Radius", turnRadius);
 
 		xDelta = turnRadius * (std::cos((theta + angularDisplacement) * kPi/180) - std::cos(theta * kPi/180));
 		yDelta = turnRadius * (std::sin((theta + angularDisplacement) * kPi/180) - std::sin(theta * kPi/180));
 	}
 	else{
-		SmartDashboard::PutNumber("Turn Radius", -555);
+		frc::SmartDashboard::PutNumber("Turn Radius", -555);
 		xDelta = leftDisplacement * std::cos(theta * kPi/180);
 		yDelta = leftDisplacement * std::sin(theta * kPi/180);
 	}
@@ -67,11 +67,11 @@ void TrackPositionCommand::update(){
 	xPosition += xDelta;
 	yPosition += yDelta;
 
-	SmartDashboard::PutNumber("X Delta", xDelta);
-	SmartDashboard::PutNumber("Y Delta", yDelta);
-	SmartDashboard::PutNumber("X Position", xPosition);
-	SmartDashboard::PutNumber("Y Position", yPosition);
-	SmartDashboard::PutNumber("Heading", theta - initialHeading);
+	frc::SmartDashboard::PutNumber("X Delta", xDelta);
+	frc::SmartDashboard::PutNumber("Y Delta", yDelta);
+	frc::SmartDashboard::PutNumber("X Position", xPosition);
+	frc::SmartDashboard::PutNumber("Y Position", yPosition);
+	frc::SmartDashboard::PutNumber("Heading", theta - initialHeading);
 
 	lastLeftEncoder = leftEncoder;
 	lastRightEncoder = rightEncoder;

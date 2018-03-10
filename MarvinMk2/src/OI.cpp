@@ -15,7 +15,7 @@ OI::OI(){
 }
 
 double OI::getDriveLeft(){
-	return driveStickLeft.GetY();
+	return -1 * driveStickLeft.GetY();
 }
 
 double OI::getDriveRight(){
@@ -75,4 +75,12 @@ OI::ElevatorPreset OI::getElevatorPreset(){
 	else{
 		return ElevatorPreset::kNone;
 	}
+}
+
+frc::Joystick* OI::getLeftStick(){
+	return &driveStickLeft;
+}
+
+bool OI::getTurnButton(){
+	return driveStickRight.GetTrigger();
 }

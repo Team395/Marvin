@@ -17,7 +17,7 @@ DrivebaseSensors::DrivebaseSensors(Drivebase* drivebasePointer) :
 	imu(getTalon(drivebase, TalonMap::kPigeon)),
 	leftEncoderTalon{getTalon(drivebase, TalonMap::kLeftEncoder)},
 	rightEncoderTalon{getTalon(drivebase, TalonMap::kRightEncoder)} {
-
+		leftEncoderTalon->SetSensorPhase(true);
 }
 
 DrivebaseSensors::~DrivebaseSensors() {

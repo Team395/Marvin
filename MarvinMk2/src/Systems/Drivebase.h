@@ -34,6 +34,7 @@ public:
 	void tankDrive(double, double);
 	void PIDWrite(double);
 	void setMinimumPidOutput(double);
+	WPI_TalonSRX* getLeftMaster();
 };
 
 #endif /* SRC_SYSTEMS_DRIVEBASE_H_ */

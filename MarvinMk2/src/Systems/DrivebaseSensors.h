@@ -31,9 +31,9 @@ class DrivebaseSensors : SystemBase, public frc::PIDSource {
 public:
 	//PID Gains for Turn
 	//TODO: retune loop for degrees
-	double kP{-0.03};
+	double kP{0.02};
 	double kI{0.00};
-	double kD{0};
+	double kD{0.0};
 
 	DrivebaseSensors(Drivebase*);
 	virtual ~DrivebaseSensors();
