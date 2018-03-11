@@ -11,9 +11,11 @@
 #include <Systems/SystemBase.h>
 #include <Systems/Elevator.h>
 #include <Systems/Drivebase.h>
-#include <Systems/DrivebaseSensors.h>
+#include <Systems/DrivebaseEncoderSensors.h>
+#include <Systems/DrivebaseGyroSensor.h>
 #include <Systems/Limelight.h>
 #include <Systems/PneumaticSystem.h>
 #include <Systems/Intake.h>
+#include <Systems/ClimberSystem.h>
 
 #endif /* SRC_SYSTEMS_SYSTEMS_H_ */
