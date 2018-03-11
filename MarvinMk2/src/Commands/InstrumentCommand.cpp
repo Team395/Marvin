@@ -33,11 +33,11 @@ void InstrumentCommand::update() {
 	frc::SmartDashboard::PutBoolean("Intake In", intakeIn);
 
 	bool actuateGripper = false;
-	if(oi->getIntakePosition() == 1){
+	if(oi->getRequestedIntakePosition() == OI::RequestedClawState::kClose){
 		intakeOpen = false;
 		actuateGripper = true;
 	}
-	if(oi->getIntakePosition() == -1){
+	if(oi->getRequestedIntakePosition() == OI::RequestedClawState::kOpen){
 		intakeOpen = true;
 		actuateGripper = true;
 	}

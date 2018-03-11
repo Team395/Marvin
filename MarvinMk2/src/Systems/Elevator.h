@@ -11,11 +11,11 @@
 #include <DigitalInput.h>
 
 #include <RobotMap.h>
-#include <Systems/DrivebaseSensors.h>
 #include <Systems/SystemBase.h>
 #include <Timer.h>
 #include <PIDOutput.h>
 #include <PIDSource.h>
+#include <Systems/DrivebaseEncoderSensors.h>
 
 class DrivebaseSensors;
 

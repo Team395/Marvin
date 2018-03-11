@@ -27,7 +27,8 @@ class Robot: public frc::TimedRobot {
 	Drivebase drivebase{};
 //	Intake intake{};
 //	PneumaticSystem pneumaticSystem{};
-	DrivebaseSensors drivebaseSensors{&drivebase};
+	DrivebaseEncoderSensors encoderSensors{&drivebase};
+	DrivebaseGyroSensor gyroSensor{&drivebase};
 	Limelight limelight{};
 
 
@@ -37,7 +38,7 @@ class Robot: public frc::TimedRobot {
 //	JoystickElevatorCommand joystickElevatorCommand{&elevator, &oi, &elevatorPositionCommand};
 
 //  TrackPositionCommand positionCommand{&drivebaseSensors};
-	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &drivebaseSensors, &oi};
+	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &gyroSensor, &oi};
 //	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
 	InstrumentCommand instrumentCommand{&oi};
 
@@ -184,7 +185,7 @@ public:
 //		joystickElevatorCommand.update();
 //		elevatorPositionCommand.update();
 
-#if 1
+#if 0
 		/************************************/
 		/*********** MOTION MAGIC ***********/
 		/************************************/

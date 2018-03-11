@@ -24,7 +24,7 @@ class PneumaticGripperCommand: public CommandBase {
 	bool scoreTimerStarted = false;
 
 	void updateAutomatic(double);
-	void updateManual(int, double);
+	void updateManual(OI::RequestedClawState, double);
 	void updateAutoscore();
 
 public:

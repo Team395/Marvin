@@ -11,10 +11,10 @@
 
 #include "Turn__DegreesCommand.h"
 
-Turn__DegreesCommand::Turn__DegreesCommand(Drivebase* drivebase, DrivebaseSensors* drivebaseSensors, OI* oi)
+Turn__DegreesCommand::Turn__DegreesCommand(Drivebase* drivebase, DrivebaseGyroSensor* gyroSensor, OI* oi)
 : CommandBase("Turn_DegreesCommand"),
-  pidController{drivebaseSensors->kP, drivebaseSensors->kI, drivebaseSensors->kD, drivebaseSensors, drivebase},
-  drivebaseSensors{drivebaseSensors},
+  pidController{gyroSensor->kP, gyroSensor->kI, gyroSensor->kD, gyroSensor, drivebase},
+  gyroSensor{gyroSensor},
   oi{oi} {
 
 }
@@ -24,21 +24,23 @@ Turn__DegreesCommand::~Turn__DegreesCommand() {
 }
 
 void Turn__DegreesCommand::init() {
-
+	CommandBase::init();
 }
 
 void Turn__DegreesCommand::update() {
-	drivebaseSensors->kP = drivebaseSensors->preferences->GetDouble("Kp", -.03);
-	drivebaseSensors->kI = drivebaseSensors->preferences->GetDouble("Ki", 0);
-	drivebaseSensors->kD = drivebaseSensors->preferences->GetDouble("Kd", 0);
-    drivebaseSensors->setMinimumPidOutput(drivebaseSensors->preferences->GetDouble("KMinimum", 0));
-	pidController.SetP(drivebaseSensors->kP);
-	pidController.SetI(drivebaseSensors->kI);
-	pidController.SetD(drivebaseSensors->kD);
+	gyroSensor->kP = gyroSensor->preferences->GetDouble("TurnDegreesKp", -.03);
+	gyroSensor->kI = gyroSensor->preferences->GetDouble("TurnDegreesKi", 0);
+	gyroSensor->kD = gyroSensor->preferences->GetDouble("TurnDegreesKd", 0);
+
+	pidController.SetP(gyroSensor->kP);
+	pidController.SetI(gyroSensor->kI);
+	pidController.SetD(gyroSensor->kD);
 	frc::SmartDashboard::PutData("PID Controller", &pidController);
 
+	gyroSensor->setMinimumPidOutput(gyroSensor->preferences->GetDouble("TurnDegreesKMinimum", 0));
+
 	if(!pidController.IsEnabled() && !turnFinished){
-		pidController.SetSetpoint(drivebaseSensors->getAngleZ() + kTurnDegrees);
+		pidController.SetSetpoint(gyroSensor->getAngleZ() + kTurnDegrees);
 		pidController.SetAbsoluteTolerance(kAcceptableError);
 		pidController.Enable();
 	}
@@ -48,20 +50,20 @@ void Turn__DegreesCommand::update() {
 		pidController.Disable();
 	}
 
-	frc::SmartDashboard::PutData("PIDController", &pidController);
-	frc::SmartDashboard::PutBoolean("Finished", pidController.OnTarget());
-	frc::SmartDashboard::PutNumber("XAngle", drivebaseSensors->getAngleZ());
-	frc::SmartDashboard::PutNumber("PIDError", pidController.GetError());
-	frc::SmartDashboard::PutNumber("PIDSetpoint", pidController.GetSetpoint());
+	frc::SmartDashboard::PutData("Turn Degrees PIDController", &pidController);
+	frc::SmartDashboard::PutBoolean("Turn Degrees Finished", pidController.OnTarget());
+	frc::SmartDashboard::PutNumber("Turn Degrees XAngle", gyroSensor->getAngleZ());
+	frc::SmartDashboard::PutNumber("Turn Degrees PIDError", pidController.GetError());
+	frc::SmartDashboard::PutNumber("Turn Degrees PIDSetpoint", pidController.GetSetpoint());
 }
 
 void Turn__DegreesCommand::finish() {
-
+	CommandBase::finish();
 }
 
 void Turn__DegreesCommand::disable() {
 	pidController.Disable();
-	frc::SmartDashboard::PutData("PIDController", &pidController);
+	frc::SmartDashboard::PutData("Turn Degrees PIDController", &pidController);
 }
 
 void Turn__DegreesCommand::startNewturn() {

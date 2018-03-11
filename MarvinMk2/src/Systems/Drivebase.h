@@ -8,12 +8,12 @@
 #ifndef SRC_SYSTEMS_DRIVEBASE_H_
 #define SRC_SYSTEMS_DRIVEBASE_H_
 
-#include <Systems/DrivebaseSensors.h>
 #include <ctre/Phoenix.h>
 #include <Solenoid.h>
 #include <Systems/SystemBase.h>
 #include <RobotMap.h>
-#include <Systems/DrivebaseSensors.h>
+#include <Systems/DrivebaseEncoderSensors.h>
+#include <Systems/DrivebaseGyroSensor.h>
 
 class Drivebase : SystemBase, public frc::PIDOutput {
 	WPI_TalonSRX leftMaster{DrivebaseMap::kLeftMaster};
@@ -24,7 +24,8 @@ class Drivebase : SystemBase, public frc::PIDOutput {
 
 	bool highGear{true};
 	double minimumPidOutput{0.1};
-	friend class DrivebaseSensors;
+	friend class DrivebaseEncoderSensors;
+	friend class DrivebaseGyroSensor;
 
 public:
 	Drivebase();

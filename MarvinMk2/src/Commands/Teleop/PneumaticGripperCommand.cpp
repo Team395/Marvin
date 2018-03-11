@@ -52,17 +52,15 @@ void PneumaticGripperCommand::updateAutomatic(double throttle){
 	}
 }
 
-void PneumaticGripperCommand::updateManual(int actuate, double throttle){
+void PneumaticGripperCommand::updateManual(OI::RequestedClawState actuate, double throttle){
 	switch(actuate){
-		case 1:
-			intake->setClawOpen(true);
+		case OI::RequestedClawState::kClose:
+			intake->setClawOpen(false);  // TODO:  check this is correct
 			break;
-
-		case -1:
-			intake->setClawOpen(false);
+		case OI::RequestedClawState::kOpen:
+			intake->setClawOpen(true);  // TODO:  check this is correct
 			break;
-
-		case 0:
+		default:
 			break;
 	}
 
@@ -94,7 +92,7 @@ void PneumaticGripperCommand::init(){
 
 void PneumaticGripperCommand::update(){
 	//Read in inputs
-	int actuate = oi->getIntakePosition();
+	OI::RequestedClawState actuate = oi->getRequestedIntakePosition();
 	double throttle= oi->getIntakeThrottle();
 	bool autoscore = oi->getIntakeAutoscore();
 
@@ -102,25 +100,28 @@ void PneumaticGripperCommand::update(){
 		if(intake->getState() == IntakeState::automatic) intake->setState(IntakeState::manual);
 		else if(intake->getState() == IntakeState::manual) intake->setState(IntakeState::automatic);
 	}
-	else if(intake->getState() == IntakeState::automatic && actuate != 0){
+	else if(intake->getState() == IntakeState::automatic && actuate != OI::RequestedClawState::kDoNothing){
 		intake->setState(IntakeState::manual);
 	}
-	else if(intake->getState() == IntakeState::manual && actuate == 1 && intake->getClawOpen()){
+	else if(intake->getState() == IntakeState::manual && actuate == OI::RequestedClawState::kClose && intake->getClawOpen()){
 		intake->setState(IntakeState::automatic);
 	}
+
 	if(autoscore){
 		intake->setState(IntakeState::autoscore);
 	}
 
 	//Update based on mode
-	if(intake->getState() == IntakeState::automatic){
-		updateAutomatic(throttle);
-	}
-	else if(intake->getState() == IntakeState::manual) {
-		updateManual(actuate, throttle);
-	}
-	else if(intake->getState() == IntakeState::autoscore){
-		updateAutoscore();
+	switch (intake->getState()) {
+		case IntakeState::automatic:
+			updateAutomatic(throttle);
+			break;
+		case IntakeState::manual:
+			updateManual(actuate, throttle);
+			break;
+		case IntakeState::autoscore:
+			updateAutoscore();
+			break;
 	}
 }
 

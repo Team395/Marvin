@@ -12,13 +12,13 @@
 #include <Commands/CommandBase.h>
 #include <OI.h>
 #include <Systems/Drivebase.h>
-#include <Systems/DrivebaseSensors.h>
+#include <Systems/DrivebaseGyroSensor.h>
 
 class Turn__DegreesCommand : CommandBase {
 	const double PI  =3.141592653589793238463;
 
 	PIDController pidController;
-	DrivebaseSensors* drivebaseSensors;
+	DrivebaseGyroSensor* gyroSensor;
 	OI* oi;
 
 	double kTurnDegrees{90};
@@ -26,7 +26,7 @@ class Turn__DegreesCommand : CommandBase {
 	bool turnFinished{false};
 
 public:
-	Turn__DegreesCommand(Drivebase*, DrivebaseSensors*, OI*);
+	Turn__DegreesCommand(Drivebase*, DrivebaseGyroSensor*, OI*);
 	virtual ~Turn__DegreesCommand();
 
 	void init() override;

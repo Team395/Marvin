@@ -10,8 +10,9 @@
 #include <SmartDashboard/SmartDashboard.h>
 #include <iostream>
 
-TrackPositionCommand::TrackPositionCommand(DrivebaseSensors* sensors) : CommandBase("Track Position Command"),
-drivebaseSensors{sensors},
+TrackPositionCommand::TrackPositionCommand(DrivebaseEncoderSensors* encoderSensors, DrivebaseGyroSensor* gyroSensor) : CommandBase("Track Position Command"),
+encoderSensors{encoderSensors},
+gyroSensor{gyroSensor},
 xPosition{0},
 yPosition{0},
 initialHeading{0},
@@ -27,19 +28,19 @@ TrackPositionCommand::~TrackPositionCommand() {
 
 void TrackPositionCommand::init(){
 	CommandBase::init();
-	initialHeading = drivebaseSensors->getAngleZ() * kPi/180;
+	initialHeading = gyroSensor->getAngleZ() * kPi/180;
 	lastTheta = initialHeading;
-	lastLeftEncoder = drivebaseSensors->getLeftEncoder(DrivebaseSensors::returnType::kDisplacement);
-	lastRightEncoder = drivebaseSensors->getRightEncoder(DrivebaseSensors::returnType::kDisplacement);
+	lastLeftEncoder = encoderSensors->getLeftEncoder(DrivebaseEncoderSensors::returnType::kDisplacement);
+	lastRightEncoder = encoderSensors->getRightEncoder(DrivebaseEncoderSensors::returnType::kDisplacement);
 	xPosition = 0.0;
 	yPosition = 0.0;
 	std::cout << "RESET\n";
 }
 
 void TrackPositionCommand::update(){
-	double leftEncoder{drivebaseSensors->getLeftEncoder(DrivebaseSensors::returnType::kDisplacement)};
-	double rightEncoder{drivebaseSensors->getRightEncoder(DrivebaseSensors::returnType::kDisplacement)};
-	double theta{drivebaseSensors->getAngleZ()* kPi/180};
+	double leftEncoder{encoderSensors->getLeftEncoder(DrivebaseEncoderSensors::returnType::kDisplacement)};
+	double rightEncoder{encoderSensors->getRightEncoder(DrivebaseEncoderSensors::returnType::kDisplacement)};
+	double theta{gyroSensor->getAngleZ()* kPi/180};
 
 	double leftDisplacement{(leftEncoder - lastLeftEncoder) * kDistancePerTick};
 	double rightDisplacement{(rightEncoder - lastRightEncoder) * kDistancePerTick};
