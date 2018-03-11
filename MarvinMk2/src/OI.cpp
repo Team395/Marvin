@@ -82,7 +82,7 @@ frc::Joystick* OI::getLeftStick(){
 }
 
 bool OI::getTurnButton(){
-	return driveStickRight.GetTrigger();
+	return driveStickRight.GetRawButton(2);
 }
 
 bool OI::getToggleIntakeMode(){
@@ -93,6 +93,10 @@ bool OI::getIntakeAutoscore(){
 	return xboxController.GetRawButtonPressed(OIMap::Xbox::kAutoScore);
 }
 
-bool OI::getShiftDown(){
-	return driveStickLeft.GetTrigger() || driveStickRight.GetTrigger();
+bool OI::getShiftDownHalf(){
+	return driveStickLeft.GetTrigger();
+}
+
+bool OI::getShiftDownSeventyFive(){
+	return driveStickRight.GetTrigger();
 }

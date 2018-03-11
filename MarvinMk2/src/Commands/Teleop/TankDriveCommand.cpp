@@ -31,11 +31,15 @@ double sign(double x){
 void TankDriveCommand::update() {
 	double left = oi->getDriveLeft();
 	double right = oi->getDriveRight();
-	bool shiftDown = oi->getShiftDown();
+	bool shiftDownHalf = oi->getShiftDownHalf();
+	bool shiftDownSeventyFive = oi->getShiftDownSeventyFive();
 
-	if(shiftDown){
-		left /= 2.0;
-		right /= 2.0;
+	if(shiftDownHalf) {
+		left *= 0.5;
+		right *= 0.5;
+	} else if(shiftDownSeventyFive) {
+		left *= 0.75;
+		right *= 0.75;
 	}
 
 	drivebase->tankDrive(sign(left) * left*left, sign(right) * right*right);

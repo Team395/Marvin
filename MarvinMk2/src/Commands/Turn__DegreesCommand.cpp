@@ -28,9 +28,13 @@ void Turn__DegreesCommand::init() {
 }
 
 void Turn__DegreesCommand::update() {
-	//gyroscope->kP = gyroscope->preferences->GetDouble("limelightKp", -.03);
-	//gyroscope->kI = gyroscope->preferences->GetDouble("limelightKi", 0);
-	//gyroscope->kD = gyroscope->preferences->GetDouble("limelightKd", 0);
+	drivebaseSensors->kP = drivebaseSensors->preferences->GetDouble("Kp", -.03);
+	drivebaseSensors->kI = drivebaseSensors->preferences->GetDouble("Ki", 0);
+	drivebaseSensors->kD = drivebaseSensors->preferences->GetDouble("Kd", 0);
+    drivebaseSensors->setMinimumPidOutput(drivebaseSensors->preferences->GetDouble("KMinimum", 0));
+	pidController.SetP(drivebaseSensors->kP);
+	pidController.SetI(drivebaseSensors->kI);
+	pidController.SetD(drivebaseSensors->kD);
 	frc::SmartDashboard::PutData("PID Controller", &pidController);
 
 	if(!pidController.IsEnabled() && !turnFinished){

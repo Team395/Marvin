@@ -37,7 +37,7 @@ void InstrumentCommand::update() {
 		intakeOpen = false;
 		actuateGripper = true;
 	}
-	if(oi->getIntakePosition() == 1){
+	if(oi->getIntakePosition() == -1){
 		intakeOpen = true;
 		actuateGripper = true;
 	}
@@ -79,8 +79,8 @@ void InstrumentCommand::update() {
 	// Elevator Presets
 	double elevatorThrottle = oi->getElevatorThrottle();
 
-	bool elevatorUp = elevatorThrottle < 0;
-	bool elevatorDown = elevatorThrottle > 0;
+	bool elevatorUp = elevatorThrottle > 0;
+	bool elevatorDown = elevatorThrottle < 0;
 	if(elevatorUp) elevatorState = kDrivingUp;
 	else if(elevatorDown) elevatorState = kDrivingDown;
 	else if(elevatorState != kZero
@@ -91,11 +91,12 @@ void InstrumentCommand::update() {
 		elevatorState = kHolding;
 	}
 
-	if(oi->getElevatorPreset() == OI::ElevatorPreset::kSwitch) elevatorState = kSwitch;
-	if(oi->getElevatorPreset() == OI::ElevatorPreset::kLowScale) elevatorState = kScaleLow;
-	if(oi->getElevatorPreset() == OI::ElevatorPreset::kNormalScale) elevatorState = kScaleNormal;
-	if(oi->getElevatorPreset() == OI::ElevatorPreset::kHighScale) elevatorState = kScaleHigh;
-	if(oi->getElevatorPreset() == OI::ElevatorPreset::kBottom) elevatorState = kZero;
+	OI::ElevatorPreset preset = oi->getElevatorPreset();
+	if(preset == OI::ElevatorPreset::kSwitch) elevatorState = kSwitch;
+	if(preset == OI::ElevatorPreset::kLowScale) elevatorState = kScaleLow;
+	if(preset == OI::ElevatorPreset::kNormalScale) elevatorState = kScaleNormal;
+	if(preset == OI::ElevatorPreset::kHighScale) elevatorState = kScaleHigh;
+	if(preset == OI::ElevatorPreset::kBottom) elevatorState = kZero;
 
 	frc::SmartDashboard::PutBoolean("SwitchPosition", elevatorState == kSwitch);
 	frc::SmartDashboard::PutBoolean("ScaleLowPosition", elevatorState == kScaleLow);
@@ -105,6 +106,8 @@ void InstrumentCommand::update() {
 	frc::SmartDashboard::PutBoolean("DrivingDown", elevatorState == kDrivingDown);
 	frc::SmartDashboard::PutBoolean("DrivingUp", elevatorState == kDrivingUp);
 	frc::SmartDashboard::PutBoolean("Holding", elevatorState == kHolding);
+
+	frc::SmartDashboard::PutNumber("elevatorState", elevatorState);
 }
 
 void InstrumentCommand::finish() {

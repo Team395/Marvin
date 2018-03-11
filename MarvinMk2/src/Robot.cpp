@@ -111,19 +111,44 @@ public:
 		drivebase.getLeftMaster()->ConfigPeakOutputReverse(-1, 10);
 
 		drivebase.getLeftMaster()->SelectProfileSlot(0, 0);
-		drivebase.getLeftMaster()->Config_kF(0, 0, 10);
+		drivebase.getLeftMaster()->Config_kF(0, 0.465, 10);
 		drivebase.getLeftMaster()->Config_kP(0, 0, 10);
 		drivebase.getLeftMaster()->Config_kI(0, 0, 10);
 		drivebase.getLeftMaster()->Config_kD(0, 0, 10);
 
-		drivebase.getLeftMaster()->ConfigMotionCruiseVelocity(0, 10);
-		drivebase.getLeftMaster()->ConfigMotionAcceleration(0, 10);
-
+		drivebase.getLeftMaster()->ConfigMotionCruiseVelocity(1100, 10);
+		drivebase.getLeftMaster()->ConfigMotionAcceleration(500, 10);
 		drivebase.getLeftMaster()->SetSelectedSensorPosition(0, 0, 10);
+
+		drivebase.getRightMaster()->
+				ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative
+						, 0
+						, 10);
+		drivebase.getRightMaster()->SetStatusFramePeriod(StatusFrameEnhanced::Status_13_Base_PIDF0
+				, 10
+				, 10);
+		drivebase.getRightMaster()->SetStatusFramePeriod(StatusFrameEnhanced::Status_10_MotionMagic
+				, 10
+				, 10);
+
+		drivebase.getRightMaster()->ConfigNominalOutputForward(0, 10);
+		drivebase.getRightMaster()->ConfigNominalOutputReverse(0, 10);
+		drivebase.getRightMaster()->ConfigPeakOutputForward(1, 10);
+		drivebase.getRightMaster()->ConfigPeakOutputReverse(-1, 10);
+
+		drivebase.getRightMaster()->SelectProfileSlot(0, 0);
+		drivebase.getRightMaster()->Config_kF(0, 0.465, 10);
+		drivebase.getRightMaster()->Config_kP(0, 0, 10);
+		drivebase.getRightMaster()->Config_kI(0, 0, 10);
+		drivebase.getRightMaster()->Config_kD(0, 0, 10);
+
+		drivebase.getRightMaster()->ConfigMotionCruiseVelocity(1100, 10);
+		drivebase.getRightMaster()->ConfigMotionAcceleration(500, 10);
+		drivebase.getRightMaster()->SetSelectedSensorPosition(0, 0, 10);
 	}
 
 	void TeleopPeriodic() override {
-#if 0
+#if 1
 		if(oi.getTurnButton()){
 			turn__DegreesCommand.update();
 		}
@@ -133,10 +158,10 @@ public:
 			tankDriveCommand.update();
 			//positionCommand.update();
 		}
-#endif
+#else
 		tankDriveCommand.update();
 		instrumentCommand.update();
-
+#endif
 /*		if(!oi.getTurnButton()){
 			aimToTargetCommand.disable();
 			aimToTargetCommand.startNewTurn();
@@ -159,23 +184,23 @@ public:
 //		joystickElevatorCommand.update();
 //		elevatorPositionCommand.update();
 
-#if 0
+#if 1
 		/************************************/
 		/*********** MOTION MAGIC ***********/
 		/************************************/
 		std::ostringstream outputStream;
-		double leftYstick = oi.getDriveLeft();
+//		double leftYstick = oi.getDriveLeft();
 
 		double motorOutput = drivebase.getLeftMaster()->GetMotorOutputPercent();
 		outputStream << "\tOut%:" << motorOutput;
 		outputStream << "\tVel:" << drivebase.getLeftMaster()->GetSelectedSensorVelocity(0);
 
-		if(oi.getLeftStick()->GetTrigger()) {
-			drivebase.getLeftMaster()->SetSelectedSensorPosition(0, 0, 10);
+		if(oi.getLeftStick()->GetRawButton(2)) {
 
 			//Motion Magic - 4096 ticks/rev * 10 Rotations in either direction
-			double targetPos = leftYstick * 4096 * 10.0;
+			double targetPos = 4096 * 10.0;
 			drivebase.getLeftMaster()->Set(ControlMode::MotionMagic, targetPos);
+			drivebase.getRightMaster()->Set(ControlMode::MotionMagic, -targetPos);
 
 			outputStream << "\terr:" << drivebase.getLeftMaster()->GetClosedLoopError(0);
 			outputStream << "\ttrg:" << targetPos;

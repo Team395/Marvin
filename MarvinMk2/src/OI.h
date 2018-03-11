@@ -44,5 +44,7 @@ public:
 
 	bool getIntakeAutoscore();
 
-	bool getShiftDown();
+	bool getShiftDownHalf();
+
+	bool getShiftDownSeventyFive();
 };

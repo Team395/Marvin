@@ -23,7 +23,7 @@ class Drivebase : SystemBase, public frc::PIDOutput {
 	std::array<WPI_TalonSRX*, 4> talonIndex {{&leftMaster, &leftSlave, &rightMaster, &rightSlave}};
 
 	bool highGear{true};
-	double minimumPidOutput{0.05};
+	double minimumPidOutput{0.1};
 	friend class DrivebaseSensors;
 
 public:
@@ -35,6 +35,7 @@ public:
 	void PIDWrite(double);
 	void setMinimumPidOutput(double);
 	WPI_TalonSRX* getLeftMaster();
+	WPI_TalonSRX* getRightMaster();
 };
 
 #endif /* SRC_SYSTEMS_DRIVEBASE_H_ */

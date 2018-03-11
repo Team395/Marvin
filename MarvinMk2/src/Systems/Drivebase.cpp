@@ -30,7 +30,7 @@ void Drivebase::tankDrive(double left, double right){
 void Drivebase::PIDWrite(double output){
 	if(output < 0 && output > -minimumPidOutput) { output = -minimumPidOutput; }
 	else if (output > 0 && output < minimumPidOutput){ output = minimumPidOutput; }
-	tankDrive(output, -output);
+	tankDrive(-output, -output); //TODO: fix motor inversion
 }
 
 void Drivebase::setMinimumPidOutput(double minimum){
@@ -39,4 +39,8 @@ void Drivebase::setMinimumPidOutput(double minimum){
 
 WPI_TalonSRX* Drivebase::getLeftMaster(){
 	return &leftMaster;
+}
+
+WPI_TalonSRX* Drivebase::getRightMaster(){
+	return &rightMaster;
 }

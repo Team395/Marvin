@@ -31,9 +31,10 @@ class DrivebaseSensors : SystemBase, public frc::PIDSource {
 public:
 	//PID Gains for Turn
 	//TODO: retune loop for degrees
-	double kP{0.02};
+	double kP{0.04};
 	double kI{0.00};
-	double kD{0.0};
+	double kD{0.004};
+	frc::Preferences* preferences = frc::Preferences::GetInstance();
 
 	DrivebaseSensors(Drivebase*);
 	virtual ~DrivebaseSensors();
@@ -48,6 +49,8 @@ public:
 	};
 	double getLeftEncoder(returnType);
 	double getRightEncoder(returnType);
+
+	void setMinimumPidOutput(double);
 };
 
 #endif /* SRC_SYSTEMS_DRIVEBASESENSORS_H_ */

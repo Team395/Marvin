@@ -22,7 +22,7 @@ class Turn__DegreesCommand : CommandBase {
 	OI* oi;
 
 	double kTurnDegrees{90};
-	double kAcceptableError{0.01};
+	double kAcceptableError{0.1};
 	bool turnFinished{false};
 
 public:

@@ -18,6 +18,7 @@ DrivebaseSensors::DrivebaseSensors(Drivebase* drivebasePointer) :
 	leftEncoderTalon{getTalon(drivebase, TalonMap::kLeftEncoder)},
 	rightEncoderTalon{getTalon(drivebase, TalonMap::kRightEncoder)} {
 		leftEncoderTalon->SetSensorPhase(true);
+		rightEncoderTalon->SetSensorPhase(true);
 }
 
 DrivebaseSensors::~DrivebaseSensors() {
@@ -59,4 +60,8 @@ double DrivebaseSensors::getRightEncoder(returnType type){
 		else{
 			return rightEncoderTalon->GetSelectedSensorVelocity(0);
 		}
+}
+
+void DrivebaseSensors::setMinimumPidOutput(double minimum){
+	drivebase->setMinimumPidOutput(minimum);
 }
