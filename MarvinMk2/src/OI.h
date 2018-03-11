@@ -43,4 +43,6 @@ public:
 	bool getToggleIntakeMode();
 
 	bool getIntakeAutoscore();
+
+	bool getShiftDown();
 };

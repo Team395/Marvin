@@ -24,7 +24,7 @@ double OI::getDriveRight(){
 
 double OI::getElevatorThrottle(){
 	double throttle = xboxController.GetRawAxis(OIMap::Xbox::kElevator);
-	double deadband = 0.15;
+	double deadband = 0.25;
 	if(std::abs(throttle) < deadband){
 		return 0;
 	}
@@ -35,7 +35,7 @@ double OI::getElevatorThrottle(){
 
 double OI::getIntakeThrottle(){
 	double throttle = xboxController.GetRawAxis(OIMap::Xbox::kIntakeThrottle);
-	double deadband = 0.15;
+	double deadband = 0.25;
 	if(std::abs(throttle) < deadband){
 		return 0;
 	}
@@ -91,4 +91,8 @@ bool OI::getToggleIntakeMode(){
 
 bool OI::getIntakeAutoscore(){
 	return xboxController.GetRawButtonPressed(OIMap::Xbox::kAutoScore);
+}
+
+bool OI::getShiftDown(){
+	return driveStickLeft.GetTrigger() || driveStickRight.GetTrigger();
 }
