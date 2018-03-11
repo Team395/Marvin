@@ -17,7 +17,7 @@ class PneumaticGripperCommand: public CommandBase {
 	Intake* intake;
 	OI* oi;
 	const double intakeTime = 1;
-	const double scoreTime = 3;
+	const double scoreTime = 1;
 	double timerStartedTime = 0;
 	bool cubeInIntake = false;
 	bool bannerSensorTripped = false;
