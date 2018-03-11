@@ -17,5 +17,6 @@
 #include <Commands/Teleop/TankDriveCommand.h>
 #include <Commands/TrackPositionCommand.h>
 #include <Commands/ElevatorPositionCommand.h>
+#include <Commands/InstrumentCommand.h>
 
 #endif /* SRC_COMMANDS_COMMANDS_H_ */

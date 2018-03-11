@@ -39,6 +39,7 @@ class Robot: public frc::TimedRobot {
 //  TrackPositionCommand positionCommand{&drivebaseSensors};
 	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &drivebaseSensors, &oi};
 //	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
+	InstrumentCommand instrumentCommand{&oi};
 
 	/*
 	std::list<CommandBase*> commandQueue;
@@ -91,6 +92,7 @@ public:
 		turn__DegreesCommand.init();
 //		positionCommand.init();
 //		aimToTargetCommand.init();
+		instrumentCommand.init();
 
 		drivebase.getLeftMaster()->
 				ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative
@@ -133,6 +135,7 @@ public:
 		}
 #endif
 		tankDriveCommand.update();
+		instrumentCommand.update();
 
 /*		if(!oi.getTurnButton()){
 			aimToTargetCommand.disable();
