@@ -17,6 +17,11 @@ class OI {
 
 public:
 	OI();
+	enum class RequestedClawState {
+		kOpen,
+		kClose,
+		kDoNothing
+	};
 	enum class ElevatorPreset{
 		kHighScale,
 		kNormalScale,
@@ -30,7 +35,7 @@ public:
 	double getDriveRight();
 
 	double getIntakeThrottle();
-	int getIntakePosition();
+	RequestedClawState getRequestedIntakePosition();
 
 	double getElevatorThrottle();
 
@@ -47,4 +52,9 @@ public:
 	bool getShiftDownHalf();
 
 	bool getShiftDownSeventyFive();
+
+	bool getExtendClimber();
+	bool getRetractClimber();
+	bool getTiltClimber();
+	bool getWinchClimber();
 };

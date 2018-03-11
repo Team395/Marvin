@@ -44,15 +44,18 @@ double OI::getIntakeThrottle(){
 	}
 }
 
-int OI::getIntakePosition(){
+OI::RequestedClawState OI::getRequestedIntakePosition(){
 	if(xboxController.GetRawAxis(OIMap::Xbox::kIntakeClose) > 0.5){
-		return 1;
+		return RequestedClawState::kClose;
+//		return 1;
 	}
 	else if(xboxController.GetRawAxis(OIMap::Xbox::kIntakeOpen) > 0.5){
-		return -1;
+		return RequestedClawState::kOpen;
+//		return -1;
 	}
 	else{
-		return 0;
+		return RequestedClawState::kDoNothing;
+//		return 0;
 	}
 }
 
@@ -99,4 +102,28 @@ bool OI::getShiftDownHalf(){
 
 bool OI::getShiftDownSeventyFive(){
 	return driveStickRight.GetTrigger();
+}
+
+bool OI::getExtendClimber() {
+	// True if user pushes up on D-PAD
+	int angle = xboxController.GetPOV();
+	return (angle >= 315 || angle <= 45);
+}
+
+bool OI::getRetractClimber() {
+	// True if user pushes up down D-PAD or LB
+	int angle = xboxController.GetPOV();
+	return (angle >= 135 || angle <= 225) || xboxController.GetBumper(frc::GenericHID::JoystickHand::kLeftHand);
+}
+
+bool OI::getTiltClimber() {
+	// True if user pushes left on D-PAD
+	int angle = xboxController.GetPOV();
+	return (angle >= 225 || angle <= 315);
+}
+
+bool OI::getWinchClimber(){
+	// True if user pushes right on D-PAD or RB
+	int angle = xboxController.GetPOV() || xboxController.GetBumper(frc::GenericHID::JoystickHand::kRightHand);
+	return (angle >= 45 || angle <= 135);
 }

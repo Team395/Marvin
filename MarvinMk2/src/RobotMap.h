@@ -58,6 +58,12 @@ namespace IntakeMap{
 	constexpr int kBackBanner = 9;
 }
 
+namespace ClimberMap{
+	constexpr int kWinch = 0;
+	constexpr int kTelescope = 1;
+	constexpr int kTilt = 2;
+};
+
 //Maps out gadgeteer ports on talons
 namespace TalonMap{
 	constexpr int kLeftEncoder = 1;
