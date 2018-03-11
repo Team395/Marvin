@@ -1,15 +1,14 @@
 /*
- * DrivebaseSensors.h
+ * DrivebaseEncoderSensors.h
  *
  *  Created on: Jan 16, 2018
  *      Author: JARVIS
  */
 
-#ifndef SRC_SYSTEMS_DRIVEBASESENSORS_H_
-#define SRC_SYSTEMS_DRIVEBASESENSORS_H_
+#ifndef SRC_SYSTEMS_DRIVEBASEENCODERSENSORS_H_
+#define SRC_SYSTEMS_DRIVEBASEENCODERSENSORS_H_
 
 
-#include <ctre/phoenix/Sensors/PigeonIMU.h>
 #include <PIDSource.h>
 #include <Systems/SystemBase.h>
 #include <Systems/Elevator.h>
@@ -21,9 +20,8 @@
 using PigeonIMU = ctre::phoenix::sensors::PigeonIMU;
 class Drivebase;
 
-class DrivebaseSensors : SystemBase, public frc::PIDSource {
+class DrivebaseEncoderSensors : SystemBase, public frc::PIDSource {
 	Drivebase* drivebase;
-	PigeonIMU imu;
 	//Talon encoders only exposed through encoder object, these are pointers
 	WPI_TalonSRX* leftEncoderTalon;
 	WPI_TalonSRX* rightEncoderTalon;
@@ -36,11 +34,20 @@ public:
 	double kD{0.004};
 	frc::Preferences* preferences = frc::Preferences::GetInstance();
 
-	DrivebaseSensors(Drivebase*);
-	virtual ~DrivebaseSensors();
-	double getAngleZ();
+	DrivebaseEncoderSensors(Drivebase*);
+	virtual ~DrivebaseEncoderSensors();
+
 	frc::PIDSourceType GetPIDSourceType();
 	double PIDGet();
+	double getAveragedEncoderPositions();
+
+
+	double convertToNativeUnits(double feet);
+	const double PI  =3.141592653589793238463;
+	const double INCHES_PER_FOOT = 12;
+	const double WHEEL_DIAMETER_INCHES = 4;
+	const double UNITS_PER_ROTATION = 4096;
+
 	WPI_TalonSRX* getTalon(Drivebase*, int);
 
 	enum class returnType{
@@ -51,6 +58,7 @@ public:
 	double getRightEncoder(returnType);
 
 	void setMinimumPidOutput(double);
+	void resetEncoderSensors();
 };
 
-#endif /* SRC_SYSTEMS_DRIVEBASESENSORS_H_ */
+#endif /* SRC_SYSTEMS_DRIVEBASEENCODERSENSORS_H_ */
