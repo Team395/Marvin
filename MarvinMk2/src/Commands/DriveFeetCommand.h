@@ -11,15 +11,33 @@
 #include <Commands/CommandBase.h>
 #include <PIDController.h>
 #include <Systems/DrivebaseEncoderSensors.h>
+#include <Systems/DrivebaseGyroSensor.h>
 
-class Drive__FeetCommand: public CommandBase {
-	PIDController pidController;
+class Drive__FeetCommand: public CommandBase{
+
+	class PIDGetter : PIDOutput{
+		double pidValue;
+	public:
+		PIDGetter();
+		void PIDWrite(double);
+		double getPIDValue();
+	};
+
+	PIDController linearPID;
+	PIDController rotationalPID;
+	PIDGetter linearGetter{};
+	PIDGetter rotationalGetter{};
+
 	DrivebaseEncoderSensors* encoderSensors;
+	DrivebaseGyroSensor* gyroSensor;
+
+	Drivebase* drivebase;
 	bool movementFinished = true;
 	double requestedMovementFeet = 0;
 	double kAcceptableError=651.9; //actually two inches
+
 public:
-	Drive__FeetCommand(double, Drivebase* drivebase, DrivebaseEncoderSensors* encoderSensors);
+	Drive__FeetCommand(double, Drivebase*, DrivebaseEncoderSensors*, DrivebaseGyroSensor*);
 	virtual ~Drive__FeetCommand();
 
 	void init() override;
