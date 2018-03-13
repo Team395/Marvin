@@ -13,20 +13,20 @@
 #include <Systems/DrivebaseEncoderSensors.h>
 #include <Systems/DrivebaseGyroSensor.h>
 
-class Drive__FeetCommand: public CommandBase{
-
-	class PIDGetter : PIDOutput{
+class PIDGetter : public PIDOutput{
 		double pidValue;
 	public:
 		PIDGetter();
+		virtual ~PIDGetter();
 		void PIDWrite(double);
 		double getPIDValue();
 	};
 
+class Drive__FeetCommand: public CommandBase{
 	PIDController linearPID;
 	PIDController rotationalPID;
-	PIDGetter linearGetter{};
-	PIDGetter rotationalGetter{};
+	PIDGetter* linearGetter{};
+	PIDGetter* rotationalGetter{};
 
 	DrivebaseEncoderSensors* encoderSensors;
 	DrivebaseGyroSensor* gyroSensor;

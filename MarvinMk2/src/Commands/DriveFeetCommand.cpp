@@ -67,7 +67,8 @@ void Drive__FeetCommand::update(){
 	}
 
 	if(linearPID.IsEnabled()){
-		drivebase->tankDrive(linearGetter.getPIDValue() + rotationalGetter.getPIDValue(), linearGetter.getPIDValue() + rotationalGetter.getPIDValue());
+		drivebase->tankDrive(linearGetter->getPIDValue() + rotationalGetter->getPIDValue()
+				, linearGetter->getPIDValue() + rotationalGetter->getPIDValue());
 	}
 
 	frc::SmartDashboard::PutData("Drive Feet PID Controller", &linearPID);
@@ -89,14 +90,18 @@ void Drive__FeetCommand::startNewMovement(){
 	movementFinished = false;
 }
 
-Drive__FeetCommand::PIDGetter::PIDGetter(){
-	pidValue = 0;
+PIDGetter::PIDGetter() : pidValue{0}{
+
 }
 
-void Drive__FeetCommand::PIDGetter::PIDWrite(double value){
+PIDGetter::~PIDGetter() {
+
+}
+
+void PIDGetter::PIDWrite(double value){
 	pidValue = value;
 }
 
-double Drive__FeetCommand::PIDGetter::getValue(){
+double PIDGetter::getPIDValue(){
 	return pidValue;
 }
