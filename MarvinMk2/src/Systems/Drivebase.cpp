@@ -14,6 +14,8 @@
 Drivebase::Drivebase() : SystemBase("drivebase"){
 	//leftMaster.SetInverted(true); //move inverted into RobotMap
 	//leftSlave.SetInverted(true);
+	rightMaster.SetInverted(true);
+	rightSlave.SetInverted(true);
 	leftSlave.Follow(leftMaster);
 	rightSlave.Follow(rightMaster);
 }
@@ -30,7 +32,7 @@ void Drivebase::tankDrive(double left, double right){
 void Drivebase::PIDWrite(double output){
 	if(output < 0 && output > -minimumPidOutput) { output = -minimumPidOutput; }
 	else if (output > 0 && output < minimumPidOutput){ output = minimumPidOutput; }
-	tankDrive(-output, -output); //TODO: fix motor inversion
+	tankDrive(output, -output); //TODO: fix motor inversion
 }
 
 void Drivebase::setMinimumPidOutput(double minimum){

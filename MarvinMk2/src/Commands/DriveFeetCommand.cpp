@@ -11,8 +11,8 @@
 
 Drive__FeetCommand::Drive__FeetCommand(double feet, Drivebase* drivebase, DrivebaseEncoderSensors* encoderSensors, DrivebaseGyroSensor* gyroSensor) :
 	CommandBase("Drive Feet Command"),
-	linearPID{encoderSensors->kP, encoderSensors->kI,encoderSensors->kD, encoderSensors, linearGetter},
-	rotationalPID{gyroSensor->kP, gyroSensor->kI, gyroSensor->kD, gyroSensor, rotationalGetter},
+	linearPID{encoderSensors->kP, encoderSensors->kI,encoderSensors->kD, encoderSensors, &linearGetter},
+	rotationalPID{gyroSensor->kP, gyroSensor->kI, gyroSensor->kD, gyroSensor, &rotationalGetter},
 	requestedMovementFeet{feet},
 	drivebase{drivebase},
 	encoderSensors{encoderSensors},
@@ -32,7 +32,7 @@ void Drive__FeetCommand::init(){
 }
 
 void Drive__FeetCommand::update(){
-	encoderSensors->kP = encoderSensors->preferences->GetDouble("DriveFeetKp", -.03);
+	encoderSensors->kP = encoderSensors->preferences->GetDouble("DriveFeetKp", 0.03);
 	encoderSensors->kI = encoderSensors->preferences->GetDouble("DriveFeetKi", 0);
 	encoderSensors->kD = encoderSensors->preferences->GetDouble("DriveFeetKd", 0);
 
@@ -41,7 +41,7 @@ void Drive__FeetCommand::update(){
 	linearPID.SetD(encoderSensors->kD);
 	encoderSensors->setMinimumPidOutput(encoderSensors->preferences->GetDouble("Drive Feet Minimum PID Output", 0));
 
-	gyroSensor->kP = gyroSensor->preferences->GetDouble("RotationalKp", -.03);
+	gyroSensor->kP = gyroSensor->preferences->GetDouble("RotationalKp", 0);
 	gyroSensor->kI = gyroSensor->preferences->GetDouble("RotationalKi", 0);
 	gyroSensor->kD = gyroSensor->preferences->GetDouble("RotationalKd", 0);
 
@@ -53,11 +53,13 @@ void Drive__FeetCommand::update(){
 
 	if(!linearPID.IsEnabled() && !movementFinished){
 		encoderSensors->resetEncoderSensors();
-		linearPID.SetSetpoint(encoderSensors->getAveragedEncoderPositions() + encoderSensors->convertToNativeUnits(requestedMovementFeet));
-		linearPID.SetAbsoluteTolerance(kAcceptableError);
-		linearPID.Enable();
-		rotationalPID.SetSetpoint(gyroSensor->getAngleZ());
-		rotationalPID.SetAbsoluteTolerance(0);
+		if(encoderSensors->getAveragedEncoderPositions() == 0) {
+			linearPID.SetSetpoint(encoderSensors->getAveragedEncoderPositions() + encoderSensors->convertToNativeUnits(requestedMovementFeet));
+			linearPID.SetAbsoluteTolerance(kAcceptableError);
+			linearPID.Enable();
+			rotationalPID.SetSetpoint(gyroSensor->getAngleZ());
+			rotationalPID.SetAbsoluteTolerance(0);
+		}
 	}
 
 	if(linearPID.OnTarget()){
@@ -67,8 +69,8 @@ void Drive__FeetCommand::update(){
 	}
 
 	if(linearPID.IsEnabled()){
-		drivebase->tankDrive(linearGetter->getPIDValue() + rotationalGetter->getPIDValue()
-				, linearGetter->getPIDValue() + rotationalGetter->getPIDValue());
+		drivebase->tankDrive(linearGetter.getPIDValue() + rotationalGetter.getPIDValue()
+				, linearGetter.getPIDValue() - rotationalGetter.getPIDValue());
 	}
 
 	frc::SmartDashboard::PutData("Drive Feet PID Controller", &linearPID);
@@ -84,6 +86,7 @@ void Drive__FeetCommand::finish(){
 
 void Drive__FeetCommand::disable(){
 	linearPID.Disable();
+	rotationalPID.Disable();
 	frc::SmartDashboard::PutData("Drive Feet PID Controller", &linearPID);
 }
 void Drive__FeetCommand::startNewMovement(){

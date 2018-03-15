@@ -25,8 +25,8 @@ class PIDGetter : public PIDOutput{
 class Drive__FeetCommand: public CommandBase{
 	PIDController linearPID;
 	PIDController rotationalPID;
-	PIDGetter* linearGetter{};
-	PIDGetter* rotationalGetter{};
+	PIDGetter linearGetter{};
+	PIDGetter rotationalGetter{};
 
 	DrivebaseEncoderSensors* encoderSensors;
 	DrivebaseGyroSensor* gyroSensor;

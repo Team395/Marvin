@@ -35,7 +35,6 @@ void Turn__DegreesCommand::update() {
 	pidController.SetP(gyroSensor->kP);
 	pidController.SetI(gyroSensor->kI);
 	pidController.SetD(gyroSensor->kD);
-	frc::SmartDashboard::PutData("PID Controller", &pidController);
 
 	gyroSensor->setMinimumPidOutput(gyroSensor->preferences->GetDouble("TurnDegreesKMinimum", 0));
 

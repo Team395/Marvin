@@ -103,9 +103,13 @@ void PneumaticGripperCommand::update(){
 	else if(intake->getState() == IntakeState::automatic && actuate != OI::RequestedClawState::kDoNothing){
 		intake->setState(IntakeState::manual);
 	}
-	else if(intake->getState() == IntakeState::manual && actuate == OI::RequestedClawState::kClose && intake->getClawOpen()){
-		intake->setState(IntakeState::automatic);
-	}
+	//TODO: probably needs to be fixed to account for placing a cube by opening the claw
+//	else if(intake->getState() == IntakeState::manual && actuate == OI::RequestedClawState::kOpen && intake->getClawOpen()){
+//		intake->setState(IntakeState::automatic);
+//	}
+
+	//TODO: remove
+	//intake->setState(IntakeState::manual);
 
 	if(autoscore){
 		intake->setState(IntakeState::autoscore);
@@ -123,6 +127,9 @@ void PneumaticGripperCommand::update(){
 			updateAutoscore();
 			break;
 	}
+
+	SmartDashboard::PutBoolean("Banner Sensor", intake->getBackBanner());
+	SmartDashboard::PutNumber("IntakeState", (int)intake->getState());
 }
 
 void PneumaticGripperCommand::finish(){

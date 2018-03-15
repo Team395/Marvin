@@ -19,7 +19,7 @@ double OI::getDriveLeft(){
 }
 
 double OI::getDriveRight(){
-	return driveStickRight.GetY();
+	return -1 * driveStickRight.GetY();
 }
 
 double OI::getElevatorThrottle(){
@@ -40,7 +40,7 @@ double OI::getIntakeThrottle(){
 		return 0;
 	}
 	else{
-		return throttle;
+		return -1 * throttle;
 	}
 }
 

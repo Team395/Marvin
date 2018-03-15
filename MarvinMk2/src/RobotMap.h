@@ -51,11 +51,11 @@ namespace ElevatorMap{
 };
 
 namespace IntakeMap{
-	constexpr int kGripperOpen = 1;
-	constexpr int kGripperClose = 0;
+	constexpr int kGripperOpen = 0;
+	constexpr int kGripperClose = 1;
 	constexpr int kIntakeLeft = 0;
 	constexpr int kIntakeRight = 1;
-	constexpr int kBackBanner = 9;
+	constexpr int kBackBanner = 2;
 }
 
 namespace ClimberMap{

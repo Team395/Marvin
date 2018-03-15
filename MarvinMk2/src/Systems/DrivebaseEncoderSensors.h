@@ -23,7 +23,7 @@ class Drivebase;
 class DrivebaseEncoderSensors : SystemBase, public frc::PIDSource {
 	Drivebase* drivebase;
 	//Talon encoders only exposed through encoder object, these are pointers
-	WPI_TalonSRX* leftEncoderTalon;
+	//WPI_TalonSRX* leftEncoderTalon;
 	WPI_TalonSRX* rightEncoderTalon;
 
 public:
@@ -54,7 +54,7 @@ public:
 		kDisplacement,
 		kVelocity
 	};
-	double getLeftEncoder(returnType);
+	//double getLeftEncoder(returnType);
 	double getRightEncoder(returnType);
 
 	void setMinimumPidOutput(double);

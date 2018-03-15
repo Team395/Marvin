@@ -8,8 +8,8 @@
 #include "Intake.h"
 
 Intake::Intake() : SystemBase("Intake"){
-	leftIntake.SetInverted(true);
-	rightIntake.SetInverted(true);
+	leftIntake.SetInverted(false);
+	rightIntake.SetInverted(false);
 }
 
 Intake::~Intake() {
@@ -21,8 +21,7 @@ void Intake::driveLeft(double speed){
 }
 
 void Intake::driveRight(double speed){
-	//Scaling factor because different motor on half of the gripper
-	rightIntake.Set(speed * 790/860);
+	rightIntake.Set(speed);
 }
 
 void Intake::setClawOpen(bool open){
@@ -35,7 +34,7 @@ bool Intake::getClawOpen(){
 }
 
 bool Intake::getBackBanner(){
-	return backBannerSensor.Get();
+	return !backBannerSensor.Get();
 }
 
 void Intake::setState(IntakeState state){
