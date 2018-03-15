@@ -157,11 +157,23 @@ public:
 		if(oi.getTurnButton()){
 			turn__DegreesCommand.update();
 		}
-		else{
+		else {
 			turn__DegreesCommand.disable();
 			turn__DegreesCommand.startNewturn();
+		}
+
+		if(oi.getLeftStick()->GetRawButton(2))
+		{
+			driveFeetCommand.update();
+		}
+		else{
+			driveFeetCommand.disable();
+			driveFeetCommand.startNewMovement();
+			//			positionCommand.update();
+		}
+
+		if(!oi.getTurnButton() && !oi.getLeftStick()->GetRawButton(2)) {
 			tankDriveCommand.update();
-//			positionCommand.update();
 		}
 #else
 //		tankDriveCommand.update();
@@ -189,14 +201,6 @@ public:
 		instrumentCommand.update();
 //		joystickElevatorCommand.update();
 //		elevatorPositionCommand.update();
-
-		if(oi.getLeftStick()->GetRawButton(2))
-		{
-			driveFeetCommand.update();
-		} else {
-			driveFeetCommand.disable();
-			driveFeetCommand.startNewMovement();
-		}
 
 #if 0
 		/************************************/

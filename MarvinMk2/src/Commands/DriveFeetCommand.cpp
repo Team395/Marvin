@@ -59,6 +59,7 @@ void Drive__FeetCommand::update(){
 			linearPID.Enable();
 			rotationalPID.SetSetpoint(gyroSensor->getAngleZ());
 			rotationalPID.SetAbsoluteTolerance(0);
+			//rotationalPID.Enable();
 		}
 	}
 
@@ -66,6 +67,7 @@ void Drive__FeetCommand::update(){
 		movementFinished = true;
 		linearPID.Disable();
 		rotationalPID.Disable();
+		drivebase->tankDrive(0,0);
 	}
 
 	if(linearPID.IsEnabled()){
@@ -78,6 +80,9 @@ void Drive__FeetCommand::update(){
 	frc::SmartDashboard::PutNumber("Drive Feet Average Encoder Positions", encoderSensors->getAveragedEncoderPositions());
 	frc::SmartDashboard::PutNumber("Drive Feet PIDError", linearPID.GetError());
 	frc::SmartDashboard::PutNumber("Drive Feet PIDSetpoint", linearPID.GetSetpoint());
+	frc::SmartDashboard::PutNumber("Drive Feet PIDWrite", linearGetter.getPIDValue());
+	frc::SmartDashboard::PutNumber("DF Right Output", drivebase->getRightMaster()->GetMotorOutputPercent());
+	frc::SmartDashboard::PutNumber("DF Left Output", drivebase->getLeftMaster()->GetMotorOutputPercent());
 
 }
 void Drive__FeetCommand::finish(){
