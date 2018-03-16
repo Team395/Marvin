@@ -14,19 +14,18 @@
 #include <Systems/Drivebase.h>
 #include <Systems/DrivebaseGyroSensor.h>
 
-class Turn__DegreesCommand : CommandBase {
+class Turn__DegreesCommand : public CommandBase {
 	const double PI  =3.141592653589793238463;
 
 	PIDController pidController;
 	DrivebaseGyroSensor* gyroSensor;
-	OI* oi;
 
 	double kTurnDegrees{90};
 	double kAcceptableError{0.1};
 	bool turnFinished{false};
 
 public:
-	Turn__DegreesCommand(Drivebase*, DrivebaseGyroSensor*, OI*);
+	Turn__DegreesCommand(Drivebase*, DrivebaseGyroSensor*);
 	virtual ~Turn__DegreesCommand();
 
 	void init() override;

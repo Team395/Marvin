@@ -11,11 +11,10 @@
 
 #include "Turn__DegreesCommand.h"
 
-Turn__DegreesCommand::Turn__DegreesCommand(Drivebase* drivebase, DrivebaseGyroSensor* gyroSensor, OI* oi)
+Turn__DegreesCommand::Turn__DegreesCommand(Drivebase* drivebase, DrivebaseGyroSensor* gyroSensor)
 : CommandBase("Turn_DegreesCommand"),
   pidController{gyroSensor->kP, gyroSensor->kI, gyroSensor->kD, gyroSensor, drivebase},
-  gyroSensor{gyroSensor},
-  oi{oi} {
+  gyroSensor{gyroSensor} {
 
 }
 
@@ -28,7 +27,7 @@ void Turn__DegreesCommand::init() {
 }
 
 void Turn__DegreesCommand::update() {
-	gyroSensor->kP = gyroSensor->preferences->GetDouble("TurnDegreesKp", -.03);
+	gyroSensor->kP = gyroSensor->preferences->GetDouble("TurnDegreesKp", 0.03);
 	gyroSensor->kI = gyroSensor->preferences->GetDouble("TurnDegreesKi", 0);
 	gyroSensor->kD = gyroSensor->preferences->GetDouble("TurnDegreesKd", 0);
 

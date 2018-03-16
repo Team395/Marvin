@@ -38,12 +38,12 @@ class Robot: public frc::TimedRobot {
 //	JoystickElevatorCommand joystickElevatorCommand{&elevator, &oi, &elevatorPositionCommand};
 
 //  TrackPositionCommand positionCommand{&drivebaseSensors};
-	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &gyroSensor, &oi};
+	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &gyroSensor};
 //	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
 	InstrumentCommand instrumentCommand{&oi};
-	Drive__FeetCommand driveFeetCommand{2,&drivebase,&encoderSensors,&gyroSensor};
+	Drive__FeetCommand driveFeetCommand{10,&drivebase,&encoderSensors,&gyroSensor};
 
-	/*
+
 	std::list<CommandBase*> commandQueue;
 	std::list<CommandBase*>::iterator commandQueueIterator;
 
@@ -57,7 +57,7 @@ class Robot: public frc::TimedRobot {
 		if(command->getCommandState() == CommandState::kFinished) {
 			commandQueueIterator++;
 		}
-	}*/
+	}
 
 	int loopCount = 0;
 	int timesInMotionMagic = 0;
@@ -73,13 +73,13 @@ public:
 	}
 
 	void AutonomousInit() override {
-//		commandQueue = auton::Wait1Wait3Wait2().getCommandQueue();
-//		commandQueueIterator = commandQueue.begin();
+		commandQueue = auton::Drive10Turn90Drive5(&drivebase, &encoderSensors, &gyroSensor).getCommandQueue();
+		commandQueueIterator = commandQueue.begin();
 	}
 
 	void AutonomousPeriodic() override {
-//		if(commandQueueIterator == commandQueue.end()) return;
-//		processCommand(*commandQueueIterator);
+		if(commandQueueIterator == commandQueue.end()) return;
+		processCommand(*commandQueueIterator);
 	}
 
 	void TeleopInit() override {

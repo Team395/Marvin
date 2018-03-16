@@ -31,11 +31,12 @@ void PneumaticGripperCommand::updateAutomatic(double throttle){
 				bannerSensorTripped = true;
 				timerStartedTime = Timer::GetFPGATimestamp();
 			}
-			intake->driveLeft(-1);
-			intake->driveRight(-1);
-			if(Timer::GetFPGATimestamp() - timerStartedTime > intakeTime){
+
+			if(Timer::GetFPGATimestamp() - timerStartedTime > intakeTime + 0.25){
 				cubeInIntake = true;
 			}
+			intake->driveLeft(-1);
+			intake->driveRight(-1);
 		}
 		else{
 			intake->driveLeft(0);
@@ -44,7 +45,7 @@ void PneumaticGripperCommand::updateAutomatic(double throttle){
 	}
 
 	//Claw Position
-	if(intake->getBackBanner()){
+	if(intake->getBackBanner() && Timer::GetFPGATimestamp() - timerStartedTime > 0.25){
 		intake->setClawOpen(false);
 	}
 	else{

@@ -41,7 +41,7 @@ void Drive__FeetCommand::update(){
 	linearPID.SetD(encoderSensors->kD);
 	encoderSensors->setMinimumPidOutput(encoderSensors->preferences->GetDouble("Drive Feet Minimum PID Output", 0));
 
-	gyroSensor->kP = gyroSensor->preferences->GetDouble("RotationalKp", 0);
+	gyroSensor->kP = gyroSensor->preferences->GetDouble("RotationalKp", 0.02);
 	gyroSensor->kI = gyroSensor->preferences->GetDouble("RotationalKi", 0);
 	gyroSensor->kD = gyroSensor->preferences->GetDouble("RotationalKd", 0);
 
@@ -59,7 +59,7 @@ void Drive__FeetCommand::update(){
 			linearPID.Enable();
 			rotationalPID.SetSetpoint(gyroSensor->getAngleZ());
 			rotationalPID.SetAbsoluteTolerance(0);
-			//rotationalPID.Enable();
+			rotationalPID.Enable();
 		}
 	}
 
@@ -71,8 +71,8 @@ void Drive__FeetCommand::update(){
 	}
 
 	if(linearPID.IsEnabled()){
-		drivebase->tankDrive(linearGetter.getPIDValue() + rotationalGetter.getPIDValue()
-				, linearGetter.getPIDValue() - rotationalGetter.getPIDValue());
+		drivebase->tankDrive(linearGetter.getPIDValue() - rotationalGetter.getPIDValue()
+				, linearGetter.getPIDValue() + rotationalGetter.getPIDValue());
 	}
 
 	frc::SmartDashboard::PutData("Drive Feet PID Controller", &linearPID);
