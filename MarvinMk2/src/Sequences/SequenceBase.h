@@ -36,7 +36,6 @@ namespace auton {
 		}
 
 		void processCommand(CommandBase* command){
-			std::cout << "Entered processCommand().";
 			if(command->getCommandState() == CommandState::kNotStarted) {
 				command->init();
 			}
@@ -46,7 +45,6 @@ namespace auton {
 			if(command->getCommandState() == CommandState::kFinished) {
 				commandQueueIterator++;
 			}
-			std::cout << "Exited processCommand().";
 		}
 	};
 }

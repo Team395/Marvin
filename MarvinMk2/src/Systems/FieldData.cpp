@@ -33,20 +33,20 @@ void FieldData::readSwitchScalePositions() {
 	}
 
 	switch(gameData[1]){
+	case 'L':
+		scalePosition = SwitchScalePositions::kLeft;
+		break;
+	case 'R':
+		scalePosition = SwitchScalePositions::kRight;
+		break;
+	}
+
+	switch(gameData[2]){
 		case 'L':
 			awaySwitchPosition = SwitchScalePositions::kLeft;
 			break;
 		case 'R':
 			awaySwitchPosition = SwitchScalePositions::kRight;
-			break;
-	}
-
-	switch(gameData[2]){
-		case 'L':
-			scalePosition = SwitchScalePositions::kLeft;
-			break;
-		case 'R':
-			scalePosition = SwitchScalePositions::kRight;
 			break;
 	}
 }

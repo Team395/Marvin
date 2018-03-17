@@ -93,35 +93,33 @@ public:
 		SwitchScalePositions scalePosition = fieldData.getScalePosition();
 
 		switch(scoringStrategy) {
-		case AutonomousScoringStrategy::kNone:
-			sequenceToExecute = &crossAutonLine;
-			break;
-		case AutonomousScoringStrategy::kSwitch:
-			switch(startPosition) {
-				case RobotStartPositions::kCenter:
-					switch(homeSwitchPosition) {
-						case SwitchScalePositions::kLeft:
-							sequenceToExecute = &scoreLeftSwitchFromCenter;
-							break;
-						case SwitchScalePositions::kRight:
-							break;
-						case SwitchScalePositions::kUnknown:
-							break;
-					}
-					break;
-				case RobotStartPositions::kLeft:
-					break;
-				case RobotStartPositions::kRight:
-					break;
-			}
-			break;
-		case AutonomousScoringStrategy::kScale:
-			break;
-		case AutonomousScoringStrategy::kSwitchAndScale:
-			break;
+			case AutonomousScoringStrategy::kNone:
+				sequenceToExecute = &crossAutonLine;
+				break;
+			case AutonomousScoringStrategy::kSwitch:
+				switch(startPosition) {
+					case RobotStartPositions::kCenter:
+						switch(homeSwitchPosition) {
+							case SwitchScalePositions::kLeft:
+								sequenceToExecute = &scoreLeftSwitchFromCenter;
+								break;
+							case SwitchScalePositions::kRight:
+								break;
+							case SwitchScalePositions::kUnknown:
+								break;
+						}
+						break;
+					case RobotStartPositions::kLeft:
+						break;
+					case RobotStartPositions::kRight:
+						break;
+				}
+				break;
+			case AutonomousScoringStrategy::kScale:
+				break;
+			case AutonomousScoringStrategy::kSwitchAndScale:
+				break;
 		}
-
-		sequenceToExecute = &drive10turn90drive5;
 
 		sequenceToExecute->initSequence();
 	}
