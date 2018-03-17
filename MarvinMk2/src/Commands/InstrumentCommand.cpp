@@ -9,8 +9,9 @@
 #include <SmartDashboard/SmartDashboard.h>
 #include <Timer.h>
 
-InstrumentCommand::InstrumentCommand(OI* oi) : CommandBase("InstrumentCommand")
-	, oi{oi} {
+InstrumentCommand::InstrumentCommand(OI* oi, Intake* intake) : CommandBase("InstrumentCommand")
+	, oi{oi}
+	, intake{intake} {
 	// TODO Auto-generated constructor stub
 
 }
@@ -45,36 +46,38 @@ void InstrumentCommand::update() {
 	frc::SmartDashboard::PutBoolean("Intake Open2", intakeOpen);
 	frc::SmartDashboard::PutBoolean("Intake Closed", !intakeOpen);
 
-	bool autoscore = oi->getIntakeAutoscore();
-	bool toggleIntakeMode = oi->getToggleIntakeMode();
-	if(toggleIntakeMode){
-		if(intakeState == IntakeStates::kAutomatic) intakeState = IntakeStates::kManual;
-		else if(intakeState == IntakeStates::kManual) intakeState = IntakeStates::kAutomatic;
-	}
-	else if(actuateGripper && intakeOpen){
-		intakeState = IntakeStates::kAutomatic;
-	}
-	else if(actuateGripper){
-		intakeState = IntakeStates::kManual;
-	}
-	if(!intakeOpen && autoscore){
-		intakeState = IntakeStates::kAutoscore;
-		if(!scoreTimerStarted) {
-			scoreTimerStarted = true;
-			scoreTimerStartedTime = Timer::GetFPGATimestamp();
-			intakeOut = true;
-		}
-	}
-	if(scoreTimerStarted && Timer::GetFPGATimestamp() - scoreTimerStartedTime > 1){
-		intakeOut = false;
-		intakeOpen = true;
-		intakeState = IntakeStates::kAutomatic;
-		scoreTimerStarted = false;
-	}
+//	bool autoscore = oi->getIntakeAutoscore();
+//	bool toggleIntakeMode = oi->getToggleIntakeMode();
+//	if(toggleIntakeMode){
+//		if(intakeState == IntakeStates::kAutomatic) intakeState = IntakeStates::kManual;
+//		else if(intakeState == IntakeStates::kManual) intakeState = IntakeStates::kAutomatic;
+//	}
+//	else if(actuateGripper && intakeOpen){
+//		intakeState = IntakeStates::kAutomatic;
+//	}
+//	else if(actuateGripper){
+//		intakeState = IntakeStates::kManual;
+//	}
+//	if(!intakeOpen && autoscore){
+//		intakeState = IntakeStates::kAutoscore;
+//		if(!scoreTimerStarted) {
+//			scoreTimerStarted = true;
+//			scoreTimerStartedTime = Timer::GetFPGATimestamp();
+//			intakeOut = true;
+//		}
+//	}
+//	if(scoreTimerStarted && Timer::GetFPGATimestamp() - scoreTimerStartedTime > 1){
+//		intakeOut = false;
+//		intakeOpen = true;
+//		intakeState = IntakeStates::kAutomatic;
+//		scoreTimerStarted = false;
+//	}
 
-	frc::SmartDashboard::PutBoolean("IntakeAutomaticMode", intakeState == IntakeStates::kAutomatic);
-	frc::SmartDashboard::PutBoolean("IntakeManualMode", intakeState == IntakeStates::kManual);
-	frc::SmartDashboard::PutBoolean("IntakeAutoscore", intakeState == IntakeStates::kAutoscore);
+	intakeState = intake->getState();
+
+	frc::SmartDashboard::PutBoolean("IntakeAutomaticMode", intakeState == IntakeState::automatic);
+	frc::SmartDashboard::PutBoolean("IntakeManualMode", intakeState == IntakeState::manual);
+	frc::SmartDashboard::PutBoolean("IntakeAutoscore", intakeState == IntakeState::autoscore);
 
 	// Elevator Presets
 	double elevatorThrottle = oi->getElevatorThrottle();

@@ -5,6 +5,7 @@
  *      Author: JARVIS
  */
 #include <string>
+#include <iostream>
 
 #include "CommandBase.h"
 
@@ -13,7 +14,6 @@ CommandBase::CommandBase(std::string name) : name{name} {
 }
 
 CommandBase::~CommandBase() {
-
 }
 
 void CommandBase::init(){

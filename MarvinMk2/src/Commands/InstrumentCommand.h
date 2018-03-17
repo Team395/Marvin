@@ -10,6 +10,7 @@
 
 #include <Commands/CommandBase.h>
 #include <OI.h>
+#include <Systems/Intake.h>
 
 enum ElevatorStates{
 	kSwitch = 0
@@ -33,15 +34,16 @@ class InstrumentCommand: public CommandBase {
 	bool intakeOut = false;
 	bool intakeIn = false;
 	ElevatorStates elevatorState = kZero;
-	IntakeStates intakeState = kAutomatic;
-	IntakeStates lastIntakeState = kAutomatic;
+	IntakeState intakeState = IntakeState::automatic;
+	IntakeState lastIntakeState = IntakeState::automatic;
 
 	bool scoreTimerStarted = false;
 	double scoreTimerStartedTime = 0;
 
 	OI* oi;
+	Intake* intake;
 public:
-	InstrumentCommand(OI* oi);
+	InstrumentCommand(OI* oi, Intake* intake);
 	virtual ~InstrumentCommand();
 
 	void init() override;

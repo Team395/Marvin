@@ -32,7 +32,7 @@ class Drive__FeetCommand: public CommandBase{
 	DrivebaseGyroSensor* gyroSensor;
 
 	Drivebase* drivebase;
-	bool movementFinished = true;
+	bool movementFinished = false;
 	double requestedMovementFeet = 0;
 	double kAcceptableError=651.9; //actually two inches
 

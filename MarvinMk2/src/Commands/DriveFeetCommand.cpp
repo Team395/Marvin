@@ -7,7 +7,7 @@
 
 #include <Commands/DriveFeetCommand.h>
 #include <SmartDashboard/SmartDashboard.h>
-
+#include <iostream>
 
 Drive__FeetCommand::Drive__FeetCommand(double feet, Drivebase* drivebase, DrivebaseEncoderSensors* encoderSensors, DrivebaseGyroSensor* gyroSensor) :
 	CommandBase("Drive Feet Command"),
@@ -68,6 +68,7 @@ void Drive__FeetCommand::update(){
 		linearPID.Disable();
 		rotationalPID.Disable();
 		drivebase->tankDrive(0,0);
+		finish();
 	}
 
 	if(linearPID.IsEnabled()){

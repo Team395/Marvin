@@ -27,9 +27,9 @@ void Turn__DegreesCommand::init() {
 }
 
 void Turn__DegreesCommand::update() {
-	gyroSensor->kP = gyroSensor->preferences->GetDouble("TurnDegreesKp", 0.03);
+	gyroSensor->kP = gyroSensor->preferences->GetDouble("TurnDegreesKp", -0.034);
 	gyroSensor->kI = gyroSensor->preferences->GetDouble("TurnDegreesKi", 0);
-	gyroSensor->kD = gyroSensor->preferences->GetDouble("TurnDegreesKd", 0);
+	gyroSensor->kD = gyroSensor->preferences->GetDouble("TurnDegreesKd", -0.036);
 
 	pidController.SetP(gyroSensor->kP);
 	pidController.SetI(gyroSensor->kI);
@@ -46,6 +46,7 @@ void Turn__DegreesCommand::update() {
 	if(pidController.OnTarget()){
 		turnFinished = true;
 		pidController.Disable();
+		finish();
 	}
 
 	frc::SmartDashboard::PutData("Turn Degrees PIDController", &pidController);

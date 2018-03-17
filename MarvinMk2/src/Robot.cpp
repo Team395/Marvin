@@ -6,6 +6,7 @@
 #include <TimedRobot.h>
 #include <LiveWindow/LiveWindow.h>
 #include <SmartDashboard/SmartDashboard.h>
+#include <SmartDashboard/SendableChooser.h>
 
 #include <Systems/Systems.h>
 #include <Commands/Commands.h>
@@ -18,11 +19,26 @@
 
 #include <sstream>
 
+enum class RobotStartPositions {
+	kLeft
+	, kRight
+	, kCenter
+};
+
+enum class AutonomousScoringStrategy {
+	kNone
+	, kSwitch
+	, kScale
+	, kSwitchAndScale
+};
+
 class Robot: public frc::TimedRobot {
 /*	frc::LiveWindow& liveWindow = *frc::LiveWindow::GetInstance();
 	frc::Preferences* preferences = frc::Preferences::GetInstance(); */
-	OI oi{};
+	SendableChooser<RobotStartPositions> startPositionChooser;
+	SendableChooser<AutonomousScoringStrategy> scoringStrategyChooser;
 
+	OI oi{};
 //	Elevator elevator{};
 	Drivebase drivebase{};
 	Intake intake{};
@@ -30,7 +46,7 @@ class Robot: public frc::TimedRobot {
 	DrivebaseEncoderSensors encoderSensors{&drivebase};
 	DrivebaseGyroSensor gyroSensor{&drivebase};
 	Limelight limelight{};
-
+	FieldData fieldData{};
 
 	TankDriveCommand tankDriveCommand{&drivebase, &oi};
 	PneumaticGripperCommand pneumaticGripperCommand{&intake, &oi};
@@ -40,51 +56,83 @@ class Robot: public frc::TimedRobot {
 //  TrackPositionCommand positionCommand{&drivebaseSensors};
 	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &gyroSensor};
 //	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
-	InstrumentCommand instrumentCommand{&oi};
+	InstrumentCommand instrumentCommand{&oi, &intake};
 	Drive__FeetCommand driveFeetCommand{10,&drivebase,&encoderSensors,&gyroSensor};
 
+	auton::Wait1Wait3Wait2 wait1wait3wait2{};
+	auton::Drive10Turn90Drive5 drive10turn90drive5{&drivebase, &encoderSensors, &gyroSensor};
 
-	std::list<CommandBase*> commandQueue;
-	std::list<CommandBase*>::iterator commandQueueIterator;
+	auton::CrossAutonLine crossAutonLine{&drivebase, &encoderSensors, &gyroSensor};
+	auton::ScoreLeftSwitchFromCenter scoreLeftSwitchFromCenter{&drivebase, &encoderSensors, &gyroSensor};
 
-	void processCommand(CommandBase* command){
-		if(command->getCommandState() == CommandState::kNotStarted) {
-			command->init();
-		}
-
-		command->update();
-
-		if(command->getCommandState() == CommandState::kFinished) {
-			commandQueueIterator++;
-		}
-	}
-
-	int loopCount = 0;
-	int timesInMotionMagic = 0;
+	auton::SequenceBase* sequenceToExecute;
 
 public:
 
 	void RobotInit() {
-//		limelight.setLedMode(limelightMap::LedMode::kOff);
-//		limelight.setCamMode(limelightMap::CamMode::kDriverCamera);
+		startPositionChooser.AddObject("Left", RobotStartPositions::kLeft);
+		startPositionChooser.AddObject("Center", RobotStartPositions::kCenter);
+		startPositionChooser.AddObject("Right", RobotStartPositions::kRight);
+
+		scoringStrategyChooser.AddObject("Cross Auton Line", AutonomousScoringStrategy::kNone);
+		scoringStrategyChooser.AddObject("Score in Switch", AutonomousScoringStrategy::kSwitch);
+		scoringStrategyChooser.AddObject("Score in Scale", AutonomousScoringStrategy::kScale);
+		scoringStrategyChooser.AddObject("Score in Switch and Scale", AutonomousScoringStrategy::kSwitchAndScale);
 	}
 
 	void DisabledInit() {
 	}
 
 	void AutonomousInit() override {
-		commandQueue = auton::Drive10Turn90Drive5(&drivebase, &encoderSensors, &gyroSensor).getCommandQueue();
-		commandQueueIterator = commandQueue.begin();
+		fieldData.readSwitchScalePositions();
+
+		RobotStartPositions startPosition = startPositionChooser.GetSelected();
+		AutonomousScoringStrategy scoringStrategy = scoringStrategyChooser.GetSelected();
+
+		SwitchScalePositions homeSwitchPosition = fieldData.getHomeSwitchPosition();
+		SwitchScalePositions scalePosition = fieldData.getScalePosition();
+
+		switch(scoringStrategy) {
+		case AutonomousScoringStrategy::kNone:
+			sequenceToExecute = &crossAutonLine;
+			break;
+		case AutonomousScoringStrategy::kSwitch:
+			switch(startPosition) {
+				case RobotStartPositions::kCenter:
+					switch(homeSwitchPosition) {
+						case SwitchScalePositions::kLeft:
+							sequenceToExecute = &scoreLeftSwitchFromCenter;
+							break;
+						case SwitchScalePositions::kRight:
+							break;
+						case SwitchScalePositions::kUnknown:
+							break;
+					}
+					break;
+				case RobotStartPositions::kLeft:
+					break;
+				case RobotStartPositions::kRight:
+					break;
+			}
+			break;
+		case AutonomousScoringStrategy::kScale:
+			break;
+		case AutonomousScoringStrategy::kSwitchAndScale:
+			break;
+		}
+
+		sequenceToExecute = &drive10turn90drive5;
+
+		sequenceToExecute->initSequence();
 	}
 
 	void AutonomousPeriodic() override {
-		if(commandQueueIterator == commandQueue.end()) return;
-		processCommand(*commandQueueIterator);
+		sequenceToExecute->execute();
 	}
 
 	void TeleopInit() override {
-//		limelight.setLedMode(limelightMap::LedMode::kOff);
-//		limelight.setCamMode(limelightMap::CamMode::kDriverCamera);
+		limelight.setLedMode(limelightMap::LedMode::kOff);
+		limelight.setCamMode(limelightMap::CamMode::kDriverCamera);
 
 		tankDriveCommand.init();
 		pneumaticGripperCommand.init();
@@ -96,60 +144,6 @@ public:
 //		aimToTargetCommand.init();
 		instrumentCommand.init();
 		driveFeetCommand.init();
-
-#if 0
-		drivebase.getLeftMaster()->
-				ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative
-						, 0
-						, 10);
-		drivebase.getLeftMaster()->SetStatusFramePeriod(StatusFrameEnhanced::Status_13_Base_PIDF0
-				, 10
-				, 10);
-		drivebase.getLeftMaster()->SetStatusFramePeriod(StatusFrameEnhanced::Status_10_MotionMagic
-				, 10
-				, 10);
-
-		drivebase.getLeftMaster()->ConfigNominalOutputForward(0, 10);
-		drivebase.getLeftMaster()->ConfigNominalOutputReverse(0, 10);
-		drivebase.getLeftMaster()->ConfigPeakOutputForward(1, 10);
-		drivebase.getLeftMaster()->ConfigPeakOutputReverse(-1, 10);
-
-		drivebase.getLeftMaster()->SelectProfileSlot(0, 0);
-		drivebase.getLeftMaster()->Config_kF(0, 0.465, 10);
-		drivebase.getLeftMaster()->Config_kP(0, 0, 10);
-		drivebase.getLeftMaster()->Config_kI(0, 0, 10);
-		drivebase.getLeftMaster()->Config_kD(0, 0, 10);
-
-		drivebase.getLeftMaster()->ConfigMotionCruiseVelocity(1100, 10);
-		drivebase.getLeftMaster()->ConfigMotionAcceleration(500, 10);
-		drivebase.getLeftMaster()->SetSelectedSensorPosition(0, 0, 10);
-
-		drivebase.getRightMaster()->
-				ConfigSelectedFeedbackSensor(FeedbackDevice::CTRE_MagEncoder_Relative
-						, 0
-						, 10);
-		drivebase.getRightMaster()->SetStatusFramePeriod(StatusFrameEnhanced::Status_13_Base_PIDF0
-				, 10
-				, 10);
-		drivebase.getRightMaster()->SetStatusFramePeriod(StatusFrameEnhanced::Status_10_MotionMagic
-				, 10
-				, 10);
-
-		drivebase.getRightMaster()->ConfigNominalOutputForward(0, 10);
-		drivebase.getRightMaster()->ConfigNominalOutputReverse(0, 10);
-		drivebase.getRightMaster()->ConfigPeakOutputForward(1, 10);
-		drivebase.getRightMaster()->ConfigPeakOutputReverse(-1, 10);
-
-		drivebase.getRightMaster()->SelectProfileSlot(0, 0);
-		drivebase.getRightMaster()->Config_kF(0, 0.465, 10);
-		drivebase.getRightMaster()->Config_kP(0, 0, 10);
-		drivebase.getRightMaster()->Config_kI(0, 0, 10);
-		drivebase.getRightMaster()->Config_kD(0, 0, 10);
-
-		drivebase.getRightMaster()->ConfigMotionCruiseVelocity(1100, 10);
-		drivebase.getRightMaster()->ConfigMotionAcceleration(500, 10);
-		drivebase.getRightMaster()->SetSelectedSensorPosition(0, 0, 10);
-#endif
 	}
 
 	void TeleopPeriodic() override {
@@ -169,7 +163,6 @@ public:
 		else{
 			driveFeetCommand.disable();
 			driveFeetCommand.startNewMovement();
-			//			positionCommand.update();
 		}
 
 		if(!oi.getTurnButton() && !oi.getLeftStick()->GetRawButton(2)) {
@@ -179,19 +172,6 @@ public:
 //		tankDriveCommand.update();
 //		instrumentCommand.update();
 #endif
-/*		if(!oi.getTurnButton()){
-			aimToTargetCommand.disable();
-			aimToTargetCommand.startNewTurn();
-			arcadeDrive.update();
-		}
-		else{
-			aimToTargetCommand.update();
-		}
-*/
-//		SmartDashboard::PutNumber("Elevator Throttle", oi.getElevatorThrottle());
-//		SmartDashboard::PutBoolean("Claw Position", oi.getIntakeThrottle());
-		//SmartDashboard::PutBoolean("topLimit", elevator.topPressed());
-		//SmartDashboard::PutBoolean("bottomLimit", elevator.bottomPressed());
 
 //		limelight.refreshNetworkTableValues();
 //		limelight.printToSmartDashboard();
@@ -201,62 +181,14 @@ public:
 		instrumentCommand.update();
 //		joystickElevatorCommand.update();
 //		elevatorPositionCommand.update();
-
-#if 0
-		/************************************/
-		/*********** MOTION MAGIC ***********/
-		/************************************/
-		std::ostringstream outputStream;
-//		double leftYstick = oi.getDriveLeft();
-
-		double motorOutput = drivebase.getLeftMaster()->GetMotorOutputPercent();
-		outputStream << "\tOut%:" << motorOutput;
-		outputStream << "\tVel:" << drivebase.getLeftMaster()->GetSelectedSensorVelocity(0);
-
-		if(oi.getLeftStick()->GetRawButton(2)) {
-
-			//Motion Magic - 4096 ticks/rev * 10 Rotations in either direction
-			double targetPos = 4096 * 10.0;
-			drivebase.getLeftMaster()->Set(ControlMode::MotionMagic, targetPos);
-			drivebase.getRightMaster()->Set(ControlMode::MotionMagic, -targetPos);
-
-			outputStream << "\terr:" << drivebase.getLeftMaster()->GetClosedLoopError(0);
-			outputStream << "\ttrg:" << targetPos;
-		}
-s
-		frc::SmartDashboard::PutNumber("SensorVel", drivebase.getLeftMaster()->GetSelectedSensorVelocity(0));
-		frc::SmartDashboard::PutNumber("SensorPos", drivebase.getLeftMaster()->GetSelectedSensorPosition(0));
-		frc::SmartDashboard::PutNumber("MotorOutputPercent", drivebase.getLeftMaster()->GetMotorOutputPercent());
-		frc::SmartDashboard::PutNumber("ClosedLoopError", drivebase.getLeftMaster()->GetClosedLoopError(0));
-
-		if(drivebase.getLeftMaster()->GetControlMode() == ControlMode::MotionMagic){
-			++timesInMotionMagic;
-		} else {
-			timesInMotionMagic = 0;
-		}
-
-		if(timesInMotionMagic > 10) {
-			frc::SmartDashboard::PutNumber("ClosedLoopTarget", drivebase.getLeftMaster()->GetClosedLoopTarget(0));
-			frc::SmartDashboard::PutNumber("ActTrajVelocity", drivebase.getLeftMaster()->GetActiveTrajectoryVelocity());
-			frc::SmartDashboard::PutNumber("ActTrajPosition", drivebase.getLeftMaster()->GetActiveTrajectoryPosition());
-			frc::SmartDashboard::PutNumber("ActTrajHeading", drivebase.getLeftMaster()->GetActiveTrajectoryHeading());
-		}
-		outputStream << "\n";
-		/************************************/
-		/*********** MOTION MAGIC ***********/
-		/************************************/
-
-		if(++loopCount > 10) {
-			loopCount = 0;
-			std::cout << outputStream.str();
-		}
-
-		outputStream.str() = "";
-#endif
 	}
 
 	void TestPeriodic() override {
 
+	}
+
+	void DisabledPeriodic() override {
+		//std::cout << "I am disabled\n";
 	}
 };
 

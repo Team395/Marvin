@@ -19,17 +19,14 @@ namespace auton {
 		TestCommand testCommand1 = TestCommand{1};
 		TestCommand testCommand3 = TestCommand{3};
 		TestCommand testCommand2 = TestCommand{2};
-
-		std::list<CommandBase*> commandQueue = {
-					&testCommand1
-					, &testCommand3
-					, &testCommand2
-				};
 	public:
-		Wait1Wait3Wait2() {};
-
-		std::list<CommandBase*> getCommandQueue() override {
-			return commandQueue;
+		Wait1Wait3Wait2()
+		{
+			std::list<CommandBase*> commands{
+				&testCommand1
+				, &testCommand3
+				, &testCommand2};
+			commandQueue = commands;
 		};
 	};
 }

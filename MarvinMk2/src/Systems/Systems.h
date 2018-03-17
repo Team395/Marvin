@@ -17,5 +17,6 @@
 #include <Systems/PneumaticSystem.h>
 #include <Systems/Intake.h>
 #include <Systems/ClimberSystem.h>
+#include <Systems/FieldData.h>
 
 #endif /* SRC_SYSTEMS_SYSTEMS_H_ */

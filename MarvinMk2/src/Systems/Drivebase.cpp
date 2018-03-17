@@ -32,7 +32,7 @@ void Drivebase::tankDrive(double left, double right){
 void Drivebase::PIDWrite(double output){
 	if(output < 0 && output > -minimumPidOutput) { output = -minimumPidOutput; }
 	else if (output > 0 && output < minimumPidOutput){ output = minimumPidOutput; }
-	tankDrive(-output, output); //TODO: fix motor inversion
+	tankDrive(output, -output); //TODO: fix motor inversion
 }
 
 void Drivebase::setMinimumPidOutput(double minimum){
