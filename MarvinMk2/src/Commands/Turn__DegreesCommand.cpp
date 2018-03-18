@@ -28,9 +28,9 @@ void Turn__DegreesCommand::init() {
 }
 
 void Turn__DegreesCommand::update() {
-	gyroSensor->kP = gyroSensor->preferences->GetDouble("TurnDegreesKp", -0.034);
+	gyroSensor->kP = gyroSensor->preferences->GetDouble("TurnDegreesKp", -0.02);
 	gyroSensor->kI = gyroSensor->preferences->GetDouble("TurnDegreesKi", 0);
-	gyroSensor->kD = gyroSensor->preferences->GetDouble("TurnDegreesKd", -0.036);
+	gyroSensor->kD = gyroSensor->preferences->GetDouble("TurnDegreesKd", -0.018);
 
 	pidController.SetP(gyroSensor->kP);
 	pidController.SetI(gyroSensor->kI);
@@ -58,6 +58,8 @@ void Turn__DegreesCommand::update() {
 }
 
 void Turn__DegreesCommand::finish() {
+	pidController.Disable();
+
 	CommandBase::finish();
 }
 

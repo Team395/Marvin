@@ -34,7 +34,7 @@ void Drive__FeetCommand::init(){
 void Drive__FeetCommand::update(){
 	encoderSensors->kP = encoderSensors->preferences->GetDouble("DriveFeetKp", 0.03);
 	encoderSensors->kI = encoderSensors->preferences->GetDouble("DriveFeetKi", 0);
-	encoderSensors->kD = encoderSensors->preferences->GetDouble("DriveFeetKd", 0);
+	encoderSensors->kD = encoderSensors->preferences->GetDouble("DriveFeetKd", 0.02);
 
 	linearPID.SetP(encoderSensors->kP);
 	linearPID.SetI(encoderSensors->kI);
@@ -74,9 +74,12 @@ void Drive__FeetCommand::update(){
 	if(linearPID.IsEnabled()){
 		drivebase->tankDrive(linearGetter.getPIDValue() - rotationalGetter.getPIDValue()
 				, linearGetter.getPIDValue() + rotationalGetter.getPIDValue());
+	} else {
+		rotationalPID.Disable();
 	}
 
-	frc::SmartDashboard::PutData("Drive Feet PID Controller", &linearPID);
+	frc::SmartDashboard::PutData("Drive Feet linear PID Controller", &linearPID);
+	frc::SmartDashboard::PutData("Drive Feet rotational PID Controller", &rotationalPID);
 	frc::SmartDashboard::PutBoolean("Drive Feet Finished", linearPID.OnTarget());
 	frc::SmartDashboard::PutNumber("Drive Feet Average Encoder Positions", encoderSensors->getAveragedEncoderPositions());
 	frc::SmartDashboard::PutNumber("Drive Feet PIDError", linearPID.GetError());
@@ -87,6 +90,10 @@ void Drive__FeetCommand::update(){
 
 }
 void Drive__FeetCommand::finish(){
+	linearPID.Disable();
+	rotationalPID.Disable();
+	drivebase->tankDrive(0,0);
+
 	CommandBase::finish();
 }
 

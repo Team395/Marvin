@@ -55,7 +55,7 @@ class Robot: public frc::TimedRobot {
 //	JoystickElevatorCommand joystickElevatorCommand{&elevator, &oi, &elevatorPositionCommand};
 
 //  TrackPositionCommand positionCommand{&drivebaseSensors};
-	Turn__DegreesCommand turn__DegreesCommand{90, &drivebase, &gyroSensor};
+	Turn__DegreesCommand turn__DegreesCommand{45, &drivebase, &gyroSensor};
 //	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
 	InstrumentCommand instrumentCommand{&oi, &intake};
 	Drive__FeetCommand driveFeetCommand{10,&drivebase,&encoderSensors,&gyroSensor};
