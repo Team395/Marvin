@@ -23,8 +23,10 @@ enum class IntakeState{
 class Intake : SystemBase {
 	Spark leftIntake{IntakeMap::kIntakeLeft};
 	Spark rightIntake{IntakeMap::kIntakeRight};
-	Solenoid gripperOpen{IntakeMap::kGripperOpen};
-	Solenoid gripperClose{IntakeMap::kGripperClose};
+	Solenoid leftGripperOpen{IntakeMap::kLeftGripperOpen};
+	Solenoid leftGripperClose{IntakeMap::kLeftGripperClose};
+	Solenoid rightGripperOpen{IntakeMap::kRightGripperOpen};
+	Solenoid rightGripperClose{IntakeMap::kRightGripperClose};
 	DigitalInput backBannerSensor{IntakeMap::kBackBanner};
 	IntakeState intakeState{IntakeState::automatic};
 

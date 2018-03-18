@@ -11,10 +11,11 @@
 
 #include "Turn__DegreesCommand.h"
 
-Turn__DegreesCommand::Turn__DegreesCommand(Drivebase* drivebase, DrivebaseGyroSensor* gyroSensor)
+Turn__DegreesCommand::Turn__DegreesCommand(double turnDegrees, Drivebase* drivebase, DrivebaseGyroSensor* gyroSensor)
 : CommandBase("Turn_DegreesCommand"),
   pidController{gyroSensor->kP, gyroSensor->kI, gyroSensor->kD, gyroSensor, drivebase},
-  gyroSensor{gyroSensor} {
+  gyroSensor{gyroSensor},
+  turnDegrees{turnDegrees} {
 
 }
 
@@ -38,7 +39,7 @@ void Turn__DegreesCommand::update() {
 	gyroSensor->setMinimumPidOutput(gyroSensor->preferences->GetDouble("TurnDegreesKMinimum", 0));
 
 	if(!pidController.IsEnabled() && !turnFinished){
-		pidController.SetSetpoint(gyroSensor->getAngleZ() + kTurnDegrees);
+		pidController.SetSetpoint(gyroSensor->getAngleZ() + turnDegrees);
 		pidController.SetAbsoluteTolerance(kAcceptableError);
 		pidController.Enable();
 	}

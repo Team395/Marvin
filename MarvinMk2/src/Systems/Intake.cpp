@@ -25,12 +25,14 @@ void Intake::driveRight(double speed){
 }
 
 void Intake::setClawOpen(bool open){
-	gripperOpen.Set(open);
-	gripperClose.Set(!open);
+	leftGripperOpen.Set(!open);
+	leftGripperClose.Set(open);
+	rightGripperOpen.Set(!open);
+	rightGripperClose.Set(open);
 }
 
 bool Intake::getClawOpen(){
-	return gripperOpen.Get();
+	return leftGripperOpen.Get();
 }
 
 bool Intake::getBackBanner(){

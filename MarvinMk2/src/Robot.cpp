@@ -46,6 +46,7 @@ class Robot: public frc::TimedRobot {
 	DrivebaseEncoderSensors encoderSensors{&drivebase};
 	DrivebaseGyroSensor gyroSensor{&drivebase};
 	Limelight limelight{};
+	ClimberSystem climberSystem{};
 	FieldData fieldData{};
 
 	TankDriveCommand tankDriveCommand{&drivebase, &oi};
@@ -54,17 +55,18 @@ class Robot: public frc::TimedRobot {
 //	JoystickElevatorCommand joystickElevatorCommand{&elevator, &oi, &elevatorPositionCommand};
 
 //  TrackPositionCommand positionCommand{&drivebaseSensors};
-	Turn__DegreesCommand turn__DegreesCommand{&drivebase, &gyroSensor};
+	Turn__DegreesCommand turn__DegreesCommand{90, &drivebase, &gyroSensor};
 //	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
 	InstrumentCommand instrumentCommand{&oi, &intake};
 	Drive__FeetCommand driveFeetCommand{10,&drivebase,&encoderSensors,&gyroSensor};
+	JoystickClimberCommand climberCommand{&oi, &climberSystem};
 
 	auton::Wait1Wait3Wait2 wait1wait3wait2{};
 	auton::Drive10Turn90Drive5 drive10turn90drive5{&drivebase, &encoderSensors, &gyroSensor};
 
 	auton::CrossAutonLine crossAutonLine{&drivebase, &encoderSensors, &gyroSensor};
-	auton::ScoreLeftSwitchFromCenter scoreLeftSwitchFromCenter{&drivebase, &encoderSensors, &gyroSensor};
-
+	auton::ScoreSwitchFromCenter scoreLeftSwitchFromCenter{&drivebase, &encoderSensors, &gyroSensor, SwitchScalePositions::kLeft};
+	auton::ScoreSwitchFromCenter scoreRightSwitchFromCenter{&drivebase, &encoderSensors, &gyroSensor, SwitchScalePositions::kRight};
 	auton::SequenceBase* sequenceToExecute;
 
 public:
@@ -78,6 +80,9 @@ public:
 		scoringStrategyChooser.AddObject("Score in Switch", AutonomousScoringStrategy::kSwitch);
 		scoringStrategyChooser.AddObject("Score in Scale", AutonomousScoringStrategy::kScale);
 		scoringStrategyChooser.AddObject("Score in Switch and Scale", AutonomousScoringStrategy::kSwitchAndScale);
+
+		SmartDashboard::PutData("Scoring Strategy", &scoringStrategyChooser);
+		SmartDashboard::PutData("Start Position", &startPositionChooser);
 	}
 
 	void DisabledInit() {
@@ -104,8 +109,10 @@ public:
 								sequenceToExecute = &scoreLeftSwitchFromCenter;
 								break;
 							case SwitchScalePositions::kRight:
+								sequenceToExecute = &scoreRightSwitchFromCenter;
 								break;
 							case SwitchScalePositions::kUnknown:
+								sequenceToExecute = &scoreLeftSwitchFromCenter;
 								break;
 						}
 						break;
@@ -122,6 +129,7 @@ public:
 		}
 
 		sequenceToExecute->initSequence();
+		climberSystem.lockClimber();
 	}
 
 	void AutonomousPeriodic() override {
@@ -142,9 +150,12 @@ public:
 //		aimToTargetCommand.init();
 		instrumentCommand.init();
 		driveFeetCommand.init();
+		climberCommand.init();
+		climberSystem.lockClimber();
 	}
 
 	void TeleopPeriodic() override {
+		frc::SmartDashboard::PutNumber("XboxPOV", oi.xboxController.GetPOV(0));
 #if 1
 		if(oi.getTurnButton()){
 			turn__DegreesCommand.update();
@@ -174,9 +185,9 @@ public:
 //		limelight.refreshNetworkTableValues();
 //		limelight.printToSmartDashboard();
 
-		//tankDriveCommand.update();
 		pneumaticGripperCommand.update();
 		instrumentCommand.update();
+		climberCommand.update();
 //		joystickElevatorCommand.update();
 //		elevatorPositionCommand.update();
 	}

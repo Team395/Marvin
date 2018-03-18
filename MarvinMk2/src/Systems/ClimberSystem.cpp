@@ -11,7 +11,6 @@ ClimberSystem::ClimberSystem()
 	: SystemBase("ClimberSystem")
 {
 	// TODO Auto-generated constructor stub
-
 }
 
 ClimberSystem::~ClimberSystem() {
@@ -27,17 +26,20 @@ void ClimberSystem::stopClimbing() {
 }
 
 void ClimberSystem::extendClimber() {
-	telescopeController.Set(1); // TODO:  1, -1, smaller value; determine direction
+	telescopeController.Set(0.2); // TODO:  1, -1, smaller value; determine direction
 }
 
 void ClimberSystem::retractClimber() {
-	telescopeController.Set(-1); // TODO:  1, -1, smaller value; determine direction
+	telescopeController.Set(-0.2); // TODO:  1, -1, smaller value; determine direction
 }
 
 void ClimberSystem::stopTelescopingClimber() {
 	telescopeController.Set(0);
 }
 
+void ClimberSystem::lockClimber() {
+	tiltController.Set(0.45);
+}
 
 void ClimberSystem::releaseClimber() {
 	tiltController.Set(1); // TODO:  1, -1, smaller value; determine direction

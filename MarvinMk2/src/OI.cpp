@@ -107,23 +107,27 @@ bool OI::getShiftDownSeventyFive(){
 bool OI::getExtendClimber() {
 	// True if user pushes up on D-PAD
 	int angle = xboxController.GetPOV();
-	return (angle >= 315 || angle <= 45);
+//	return (angle >= 315 || angle <= 45);
+	return (angle > 315 && angle <= 360) || (angle >= 0 && angle < 45);
 }
 
 bool OI::getRetractClimber() {
-	// True if user pushes up down D-PAD or LB
+	// True if user pushes down on D-PAD or LB
 	int angle = xboxController.GetPOV();
-	return (angle >= 135 || angle <= 225) || xboxController.GetBumper(frc::GenericHID::JoystickHand::kLeftHand);
+//	return (angle >= 135 || angle <= 225) || xboxController.GetBumper(frc::GenericHID::JoystickHand::kLeftHand);
+	return (angle > 135 && angle < 225) || xboxController.GetBumper(frc::GenericHID::JoystickHand::kLeftHand);
 }
 
 bool OI::getTiltClimber() {
 	// True if user pushes left on D-PAD
 	int angle = xboxController.GetPOV();
-	return (angle >= 225 || angle <= 315);
+//	return (angle >= 225 || angle <= 315);
+	return (angle > 225 && angle < 315);
 }
 
 bool OI::getWinchClimber(){
 	// True if user pushes right on D-PAD or RB
-	int angle = xboxController.GetPOV() || xboxController.GetBumper(frc::GenericHID::JoystickHand::kRightHand);
-	return (angle >= 45 || angle <= 135);
+	int angle = xboxController.GetPOV();
+//	return (angle >= 45 || angle <= 135);
+	return (angle > 45 && angle < 135) || xboxController.GetBumper(frc::GenericHID::JoystickHand::kRightHand);
 }

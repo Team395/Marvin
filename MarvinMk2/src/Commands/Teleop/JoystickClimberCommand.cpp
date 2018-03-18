@@ -7,6 +7,9 @@
 
 #include <Commands/Teleop/JoystickClimberCommand.h>
 
+#include <SmartDashboard/Smartdashboard.h>
+#include <iostream>
+
 JoystickClimberCommand::JoystickClimberCommand(OI* oi, ClimberSystem* climberSystem)
 	: CommandBase("JoystickClimberCommand"),
 	  oi{oi},
@@ -22,13 +25,13 @@ void JoystickClimberCommand::init() {
 }
 
 void JoystickClimberCommand::update() {
+	SmartDashboard::PutBoolean("ExtendClimber", oi->getExtendClimber());
+	SmartDashboard::PutBoolean("RetractClimber", oi->getRetractClimber());
+	SmartDashboard::PutBoolean("WinchClimber", oi->getWinchClimber());
+	SmartDashboard::PutBoolean("TiltClimber", oi->getTiltClimber());
 	if (oi->getExtendClimber()) {
 		climberSystem->extendClimber();
-	} else {
-		climberSystem->stopTelescopingClimber();
-	}
-
-	if (oi->getRetractClimber()) {
+	} else if (oi->getRetractClimber()) {
 		climberSystem->retractClimber();
 	} else {
 		climberSystem->stopTelescopingClimber();

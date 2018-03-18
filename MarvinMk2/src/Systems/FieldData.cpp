@@ -19,6 +19,7 @@ FieldData::~FieldData() {
 }
 
 void FieldData::readSwitchScalePositions() {
+	//GameSpecificMessage returns: "LLL", "LRL", "RLL", "RLR" ...
 	gameData = frc::DriverStation::GetInstance().GetGameSpecificMessage();
 
 	if(gameData.length() == 0) return;

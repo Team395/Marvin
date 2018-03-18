@@ -20,12 +20,12 @@ class Turn__DegreesCommand : public CommandBase {
 	PIDController pidController;
 	DrivebaseGyroSensor* gyroSensor;
 
-	double kTurnDegrees{90};
+	double turnDegrees{0};
 	double kAcceptableError{0.1};
 	bool turnFinished{false};
 
 public:
-	Turn__DegreesCommand(Drivebase*, DrivebaseGyroSensor*);
+	Turn__DegreesCommand(double, Drivebase*, DrivebaseGyroSensor*);
 	virtual ~Turn__DegreesCommand();
 
 	void init() override;

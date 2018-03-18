@@ -32,6 +32,7 @@ public:
 	void stopTelescopingClimber();
 
 	// tilt actions
+	void lockClimber();
 	void releaseClimber();
 };
 

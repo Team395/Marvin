@@ -70,8 +70,9 @@
 						</toolChain>
 					</folderInfo>
 					<fileInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.1104744751.1063124988" name="JoystickElevatorCommand.h" rcbsApplicability="disable" resourcePath="src/Commands/Teleop/JoystickElevatorCommand.h" toolsToInvoke=""/>
+					<fileInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.1104744751.1159389099" name="TrackPositionCommand.h" rcbsApplicability="disable" resourcePath="src/Commands/TrackPositionCommand.h" toolsToInvoke=""/>
 					<sourceEntries>
-						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="src/Commands/TrackPositionCommand.cpp|src/Commands/TrackPositionCommand.h" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

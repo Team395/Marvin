@@ -13,9 +13,11 @@
 class OI {
 	frc::Joystick driveStickLeft{OIMap::LeftStick::kDriveStickLeft};
 	frc::Joystick driveStickRight{OIMap::RightStick::kDriveStickRight};
-	frc::XboxController xboxController{OIMap::Xbox::kXboxController};
+
 
 public:
+	frc::XboxController xboxController{OIMap::Xbox::kXboxController};
+
 	OI();
 	enum class RequestedClawState {
 		kOpen,
