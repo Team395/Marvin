@@ -26,11 +26,11 @@ void ClimberSystem::stopClimbing() {
 }
 
 void ClimberSystem::extendClimber() {
-	telescopeController.Set(0.2); // TODO:  1, -1, smaller value; determine direction
+	telescopeController.Set(-0.4); // TODO:  1, -1, smaller value; determine direction
 }
 
 void ClimberSystem::retractClimber() {
-	telescopeController.Set(-0.2); // TODO:  1, -1, smaller value; determine direction
+	telescopeController.Set(+0.4); // TODO:  1, -1, smaller value; determine direction
 }
 
 void ClimberSystem::stopTelescopingClimber() {

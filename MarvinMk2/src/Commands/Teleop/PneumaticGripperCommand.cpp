@@ -93,6 +93,7 @@ void PneumaticGripperCommand::init(){
 
 void PneumaticGripperCommand::update(){
 	//Read in inputs
+	bool clawOpen = intake->getClawOpen();
 	OI::RequestedClawState actuate = oi->getRequestedIntakePosition();
 	double throttle= oi->getIntakeThrottle();
 	bool autoscore = oi->getIntakeAutoscore();
@@ -100,6 +101,9 @@ void PneumaticGripperCommand::update(){
 	if(oi->getToggleIntakeMode()){
 		if(intake->getState() == IntakeState::automatic) intake->setState(IntakeState::manual);
 		else if(intake->getState() == IntakeState::manual) intake->setState(IntakeState::automatic);
+	}
+	else if(clawOpen && actuate == OI::RequestedClawState::kOpen){
+		intake->setState(IntakeState::automatic);
 	}
 	else if(intake->getState() == IntakeState::automatic && actuate != OI::RequestedClawState::kDoNothing){
 		intake->setState(IntakeState::manual);

@@ -20,6 +20,11 @@ enum class IntakeState{
 	autoscore
 };
 
+enum class GripperState{
+	open,
+	close
+};
+
 class Intake : SystemBase {
 	Spark leftIntake{IntakeMap::kIntakeLeft};
 	Spark rightIntake{IntakeMap::kIntakeRight};
@@ -29,6 +34,7 @@ class Intake : SystemBase {
 	Solenoid rightGripperClose{IntakeMap::kRightGripperClose};
 	DigitalInput backBannerSensor{IntakeMap::kBackBanner};
 	IntakeState intakeState{IntakeState::automatic};
+	GripperState gripperState{GripperState::open};
 
 public:
 	Intake();
@@ -43,6 +49,9 @@ public:
 
 	void setState(IntakeState);
 	IntakeState getState();
+
+	void setGripperState(GripperState);
+	GripperState getGripperState();
 };
 
 #endif /* SRC_SYSTEMS_INTAKE_H_ */

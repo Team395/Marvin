@@ -45,15 +45,20 @@ double OI::getIntakeThrottle(){
 }
 
 OI::RequestedClawState OI::getRequestedIntakePosition(){
-	if(xboxController.GetRawAxis(OIMap::Xbox::kIntakeClose) > 0.5){
+	static bool pressed = false;
+	if(xboxController.GetRawAxis(OIMap::Xbox::kIntakeClose) > 0.5 && !pressed){
+		pressed = true;
 		return RequestedClawState::kClose;
+
 //		return 1;
 	}
-	else if(xboxController.GetRawAxis(OIMap::Xbox::kIntakeOpen) > 0.5){
+	else if(xboxController.GetRawAxis(OIMap::Xbox::kIntakeOpen) > 0.5 && !pressed){
+		pressed = true;
 		return RequestedClawState::kOpen;
 //		return -1;
 	}
 	else{
+		pressed = false;
 		return RequestedClawState::kDoNothing;
 //		return 0;
 	}

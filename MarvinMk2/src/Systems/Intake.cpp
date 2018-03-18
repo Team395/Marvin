@@ -29,10 +29,12 @@ void Intake::setClawOpen(bool open){
 	leftGripperClose.Set(open);
 	rightGripperOpen.Set(!open);
 	rightGripperClose.Set(open);
+
+	setGripperState(open ? GripperState::open : GripperState::close);
 }
 
 bool Intake::getClawOpen(){
-	return leftGripperOpen.Get();
+	return !leftGripperOpen.Get();
 }
 
 bool Intake::getBackBanner(){
@@ -45,4 +47,12 @@ void Intake::setState(IntakeState state){
 
 IntakeState Intake::getState(){
 	return intakeState;
+}
+
+void Intake::setGripperState(GripperState state){
+	gripperState = state;
+}
+
+GripperState Intake::getGripperState(){
+	return gripperState;
 }
