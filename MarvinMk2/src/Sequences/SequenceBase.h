@@ -30,6 +30,7 @@ namespace auton {
 
 		void setCommandsToRun(std::list<CommandBase*> commands) {
 			commandsToRun = commands;
+			numberOfCommands = commandsToRun.size();
 		}
 
 		std::list<SequenceBase*> getCommandQueue() {
@@ -44,13 +45,17 @@ namespace auton {
 		}
 
 		void execute(){
-			if(sequenceQueueIterator == sequenceQueue.end()) return;
+			if(sequenceQueueIterator == sequenceQueue.end()) {
+				sequenceState = CommandState::kFinished;
+				return;
+			}
 			processSequence(*sequenceQueueIterator);
 		}
 
 		void processSequence(SequenceBase* sequence) {
 			executeInParallel(sequence);
 			if(sequence->sequenceState == CommandState::kFinished) {
+				numberOfFinishedCommands++;
 				sequenceQueueIterator++;
 			}
 		}
@@ -60,10 +65,16 @@ namespace auton {
 			std::list<CommandBase*>::iterator iterator = sequence->commandsToRun.begin();
 
 			while(iterator != sequence->commandsToRun.end()) {
+				while((*iterator)->getCommandState() == CommandState::kFinished){
+					iterator++;
+					if(iterator == sequence->commandsToRun.end()) return;
+				}
+
 				bool finished = processCommand(*(iterator++));
 
 				if(finished) {
 					sequence->numberOfFinishedCommands++;
+
 					if(sequence->numberOfCommands == sequence->numberOfFinishedCommands){
 						sequence->sequenceState = CommandState::kFinished;
 					}
