@@ -26,6 +26,12 @@ namespace auton {
 		Drive__FeetCommand drive5_3;
 		SwitchScalePositions switchPosition;
 
+		SequenceBase driveAwayFromWall;
+		SequenceBase turnTowardsSwitchPlate;
+		SequenceBase driveTowardsSwitchPlate;
+		SequenceBase alignWithSwitch;
+		SequenceBase approachSwitch;
+
 	public:
 		ScoreSwitchFromCenter(Drivebase* drivebase, DrivebaseEncoderSensors* encoders, DrivebaseGyroSensor* gyro, SwitchScalePositions switchPosition) :
 			drive5{5, drivebase, encoders, gyro},
@@ -35,15 +41,21 @@ namespace auton {
 			drive5_3{5, drivebase, encoders, gyro},
 			switchPosition{switchPosition}
 			{
-				std::list<CommandBase*> commands{
-					&drive5
-					, &turn45
-					, &drive5_2
-					, &turnNegative45
-					, &drive5_3
+				driveAwayFromWall.setCommandsToRun(std::list<CommandBase*>{&drive5});
+				turnTowardsSwitchPlate.setCommandsToRun(std::list<CommandBase*>{&turn45});
+				driveTowardsSwitchPlate.setCommandsToRun(std::list<CommandBase*>{&drive5_2});
+				alignWithSwitch.setCommandsToRun(std::list<CommandBase*>{&turnNegative45});
+				approachSwitch.setCommandsToRun(std::list<CommandBase*>{&drive5_3});
+
+				std::list<SequenceBase*> sequences{
+					&driveAwayFromWall
+					, &turnTowardsSwitchPlate
+					, &driveTowardsSwitchPlate
+					, &alignWithSwitch
+					, &approachSwitch
 
 				};
-				commandQueue = commands;
+				sequenceQueue = sequences;
 			}
 
 			virtual ~ScoreSwitchFromCenter(){}

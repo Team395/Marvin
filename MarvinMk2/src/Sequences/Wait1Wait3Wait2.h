@@ -19,14 +19,24 @@ namespace auton {
 		TestCommand testCommand1 = TestCommand{1};
 		TestCommand testCommand3 = TestCommand{3};
 		TestCommand testCommand2 = TestCommand{2};
+
+		SequenceBase sequenceOne;
+		SequenceBase sequenceTwo;
+
 	public:
 		Wait1Wait3Wait2()
 		{
-			std::list<CommandBase*> commands{
-				&testCommand1
-				, &testCommand3
-				, &testCommand2};
-			commandQueue = commands;
+			sequenceOne.setCommandsToRun(std::list<CommandBase*>{&testCommand1});
+			sequenceTwo.setCommandsToRun(std::list<CommandBase*>{
+				&testCommand3,
+				&testCommand2
+			});
+
+			std::list<SequenceBase*> sequences{
+				&sequenceOne,
+				&sequenceTwo
+			};
+			sequenceQueue = sequences;
 		};
 	};
 }

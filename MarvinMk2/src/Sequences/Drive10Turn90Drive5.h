@@ -22,17 +22,26 @@ namespace auton {
 		Turn__DegreesCommand turn90;
 		Drive__FeetCommand drive5;
 
+		SequenceBase drive10sequence;
+		SequenceBase turn90sequence;
+		SequenceBase drive5sequence;
+
 	public:
 		Drive10Turn90Drive5(Drivebase* drivebase, DrivebaseEncoderSensors* encoders, DrivebaseGyroSensor* gyro) :
 			drive10{10, drivebase, encoders, gyro},
 			turn90{90, drivebase, gyro},
 			drive5{5, drivebase, encoders, gyro}
 			{
-				std::list<CommandBase*> commands{
-					&drive10
-					, &turn90
-					, &drive5};
-				commandQueue = commands;
+				drive10sequence.setCommandsToRun(std::list<CommandBase*>{&drive10});
+				turn90sequence.setCommandsToRun(std::list<CommandBase*>{&turn90});
+				drive5sequence.setCommandsToRun(std::list<CommandBase*>{&drive5});
+
+				std::list<SequenceBase*> sequences{
+					&drive10sequence,
+					&turn90sequence,
+					&drive5sequence
+				};
+				sequenceQueue = sequences;
 			}
 
 			virtual ~Drive10Turn90Drive5(){}

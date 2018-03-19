@@ -18,15 +18,21 @@ namespace auton {
 	class CrossAutonLine: public SequenceBase {
 
 		Drive__FeetCommand drive5;
-
+		SequenceBase crossAutonLine{};
 	public:
 		CrossAutonLine(Drivebase* drivebase, DrivebaseEncoderSensors* encoders, DrivebaseGyroSensor* gyro) :
 			drive5{5, drivebase, encoders, gyro}
 			{
-				std::list<CommandBase*> commands{
+				std::list<CommandBase*> sequenceOneCommands{
 					&drive5
 				};
-				commandQueue = commands;
+				crossAutonLine.setCommandsToRun(sequenceOneCommands);
+
+				std::list<SequenceBase*> sequences{
+					&crossAutonLine
+				};
+
+				sequenceQueue = sequences;
 			}
 
 			virtual ~CrossAutonLine(){}
