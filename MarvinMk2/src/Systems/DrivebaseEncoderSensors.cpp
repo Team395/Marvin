@@ -57,6 +57,11 @@ WPI_TalonSRX* DrivebaseEncoderSensors::getTalon(Drivebase* drivebase, int index)
 
 double DrivebaseEncoderSensors::getRightEncoder(returnType type){
 	if(static_cast<int>(type) == 0){
+		//TODO: not sure how to handle error here:
+		// encoder values can be positive or negative, how do we differentiate from an error code?
+		// possibly use rightEncoderTalon->GetLastError()? 0 = OKAY
+		// as per: https://github.com/CrossTheRoadElec/Phoenix-frc-lib/blob/666d176a08151793044ab74e0005f13d3732ed96/libraries/driver/include/ctre/phoenix/ErrorCode.h
+
 			return rightEncoderTalon->GetSelectedSensorPosition(0);
 		}
 		else{

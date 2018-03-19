@@ -112,6 +112,7 @@ public:
 								sequenceToExecute = &scoreRightSwitchFromCenter;
 								break;
 							case SwitchScalePositions::kUnknown:
+								//TODO: should not score or raise elevator. maybe define this behavior with a function/setter?
 								sequenceToExecute = &scoreLeftSwitchFromCenter;
 								break;
 						}

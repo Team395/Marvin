@@ -25,12 +25,13 @@ void Intake::driveRight(double speed){
 }
 
 void Intake::setClawOpen(bool open){
+	//leftGripperOpen and leftGripperClose are flipped
 	leftGripperOpen.Set(!open);
 	leftGripperClose.Set(open);
 	rightGripperOpen.Set(!open);
 	rightGripperClose.Set(open);
 
-	setGripperState(open ? GripperState::open : GripperState::close);
+	setGripperState(!open ? GripperState::open : GripperState::close);
 }
 
 bool Intake::getClawOpen(){

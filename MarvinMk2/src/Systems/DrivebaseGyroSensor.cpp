@@ -23,7 +23,8 @@ DrivebaseGyroSensor::~DrivebaseGyroSensor() {
 
 double DrivebaseGyroSensor::getAngleZ() {
 	double* returnArray = new double[3];
-	imu.GetAccumGyro(returnArray);
+	int errorResponse = imu.GetAccumGyro(returnArray);
+	//TODO: what to do with errorResponse?
 	return returnArray[gyroMap::GyroIndex::kZIndex];
 }
 

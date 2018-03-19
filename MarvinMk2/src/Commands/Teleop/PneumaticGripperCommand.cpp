@@ -113,9 +113,6 @@ void PneumaticGripperCommand::update(){
 //		intake->setState(IntakeState::automatic);
 //	}
 
-	//TODO: remove
-	//intake->setState(IntakeState::manual);
-
 	if(autoscore){
 		intake->setState(IntakeState::autoscore);
 	}
