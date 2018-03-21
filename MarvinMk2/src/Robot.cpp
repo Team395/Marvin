@@ -177,7 +177,9 @@ public:
 	}
 
 	void TeleopInit() override {
-		sequenceToExecute->disable();
+		if(sequenceToExecute) {
+			sequenceToExecute->disable();
+		}
 
 		limelight.setLedMode(limelightMap::LedMode::kOff);
 		limelight.setCamMode(limelightMap::CamMode::kDriverCamera);
