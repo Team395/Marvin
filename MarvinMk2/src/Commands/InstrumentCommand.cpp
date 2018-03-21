@@ -33,45 +33,12 @@ void InstrumentCommand::update() {
 	frc::SmartDashboard::PutBoolean("Intake Out", intakeOut);
 	frc::SmartDashboard::PutBoolean("Intake In", intakeIn);
 
-	bool actuateGripper = false;
-	if(oi->getRequestedIntakePosition() == OI::RequestedClawState::kClose){
-		intakeOpen = false;
-		actuateGripper = true;
-	}
-	if(oi->getRequestedIntakePosition() == OI::RequestedClawState::kOpen){
-		intakeOpen = true;
-		actuateGripper = true;
-	}
-	frc::SmartDashboard::PutBoolean("Intake Open", intakeOpen);
-	frc::SmartDashboard::PutBoolean("Intake Open2", intakeOpen);
-	frc::SmartDashboard::PutBoolean("Intake Closed", !intakeOpen);
+	GripperState gripperState = intake->getGripperState();
+	bool gripperOpen = gripperState == GripperState::open ? true : false;
 
-//	bool autoscore = oi->getIntakeAutoscore();
-//	bool toggleIntakeMode = oi->getToggleIntakeMode();
-//	if(toggleIntakeMode){
-//		if(intakeState == IntakeStates::kAutomatic) intakeState = IntakeStates::kManual;
-//		else if(intakeState == IntakeStates::kManual) intakeState = IntakeStates::kAutomatic;
-//	}
-//	else if(actuateGripper && intakeOpen){
-//		intakeState = IntakeStates::kAutomatic;
-//	}
-//	else if(actuateGripper){
-//		intakeState = IntakeStates::kManual;
-//	}
-//	if(!intakeOpen && autoscore){
-//		intakeState = IntakeStates::kAutoscore;
-//		if(!scoreTimerStarted) {
-//			scoreTimerStarted = true;
-//			scoreTimerStartedTime = Timer::GetFPGATimestamp();
-//			intakeOut = true;
-//		}
-//	}
-//	if(scoreTimerStarted && Timer::GetFPGATimestamp() - scoreTimerStartedTime > 1){
-//		intakeOut = false;
-//		intakeOpen = true;
-//		intakeState = IntakeStates::kAutomatic;
-//		scoreTimerStarted = false;
-//	}
+	frc::SmartDashboard::PutBoolean("Intake Open", gripperOpen);
+	frc::SmartDashboard::PutBoolean("Intake Open2", gripperOpen);
+	frc::SmartDashboard::PutBoolean("Intake Closed", !gripperOpen);
 
 	intakeState = intake->getState();
 
@@ -116,3 +83,5 @@ void InstrumentCommand::update() {
 void InstrumentCommand::finish() {
 	CommandBase::finish();
 }
+
+void InstrumentCommand::disable(){}

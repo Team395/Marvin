@@ -14,6 +14,7 @@ class OI {
 	frc::Joystick driveStickLeft{OIMap::LeftStick::kDriveStickLeft};
 	frc::Joystick driveStickRight{OIMap::RightStick::kDriveStickRight};
 
+	bool intakeTriggerPressed;
 
 public:
 	frc::XboxController xboxController{OIMap::Xbox::kXboxController};

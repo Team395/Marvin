@@ -38,8 +38,10 @@ void Elevator::setOffset(double offset){
 }
 
 double Elevator::PIDGet(){
-	double pidGet = winchController.GetSelectedSensorPosition(0) * inchesPerTick;
+	double currentSensorPositionTicks = winchController.GetSelectedSensorPosition(0);
+	double pidGet = currentSensorPositionTicks * inchesPerTick;
 	frc::SmartDashboard::PutNumber("PIDGet", pidGet);
+	currentPosition = currentSensorPositionTicks;
 	return pidGet;
 }
 

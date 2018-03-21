@@ -43,8 +43,8 @@ public:
 	void init() override;
 	void update() override;
 	void finish() override;
+	void disable() override;
 
-	void disable();
 	void startNewMovement();
 };
 

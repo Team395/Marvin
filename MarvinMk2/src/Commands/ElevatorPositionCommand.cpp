@@ -86,3 +86,5 @@ double ElevatorPositionCommand::getSetpoint(){
 double ElevatorPositionCommand::getAbsError(){
 	return std::abs(pidController.GetError());
 }
+
+void ElevatorPositionCommand::disable(){}

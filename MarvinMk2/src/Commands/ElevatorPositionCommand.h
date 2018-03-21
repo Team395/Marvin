@@ -25,9 +25,10 @@ public:
 	ElevatorPositionCommand(Elevator*, double, double, double);
 	virtual ~ElevatorPositionCommand();
 
-	void init();
-	void update();
-	void finish();
+	void init() override;
+	void update() override;
+	void finish() override;
+	void disable() override;
 	void setSetpoint(double);
 	double getSetpoint();
 	double getAbsError();

@@ -52,3 +52,5 @@ void JoystickClimberCommand::finish() {
 	CommandBase::finish();
 }
 
+void JoystickClimberCommand::disable(){}
+

@@ -20,6 +20,7 @@ public:
 	void init() override;
 	void update() override;
 	void finish() override;
+	void disable() override;
 
 	double getSeconds();
 };

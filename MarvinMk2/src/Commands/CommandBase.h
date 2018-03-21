@@ -22,6 +22,7 @@ public:
 	virtual void init()=0;
 	virtual void update()=0;
 	virtual void finish()=0;
+	virtual void disable()=0;
 
 
 	std::string getName();

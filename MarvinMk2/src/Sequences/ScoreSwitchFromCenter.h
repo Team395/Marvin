@@ -15,6 +15,7 @@
 #include <Systems/DrivebaseGyroSensor.h>
 #include <Systems/Drivebase.h>
 #include <Systems/FieldData.h>
+#include <Commands/TestCommand.h>
 
 namespace auton {
 	class ScoreSwitchFromCenter: public SequenceBase {
@@ -25,12 +26,21 @@ namespace auton {
 		Turn__DegreesCommand turnNegative45;
 		Drive__FeetCommand drive5_3;
 		SwitchScalePositions switchPosition;
+		TestCommand test1{0.1};
+		TestCommand test2{0.1};
+		TestCommand test3{0.1};
+		TestCommand test4{0.1};
 
 		SequenceBase driveAwayFromWall;
 		SequenceBase turnTowardsSwitchPlate;
 		SequenceBase driveTowardsSwitchPlate;
 		SequenceBase alignWithSwitch;
 		SequenceBase approachSwitch;
+
+		SequenceBase wait1;
+		SequenceBase wait2;
+		SequenceBase wait3;
+		SequenceBase wait4;
 
 	public:
 		ScoreSwitchFromCenter(Drivebase* drivebase, DrivebaseEncoderSensors* encoders, DrivebaseGyroSensor* gyro, SwitchScalePositions switchPosition) :
@@ -42,16 +52,24 @@ namespace auton {
 			switchPosition{switchPosition}
 			{
 				driveAwayFromWall.setCommandsToRun(std::list<CommandBase*>{&drive5});
+				wait1.setCommandsToRun(std::list<CommandBase*>{&test1});
 				turnTowardsSwitchPlate.setCommandsToRun(std::list<CommandBase*>{&turn45});
+				wait2.setCommandsToRun(std::list<CommandBase*>{&test2});
 				driveTowardsSwitchPlate.setCommandsToRun(std::list<CommandBase*>{&drive5_2});
+				wait3.setCommandsToRun(std::list<CommandBase*>{&test3});
 				alignWithSwitch.setCommandsToRun(std::list<CommandBase*>{&turnNegative45});
+				wait4.setCommandsToRun(std::list<CommandBase*>{&test4});
 				approachSwitch.setCommandsToRun(std::list<CommandBase*>{&drive5_3});
 
 				std::list<SequenceBase*> sequences{
 					&driveAwayFromWall
+					, &wait1
 					, &turnTowardsSwitchPlate
+					, &wait2
 					, &driveTowardsSwitchPlate
+					, &wait3
 					, &alignWithSwitch
+					, &wait4
 					, &approachSwitch
 
 				};

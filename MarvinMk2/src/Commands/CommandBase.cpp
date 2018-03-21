@@ -24,6 +24,10 @@ void CommandBase::finish(){
 	commandState = CommandState::kFinished;
 }
 
+void CommandBase::disable(){
+
+}
+
 std::string CommandBase::getName(){
 	return name;
 }

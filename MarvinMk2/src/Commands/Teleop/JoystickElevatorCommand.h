@@ -29,6 +29,7 @@ public:
 	void init() override;
 	void update() override;
 	void finish() override;
+	void disable() override;
 };
 
 #endif /* SRC_COMMANDS_JOYSTICKELEVATORCOMMAND_H_ */

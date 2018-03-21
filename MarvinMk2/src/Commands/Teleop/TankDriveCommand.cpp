@@ -48,3 +48,5 @@ void TankDriveCommand::update() {
 void TankDriveCommand::finish() {
 
 }
+
+void TankDriveCommand::disable(){}

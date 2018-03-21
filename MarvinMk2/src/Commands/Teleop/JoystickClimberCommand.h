@@ -22,6 +22,7 @@ public:
 	void init() override;
 	void update() override;
 	void finish() override;
+	void disable() override;
 };
 
 #endif /* SRC_COMMANDS_TELEOP_JOYSTICKCLIMBERCOMMAND_H_ */

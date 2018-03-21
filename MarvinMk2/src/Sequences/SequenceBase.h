@@ -9,7 +9,8 @@
 #define SRC_SEQUENCES_SEQUENCEBASE_H_
 
 #include <list>
-
+#include <exception>
+#include <iostream>
 #include <Commands/CommandBase.h>
 
 namespace auton {
@@ -95,6 +96,30 @@ namespace auton {
 			}
 
 			return false;
+		}
+
+		void disable() {
+			auto sequenceIterator = sequenceQueue.begin();
+
+			while(sequenceIterator != sequenceQueue.end()) {
+				for(auto i : (*sequenceIterator)->commandsToRun){
+					i->disable();
+				}
+
+				sequenceIterator++;
+				//WHY WAS THIS NOT BREAKING OUT OF THE LOOP
+//				auto iterator = (*sequenceIterator)->commandsToRun.begin();
+//				while(iterator != (*sequenceIterator)->commandsToRun.end()) {
+////					try {
+////					*(*iterator);//->disable();
+////					} catch(std::exception& e) {
+////						std::cout << e.what() << std::endl;
+////					}
+//					std::cout<< "disabling command\n";
+//
+//					iterator++;
+//				}
+			}
 		}
 	};
 }

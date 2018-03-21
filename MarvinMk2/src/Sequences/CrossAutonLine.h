@@ -10,6 +10,7 @@
 
 #include <Sequences/SequenceBase.h>
 #include <Commands/DriveFeetCommand.h>
+#include <Commands/AutoIntakeCommand.h>
 #include <Systems/DrivebaseEncoderSensors.h>
 #include <Systems/DrivebaseGyroSensor.h>
 #include <Systems/Drivebase.h>
@@ -18,13 +19,16 @@ namespace auton {
 	class CrossAutonLine: public SequenceBase {
 
 		Drive__FeetCommand drive5;
+		AutoIntakeCommand intake;
 		SequenceBase crossAutonLine{};
 	public:
-		CrossAutonLine(Drivebase* drivebase, DrivebaseEncoderSensors* encoders, DrivebaseGyroSensor* gyro) :
-			drive5{5, drivebase, encoders, gyro}
+		CrossAutonLine(Drivebase* drivebase, DrivebaseEncoderSensors* encoders, DrivebaseGyroSensor* gyro, PneumaticGripperCommand* gripperCommand) :
+			drive5{5, drivebase, encoders, gyro},
+			intake{gripperCommand}
 			{
 				std::list<CommandBase*> sequenceOneCommands{
-					&drive5
+					&drive5,
+					&intake
 				};
 				crossAutonLine.setCommandsToRun(sequenceOneCommands);
 

@@ -40,6 +40,10 @@ void TestCommand::finish(){
 	std::cout << getName() << " " << seconds << ": Finished\n";
 }
 
+void TestCommand::disable(){
+
+}
+
 double TestCommand::getSeconds(){
 	return seconds;
 }

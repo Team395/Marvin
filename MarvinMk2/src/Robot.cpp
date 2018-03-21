@@ -25,12 +25,47 @@ enum class RobotStartPositions {
 	, kCenter
 };
 
+std::string stringifyRobotStartPositions(RobotStartPositions position) {
+	switch(position) {
+		case RobotStartPositions::kLeft:
+			return "LEFT";
+			break;
+		case RobotStartPositions::kRight:
+			return "RIGHT";
+			break;
+		case RobotStartPositions::kCenter:
+			return "CENTER";
+			break;
+		default:
+			return "";
+	}
+}
+
 enum class AutonomousScoringStrategy {
 	kNone
 	, kSwitch
 	, kScale
 	, kSwitchAndScale
 };
+
+std::string stringifyAutonomousScoringStrategy(AutonomousScoringStrategy strategy) {
+	switch(strategy) {
+		case AutonomousScoringStrategy::kNone:
+			return "NONE";
+			break;
+		case AutonomousScoringStrategy::kSwitch:
+			return "SWITCH";
+			break;
+		case AutonomousScoringStrategy::kScale:
+			return "SCALE";
+			break;
+		case AutonomousScoringStrategy::kSwitchAndScale:
+			return "SWITCH AND SCALE";
+			break;
+		default:
+			return "";
+	}
+}
 
 class Robot: public frc::TimedRobot {
 /*	frc::LiveWindow& liveWindow = *frc::LiveWindow::GetInstance();
@@ -39,7 +74,7 @@ class Robot: public frc::TimedRobot {
 	SendableChooser<AutonomousScoringStrategy> scoringStrategyChooser;
 
 	OI oi{};
-//	Elevator elevator{};
+	Elevator elevator{};
 	Drivebase drivebase{};
 	Intake intake{};
 	PneumaticSystem pneumaticSystem{};
@@ -50,7 +85,7 @@ class Robot: public frc::TimedRobot {
 	FieldData fieldData{};
 
 	TankDriveCommand tankDriveCommand{&drivebase, &oi};
-	PneumaticGripperCommand pneumaticGripperCommand{&intake, &oi};
+	PneumaticGripperCommand pneumaticGripperCommand{&intake, &elevator, &oi};
 //	ElevatorPositionCommand elevatorPositionCommand{&elevator, 0.35, 0, 0.15};
 //	JoystickElevatorCommand joystickElevatorCommand{&elevator, &oi, &elevatorPositionCommand};
 
@@ -64,19 +99,22 @@ class Robot: public frc::TimedRobot {
 	auton::Wait1Wait3Wait2 wait1wait3wait2{};
 	auton::Drive10Turn90Drive5 drive10turn90drive5{&drivebase, &encoderSensors, &gyroSensor};
 
-	auton::CrossAutonLine crossAutonLine{&drivebase, &encoderSensors, &gyroSensor};
+	auton::CrossAutonLine crossAutonLine{&drivebase, &encoderSensors, &gyroSensor, &pneumaticGripperCommand};
 	auton::ScoreSwitchFromCenter scoreLeftSwitchFromCenter{&drivebase, &encoderSensors, &gyroSensor, SwitchScalePositions::kLeft};
 	auton::ScoreSwitchFromCenter scoreRightSwitchFromCenter{&drivebase, &encoderSensors, &gyroSensor, SwitchScalePositions::kRight};
 	auton::SequenceBase* sequenceToExecute;
 
+	RobotStartPositions startPosition;
+	AutonomousScoringStrategy scoringStrategy;
+
 public:
 
 	void RobotInit() {
-		startPositionChooser.AddObject("Left", RobotStartPositions::kLeft);
+		startPositionChooser.AddDefault("Left", RobotStartPositions::kLeft);
 		startPositionChooser.AddObject("Center", RobotStartPositions::kCenter);
 		startPositionChooser.AddObject("Right", RobotStartPositions::kRight);
 
-		scoringStrategyChooser.AddObject("Cross Auton Line", AutonomousScoringStrategy::kNone);
+		scoringStrategyChooser.AddDefault("Cross Auton Line", AutonomousScoringStrategy::kNone);
 		scoringStrategyChooser.AddObject("Score in Switch", AutonomousScoringStrategy::kSwitch);
 		scoringStrategyChooser.AddObject("Score in Scale", AutonomousScoringStrategy::kScale);
 		scoringStrategyChooser.AddObject("Score in Switch and Scale", AutonomousScoringStrategy::kSwitchAndScale);
@@ -90,9 +128,6 @@ public:
 
 	void AutonomousInit() override {
 		fieldData.readSwitchScalePositions();
-
-		RobotStartPositions startPosition = startPositionChooser.GetSelected();
-		AutonomousScoringStrategy scoringStrategy = scoringStrategyChooser.GetSelected();
 
 		SwitchScalePositions homeSwitchPosition = fieldData.getHomeSwitchPosition();
 		SwitchScalePositions scalePosition = fieldData.getScalePosition();
@@ -131,13 +166,19 @@ public:
 
 		sequenceToExecute->initSequence();
 		climberSystem.lockClimber();
+		SmartDashboard::PutBoolean("Auton Complete", false);
 	}
 
 	void AutonomousPeriodic() override {
 		sequenceToExecute->execute();
+		if(sequenceToExecute->sequenceState == CommandState::kFinished){
+			SmartDashboard::PutBoolean("Auton Complete", true);
+		}
 	}
 
 	void TeleopInit() override {
+		sequenceToExecute->disable();
+
 		limelight.setLedMode(limelightMap::LedMode::kOff);
 		limelight.setCamMode(limelightMap::CamMode::kDriverCamera);
 
@@ -198,7 +239,11 @@ public:
 	}
 
 	void DisabledPeriodic() override {
-		//std::cout << "I am disabled\n";
+		startPosition = startPositionChooser.GetSelected();
+		scoringStrategy = scoringStrategyChooser.GetSelected();
+
+		frc::SmartDashboard::PutString("StartPos", stringifyRobotStartPositions(startPosition));
+		frc::SmartDashboard::PutString("ScoringStrat", stringifyAutonomousScoringStrategy(scoringStrategy));
 	}
 };
 

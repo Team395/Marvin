@@ -31,7 +31,7 @@ public:
 	void update() override;
 	void finish() override;
 
-	void disable();
+	void disable() override;
 	void startNewTurn();
 };
 

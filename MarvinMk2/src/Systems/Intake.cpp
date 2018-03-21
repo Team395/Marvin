@@ -31,7 +31,7 @@ void Intake::setClawOpen(bool open){
 	rightGripperOpen.Set(!open);
 	rightGripperClose.Set(open);
 
-	setGripperState(!open ? GripperState::open : GripperState::close);
+	setGripperState(open ? GripperState::open : GripperState::close);
 }
 
 bool Intake::getClawOpen(){

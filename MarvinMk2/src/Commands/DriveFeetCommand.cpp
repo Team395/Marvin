@@ -90,9 +90,7 @@ void Drive__FeetCommand::update(){
 
 }
 void Drive__FeetCommand::finish(){
-	linearPID.Disable();
-	rotationalPID.Disable();
-	drivebase->tankDrive(0,0);
+	disable();
 
 	CommandBase::finish();
 }
@@ -100,6 +98,8 @@ void Drive__FeetCommand::finish(){
 void Drive__FeetCommand::disable(){
 	linearPID.Disable();
 	rotationalPID.Disable();
+	drivebase->tankDrive(0,0);
+
 	frc::SmartDashboard::PutData("Drive Feet PID Controller", &linearPID);
 }
 void Drive__FeetCommand::startNewMovement(){

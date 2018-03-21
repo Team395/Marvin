@@ -9,7 +9,11 @@
 #include <SmartDashboard/Smartdashboard.h>
 #include <iostream>
 
-PneumaticGripperCommand::PneumaticGripperCommand(Intake* intake, OI* oi) : CommandBase("PneumaticgripperCommand"), intake{intake}, oi{oi}{
+PneumaticGripperCommand::PneumaticGripperCommand(Intake* intake, Elevator* elevator, OI* oi) :
+	CommandBase("PneumaticgripperCommand"),
+	intake{intake},
+	elevator{elevator},
+	oi{oi}{
 
 }
 
@@ -17,7 +21,16 @@ PneumaticGripperCommand::~PneumaticGripperCommand() {
 
 }
 
-void PneumaticGripperCommand::updateAutomatic(double throttle){
+bool PneumaticGripperCommand::updateAutomatic(double throttle){
+
+	//Claw Position
+	if(intake->getBackBanner() && Timer::GetFPGATimestamp() - timerStartedTime > 0.25){
+		intake->setClawOpen(false);
+	}
+	else{
+		intake->setClawOpen(true);
+	}
+
 	//Wheel Speed
 	if(!intake->getBackBanner()){
 		intake->driveLeft(throttle);
@@ -39,18 +52,13 @@ void PneumaticGripperCommand::updateAutomatic(double throttle){
 			intake->driveRight(-1);
 		}
 		else{
-			intake->driveLeft(0);
-			intake->driveRight(0);
+			intake->driveLeft(throttle);
+			intake->driveRight(throttle);
+			return true;
 		}
 	}
 
-	//Claw Position
-	if(intake->getBackBanner() && Timer::GetFPGATimestamp() - timerStartedTime > 0.25){
-		intake->setClawOpen(false);
-	}
-	else{
-		intake->setClawOpen(true);
-	}
+	return false;
 }
 
 void PneumaticGripperCommand::updateManual(OI::RequestedClawState actuate, double throttle){
@@ -69,7 +77,7 @@ void PneumaticGripperCommand::updateManual(OI::RequestedClawState actuate, doubl
 	intake->driveRight(throttle);
 }
 
-void PneumaticGripperCommand::updateAutoscore(){
+bool PneumaticGripperCommand::updateAutoscore(){
 	if(!scoreTimerStarted){
 		timerStartedTime = Timer::GetFPGATimestamp();
 		scoreTimerStarted = true;
@@ -84,7 +92,9 @@ void PneumaticGripperCommand::updateAutoscore(){
 		scoreTimerStarted = false;
 		cubeInIntake = false;
 		bannerSensorTripped = false;
+		return true;
 	}
+	return false;
 }
 
 void PneumaticGripperCommand::init(){
@@ -92,8 +102,17 @@ void PneumaticGripperCommand::init(){
 }
 
 void PneumaticGripperCommand::update(){
+	//TODO: remove
+	if(oi->getShiftDownSeventyFive())
+	{
+		elevator->currentPosition = 20;
+	}
+	else if(oi->getShiftDownHalf()) {
+		elevator->currentPosition = 1;
+	}
+
 	//Read in inputs
-	bool clawOpen = intake->getClawOpen();
+	GripperState gripperState = intake->getGripperState();
 	OI::RequestedClawState actuate = oi->getRequestedIntakePosition();
 	double throttle= oi->getIntakeThrottle();
 	bool autoscore = oi->getIntakeAutoscore();
@@ -102,12 +121,23 @@ void PneumaticGripperCommand::update(){
 		if(intake->getState() == IntakeState::automatic) intake->setState(IntakeState::manual);
 		else if(intake->getState() == IntakeState::manual) intake->setState(IntakeState::automatic);
 	}
-	else if(clawOpen && actuate == OI::RequestedClawState::kOpen){
+//	else if(gripperState == GripperState::open && actuate == OI::RequestedClawState::kOpen){
+//		intake->setState(IntakeState::automatic);
+//	}
+	else if(elevatorAutomaticThresholdState == ElevatorAutomaticThreshold::kBelow && elevator->currentPosition > kElevatorAutomaticThreshold) {
+		intake->setState(IntakeState::manual);
+	}
+	else if(elevatorAutomaticThresholdState == ElevatorAutomaticThreshold::kAbove && elevator->currentPosition < kElevatorAutomaticThreshold) {
 		intake->setState(IntakeState::automatic);
 	}
 	else if(intake->getState() == IntakeState::automatic && actuate != OI::RequestedClawState::kDoNothing){
 		intake->setState(IntakeState::manual);
 	}
+
+	elevatorAutomaticThresholdState = elevator->currentPosition > kElevatorAutomaticThreshold
+			? ElevatorAutomaticThreshold::kAbove
+			: ElevatorAutomaticThreshold::kBelow;
+
 	//TODO: probably needs to be fixed to account for placing a cube by opening the claw
 //	else if(intake->getState() == IntakeState::manual && actuate == OI::RequestedClawState::kOpen && intake->getClawOpen()){
 //		intake->setState(IntakeState::automatic);
@@ -132,8 +162,11 @@ void PneumaticGripperCommand::update(){
 
 	SmartDashboard::PutBoolean("Banner Sensor", intake->getBackBanner());
 	SmartDashboard::PutNumber("IntakeState", (int)intake->getState());
+	SmartDashboard::PutNumber("RequestedIntakeState", (int)actuate);
 }
 
 void PneumaticGripperCommand::finish(){
 	CommandBase::finish();
 }
+
+void PneumaticGripperCommand::disable(){}

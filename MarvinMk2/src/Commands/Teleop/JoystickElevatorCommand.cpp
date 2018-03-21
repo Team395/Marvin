@@ -59,3 +59,5 @@ void JoystickElevatorCommand::update() {
 void JoystickElevatorCommand::finish() {
 	CommandBase::finish();
 }
+
+void JoystickElevatorCommand::disable(){}
