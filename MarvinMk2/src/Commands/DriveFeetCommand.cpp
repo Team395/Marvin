@@ -13,10 +13,10 @@ Drive__FeetCommand::Drive__FeetCommand(double feet, Drivebase* drivebase, Driveb
 	CommandBase("Drive Feet Command"),
 	linearPID{encoderSensors->kP, encoderSensors->kI,encoderSensors->kD, encoderSensors, &linearGetter},
 	rotationalPID{gyroSensor->kP, gyroSensor->kI, gyroSensor->kD, gyroSensor, &rotationalGetter},
-	requestedMovementFeet{feet},
 	drivebase{drivebase},
 	encoderSensors{encoderSensors},
-	gyroSensor{gyroSensor}
+	gyroSensor{gyroSensor},
+	requestedMovementFeet{feet}
 	{
 
 }

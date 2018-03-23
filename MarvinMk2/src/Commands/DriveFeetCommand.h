@@ -28,10 +28,10 @@ class Drive__FeetCommand: public CommandBase{
 	PIDGetter linearGetter{};
 	PIDGetter rotationalGetter{};
 
+	Drivebase* drivebase;
 	DrivebaseEncoderSensors* encoderSensors;
 	DrivebaseGyroSensor* gyroSensor;
 
-	Drivebase* drivebase;
 	bool movementFinished = false;
 	double requestedMovementFeet = 0;
 	double kAcceptableError=651.9; //actually two inches
