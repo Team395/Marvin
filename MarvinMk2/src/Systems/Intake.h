@@ -17,7 +17,8 @@
 enum class IntakeState{
 	automatic,
 	manual,
-	autoscore
+	autoscore,
+	retain
 };
 
 enum class GripperState{

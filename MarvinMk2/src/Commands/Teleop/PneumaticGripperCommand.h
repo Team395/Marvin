@@ -30,6 +30,14 @@ class PneumaticGripperCommand: public CommandBase {
 	bool bannerSensorTripped = false;
 	bool scoreTimerStarted = false;
 
+	double retainTimerPeriod = 1;
+	double retainTimerDuration = 0.25;
+	bool retainPeriodTimerStarted = false;
+	double retainPeriodTimerStartedTime = 0;
+	bool retainTimerStarted = false;
+	double retainTimerStartedTime = 0;
+	IntakeState intakeStatePriorToRetain;
+
 	//TODO: tune this
 	int kElevatorAutomaticThreshold = 15;
 	ElevatorAutomaticThreshold elevatorAutomaticThresholdState = ElevatorAutomaticThreshold::kBelow;
@@ -40,6 +48,7 @@ class PneumaticGripperCommand: public CommandBase {
 public:
 	bool updateAutomatic(double);
 	bool updateAutoscore();
+	void updateRetain();
 
 	PneumaticGripperCommand(Intake* intake, Elevator* elevator, OI* oi);
 	virtual ~PneumaticGripperCommand();

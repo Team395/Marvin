@@ -97,6 +97,33 @@ bool PneumaticGripperCommand::updateAutoscore(){
 	return false;
 }
 
+void PneumaticGripperCommand::updateRetain(){
+	if(!retainPeriodTimerStarted){
+		retainPeriodTimerStartedTime = frc::Timer::GetFPGATimestamp();
+		retainPeriodTimerStarted = true;
+	}
+
+	if(frc::Timer::GetFPGATimestamp() - retainPeriodTimerStartedTime > retainTimerPeriod) {
+		if(!retainTimerStarted){
+			retainTimerStarted = frc::Timer::GetFPGATimestamp();
+			retainTimerStarted = true;
+		}
+
+		intake->driveLeft(-1);
+		intake->driveRight(-1);
+
+		if(frc::Timer::GetFPGATimestamp() - retainTimerStarted > retainTimerDuration){
+			intake->driveLeft(0);
+			intake->driveRight(0);
+
+			retainTimerStarted = false;
+			retainPeriodTimerStarted = false;
+
+			intake->setState(intakeStatePriorToRetain);
+		}
+	}
+}
+
 void PneumaticGripperCommand::init(){
 	CommandBase::init();
 }
@@ -120,9 +147,6 @@ void PneumaticGripperCommand::update(){
 		if(intake->getState() == IntakeState::automatic) intake->setState(IntakeState::manual);
 		else if(intake->getState() == IntakeState::manual) intake->setState(IntakeState::automatic);
 	}
-//	else if(gripperState == GripperState::open && actuate == OI::RequestedClawState::kOpen){
-//		intake->setState(IntakeState::automatic);
-//	}
 	else if(elevatorAutomaticThresholdState == ElevatorAutomaticThreshold::kBelow && elevator->currentPosition > kElevatorAutomaticThreshold) {
 		intake->setState(IntakeState::manual);
 	}
@@ -131,6 +155,15 @@ void PneumaticGripperCommand::update(){
 	}
 	else if(intake->getState() == IntakeState::automatic && actuate != OI::RequestedClawState::kDoNothing){
 		intake->setState(IntakeState::manual);
+	}
+	else if(cubeInIntake && gripperState == GripperState::close){
+		intakeStatePriorToRetain = intake->getState();
+		intake->setState(IntakeState::retain);
+	}
+
+	if(intake->getState() != IntakeState::retain) {
+		retainTimerStarted = false;
+		retainPeriodTimerStarted = false;
 	}
 
 	elevatorAutomaticThresholdState = elevator->currentPosition > kElevatorAutomaticThreshold
@@ -156,6 +189,9 @@ void PneumaticGripperCommand::update(){
 			break;
 		case IntakeState::autoscore:
 			updateAutoscore();
+			break;
+		case IntakeState::retain:
+			updateRetain();
 			break;
 	}
 
