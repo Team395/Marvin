@@ -5,7 +5,7 @@
  *      Author: JARVIS
  */
 
-#include <Systems/AutoElevatorCommand.h>
+#include <Commands/AutoElevatorCommand.h>
 
 AutoElevatorCommand::AutoElevatorCommand(ElevatorPositionCommand* positionCommand, OI::ElevatorPreset height) :
 CommandBase("Auto Elevator Command"),
