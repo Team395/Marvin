@@ -23,6 +23,7 @@ ElevatorPositionCommand::~ElevatorPositionCommand() {
 
 void ElevatorPositionCommand::init(){
 	pidController.Disable();
+	pidController.SetAbsoluteTolerance(1);
 }
 
 void ElevatorPositionCommand::update(){
@@ -88,3 +89,7 @@ double ElevatorPositionCommand::getAbsError(){
 }
 
 void ElevatorPositionCommand::disable(){}
+
+bool ElevatorPositionCommand::onTarget(){
+	return pidController.OnTarget();
+}

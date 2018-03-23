@@ -32,6 +32,7 @@ public:
 	void setSetpoint(double);
 	double getSetpoint();
 	double getAbsError();
+	bool onTarget();
 };
 
 #endif /* SRC_COMMANDS_ELEVATORPOSITIONCOMMAND_H_ */

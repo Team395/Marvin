@@ -112,7 +112,6 @@ void PneumaticGripperCommand::update(){
 	}
 
 	//Read in inputs
-	GripperState gripperState = intake->getGripperState();
 	OI::RequestedClawState actuate = oi->getRequestedIntakePosition();
 	double throttle= oi->getIntakeThrottle();
 	bool autoscore = oi->getIntakeAutoscore();
