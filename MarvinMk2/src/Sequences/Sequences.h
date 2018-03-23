@@ -12,6 +12,7 @@
 #include <Sequences/CrossAutonLine.h>
 #include <Sequences/ScoreSwitchFromCenter.h>
 #include <Sequences/ScoreLeftFromLeft.h>
+#include <Sequences/PitTestSequence.h>
 
 #include "SequenceBase.h"
 #include "Wait1Wait3Wait2.h"

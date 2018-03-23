@@ -27,7 +27,7 @@ class Elevator : SystemBase, public PIDOutput, public PIDSource {
 	frc::Timer downTimer{};
 	bool driveUpLastCommand;
 	double percentOutputOffset = 0.19;
-	double minimumAcceptableOutput = .07;
+	double minimumAcceptableOutput = .0;
 
 public:
 	const double inchesPerTick = 0.00182;

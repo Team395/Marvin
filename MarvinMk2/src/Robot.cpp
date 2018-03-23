@@ -103,7 +103,8 @@ class Robot: public frc::TimedRobot {
 	auton::ScoreSwitchFromCenter scoreLeftSwitchFromCenter{&drivebase, &encoderSensors, &gyroSensor, SwitchScalePositions::kLeft};
 	auton::ScoreSwitchFromCenter scoreRightSwitchFromCenter{&drivebase, &encoderSensors, &gyroSensor, SwitchScalePositions::kRight};
 	auton::ScoreLeftFromLeft scoreLeftFromLeft{&drivebase, &encoderSensors, &gyroSensor, &elevatorPositionCommand};
-	auton::SequenceBase* sequenceToExecute;
+	auton::PitTestSequence pitTestSequence;
+	auton::SequenceBase* sequenceToExecute = 0;
 
 	RobotStartPositions startPosition;
 	AutonomousScoringStrategy scoringStrategy;
@@ -122,70 +123,6 @@ public:
 
 		SmartDashboard::PutData("Scoring Strategy", &scoringStrategyChooser);
 		SmartDashboard::PutData("Start Position", &startPositionChooser);
-	}
-
-	void DisabledInit() {
-	}
-
-	void AutonomousInit() override {
-		fieldData.readSwitchScalePositions();
-
-		SwitchScalePositions homeSwitchPosition = fieldData.getHomeSwitchPosition();
-		SwitchScalePositions scalePosition = fieldData.getScalePosition();
-		homeSwitchPosition = SwitchScalePositions::kLeft;
-		switch(scoringStrategy) {
-			case AutonomousScoringStrategy::kNone:
-				sequenceToExecute = &crossAutonLine;
-				break;
-			case AutonomousScoringStrategy::kSwitch:
-				switch(startPosition) {
-					case RobotStartPositions::kCenter:
-						switch(homeSwitchPosition) {
-							case SwitchScalePositions::kLeft:
-								sequenceToExecute = &scoreLeftSwitchFromCenter;
-								break;
-							case SwitchScalePositions::kRight:
-								sequenceToExecute = &scoreRightSwitchFromCenter;
-								break;
-							case SwitchScalePositions::kUnknown:
-								//TODO: should not score or raise elevator. maybe define this behavior with a function/setter?
-								sequenceToExecute = &scoreLeftSwitchFromCenter;
-								break;
-						}
-						break;
-					case RobotStartPositions::kLeft:
-						sequenceToExecute = &scoreLeftFromLeft;
-						break;
-					case RobotStartPositions::kRight:
-						break;
-				}
-				break;
-			case AutonomousScoringStrategy::kScale:
-				break;
-			case AutonomousScoringStrategy::kSwitchAndScale:
-				break;
-		}
-
-		sequenceToExecute->initSequence();
-		climberSystem.lockClimber();
-		SmartDashboard::PutBoolean("Auton Complete", false);
-		elevatorPositionCommand.setSetpoint(0);
-	}
-
-	void AutonomousPeriodic() override {
-		sequenceToExecute->execute();
-		if(sequenceToExecute->sequenceState == CommandState::kFinished){
-			SmartDashboard::PutBoolean("Auton Complete", true);
-		}
-	}
-
-	void TeleopInit() override {
-		if(sequenceToExecute) {
-			sequenceToExecute->disable();
-		}
-
-		limelight.setLedMode(limelightMap::LedMode::kOff);
-		limelight.setCamMode(limelightMap::CamMode::kDriverCamera);
 
 		tankDriveCommand.init();
 		pneumaticGripperCommand.init();
@@ -200,6 +137,99 @@ public:
 		climberCommand.init();
 		climberSystem.lockClimber();
 		elevatorPositionCommand.setSetpoint(0);
+	}
+
+	void DisabledInit() {
+	}
+
+	void AutonomousInit() override {
+		fieldData.readSwitchScalePositions();
+
+		SwitchScalePositions homeSwitchPosition = fieldData.getHomeSwitchPosition();
+//		SwitchScalePositions scalePosition = fieldData.getScalePosition();
+
+		switch(scoringStrategy) {
+			case AutonomousScoringStrategy::kNone:
+				std::cout << "AutonomousInit():  AutonomousScoringStrategy::kNone" << std::endl;
+				sequenceToExecute = &crossAutonLine;
+				break;
+			case AutonomousScoringStrategy::kSwitch:
+				switch(startPosition) {
+					case RobotStartPositions::kCenter:
+						switch(homeSwitchPosition) {
+							case SwitchScalePositions::kLeft:
+								std::cout << "AutonomousInit():  AutonomousScoringStrategy::kSwitch, RobotStartPositions::kCenter, SwitchScalePositions::kLeft" << std::endl;
+								sequenceToExecute = &scoreLeftSwitchFromCenter;
+								break;
+							case SwitchScalePositions::kRight:
+								std::cout << "AutonomousInit():  AutonomousScoringStrategy::kSwitch, RobotStartPositions::kCenter, SwitchScalePositions::kRight" << std::endl;
+								sequenceToExecute = &scoreRightSwitchFromCenter;
+								break;
+							case SwitchScalePositions::kUnknown:
+								std::cout << "AutonomousInit():  AutonomousScoringStrategy::kSwitch, RobotStartPositions::kCenter, SwitchScalePositions::kUnknown" << std::endl;
+								//TODO: should not score or raise elevator. maybe define this behavior with a function/setter?
+								sequenceToExecute = &scoreLeftSwitchFromCenter;
+								break;
+						}
+						break;
+					case RobotStartPositions::kLeft:
+						std::cout << "AutonomousInit():  AutonomousScoringStrategy::kSwitch, RobotStartPositions::kLeft" << std::endl;
+						sequenceToExecute = &scoreLeftFromLeft;
+						break;
+					case RobotStartPositions::kRight:
+						std::cout << "AutonomousInit():  AutonomousScoringStrategy::kSwitch, RobotStartPositions::kRight" << std::endl;
+						break;
+				}
+				break;
+			case AutonomousScoringStrategy::kScale:
+				std::cout << "AutonomousInit():  AutonomousScoringStrategy::kScale" << std::endl;
+				break;
+			case AutonomousScoringStrategy::kSwitchAndScale:
+				std::cout << "AutonomousInit():  AutonomousScoringStrategy::kSwitchAndScale" << std::endl;
+				break;
+		}
+
+		if(!sequenceToExecute){
+			std::cout << "sequenceToExecute was null" << std::endl;
+		}
+
+		sequenceToExecute->initSequence();
+		climberSystem.lockClimber();
+
+		SmartDashboard::PutBoolean("Auton Complete", false);
+		elevatorPositionCommand.setSetpoint(0);
+	}
+
+	void AutonomousPeriodic() override {
+		if(sequenceToExecute) {
+			sequenceToExecute->execute();
+			if(sequenceToExecute->sequenceState == CommandState::kFinished){
+				SmartDashboard::PutBoolean("Auton Complete", true);
+			}
+		}
+	}
+
+	void TeleopInit() override {
+		if(sequenceToExecute) {
+			sequenceToExecute->disable();
+		}
+
+		limelight.setLedMode(limelightMap::LedMode::kOff);
+		limelight.setCamMode(limelightMap::CamMode::kDriverCamera);
+
+//		tankDriveCommand.init();
+//		pneumaticGripperCommand.init();
+//		elevatorPositionCommand.init();
+//		joystickElevatorCommand.init();
+//
+//		turn__DegreesCommand.init();
+////		positionCommand.init();
+////		aimToTargetCommand.init();
+//		instrumentCommand.init();
+//		driveFeetCommand.init();
+//		climberCommand.init();
+//		climberSystem.lockClimber();
+//		elevatorPositionCommand.setSetpoint(0);
 	}
 
 	void TeleopPeriodic() override {

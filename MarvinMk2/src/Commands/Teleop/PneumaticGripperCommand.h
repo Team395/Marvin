@@ -39,7 +39,7 @@ class PneumaticGripperCommand: public CommandBase {
 	IntakeState intakeStatePriorToRetain;
 
 	//TODO: tune this
-	int kElevatorAutomaticThreshold = 15;
+	int kElevatorAutomaticThreshold = 10;
 	ElevatorAutomaticThreshold elevatorAutomaticThresholdState = ElevatorAutomaticThreshold::kBelow;
 
 

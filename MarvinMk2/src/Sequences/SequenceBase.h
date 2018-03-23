@@ -63,9 +63,29 @@ namespace auton {
 
 		//return true if finished
 		void executeInParallel(SequenceBase* sequence){
+#if 1
+//			for (auto iterator : sequence->commandsToRun) {
+			for (auto& iterator : sequence->commandsToRun) {
+				if (iterator->getCommandState() == CommandState::kFinished) {
+					continue;
+				}
+
+				bool finished = processCommand(iterator);
+				if (finished) {
+					sequence->numberOfFinishedCommands++;
+
+					if(sequence->numberOfCommands == sequence->numberOfFinishedCommands){
+						sequence->sequenceState = CommandState::kFinished;
+					}
+				}
+			}
+#else
 			std::list<CommandBase*>::iterator iterator = sequence->commandsToRun.begin();
 
 			while(iterator != sequence->commandsToRun.end()) {
+//				std::cout << (*iterator)->getName() << std::endl;
+//				sequence->sequenceState = CommandState::kFinished;
+//				iterator++;
 				while((*iterator)->getCommandState() == CommandState::kFinished){
 					iterator++;
 					if(iterator == sequence->commandsToRun.end()) return;
@@ -81,6 +101,7 @@ namespace auton {
 					}
 				}
 			}
+#endif
 		}
 
 		//return true if command finished
@@ -99,6 +120,13 @@ namespace auton {
 		}
 
 		void disable() {
+#if 1
+			for (auto& sequenceIterator : sequenceQueue) {
+				for (auto& iterator : sequenceIterator->commandsToRun) {
+					iterator->disable();
+				}
+			}
+#else
 			auto sequenceIterator = sequenceQueue.begin();
 
 			while(sequenceIterator != sequenceQueue.end()) {
@@ -120,6 +148,7 @@ namespace auton {
 //					iterator++;
 //				}
 			}
+#endif
 		}
 	};
 }

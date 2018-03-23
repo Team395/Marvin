@@ -36,8 +36,8 @@ class Intake : SystemBase {
 	IntakeState intakeState{IntakeState::automatic};
 	GripperState gripperState{GripperState::open};
 	Servo releaseServo{IntakeMap::kReleaseServo};
-	double openPosition = 0;
-	double closedPosition = 1;
+	double openPosition = 1;
+	double closedPosition = 0;
 
 
 public:

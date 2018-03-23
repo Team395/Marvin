@@ -44,7 +44,8 @@ namespace auton {
 			drive2{2.3333, drivebase, encoders, gyro},
 			elevatorCommand{positionCommand, OI::ElevatorPreset::kSwitch}
 			{
-				driveAwayFromWall.setCommandsToRun(std::list<CommandBase*>{&drive1, &elevatorCommand});
+//				driveAwayFromWall.setCommandsToRun(std::list<CommandBase*>{&drive1, &elevatorCommand});
+				driveAwayFromWall.setCommandsToRun(std::list<CommandBase*>{&drive1});
 				wait1.setCommandsToRun(std::list<CommandBase*>{&test1});
 				turnTowardsSwitchPlate.setCommandsToRun(std::list<CommandBase*>{&turn1});
 				wait2.setCommandsToRun(std::list<CommandBase*>{&test2});
