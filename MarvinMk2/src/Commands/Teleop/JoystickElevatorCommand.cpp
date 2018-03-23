@@ -31,21 +31,27 @@ void JoystickElevatorCommand::update() {
 
 	switch(oi->getElevatorPreset()){
 		case(OI::ElevatorPreset::kHighScale):
+			std::cout << "Setting high: " << highHeight << std::endl;
 			setpoint = highHeight;
 			break;
 		case(OI::ElevatorPreset::kNormalScale):
+			std::cout << "Setting normal: " << normalHeight << std::endl;
 			setpoint = normalHeight;
 			break;
 		case(OI::ElevatorPreset::kLowScale):
+			std::cout << "Setting low scale: " << lowHeight << std::endl;
 			setpoint = lowHeight;
 			break;
 		case(OI::ElevatorPreset::kSwitch):
+			std::cout << "Setting switch: " << switchHeight << std::endl;
 			setpoint = switchHeight;
 			break;
 		case(OI::ElevatorPreset::kBottom):
+			std::cout << "Setting bottom: " << bottomHeight << std::endl;
 			setpoint = bottomHeight;
 			break;
 		case(OI::ElevatorPreset::kNone):
+			std::cout << "Setting none: " << setpoint << std::endl;
 			break;
 	}
 	double setpointIncrement = 0;

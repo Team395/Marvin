@@ -7,6 +7,8 @@
 
 #pragma once
 
+//TODO Recheck All
+
 namespace OIMap{
 	namespace Xbox{
 		constexpr int kXboxController = 2;
@@ -33,7 +35,7 @@ namespace OIMap{
 		constexpr int kDriveStickRight = 1;
 	}
 };
-
+//TODO webdb
 namespace DrivebaseMap{
 	constexpr int kLeftMaster = 1;
 	constexpr int kLeftSlave = 2;
@@ -42,22 +44,21 @@ namespace DrivebaseMap{
 };
 
 namespace ElevatorMap{
-	constexpr int kWinchInverted = 1;
+	constexpr int kWinchInverted = 1; //TODO
 	constexpr int kLimitTop = 0;
 	constexpr int kLimitBottom = 1;
 	constexpr int kTopInverted = 1;
 	constexpr int kBottomInverted = 1;
-	constexpr int kWinch = 5;
+	constexpr int kWinch = 5; //WEBDB
 };
 
 namespace IntakeMap{
-	constexpr int kLeftGripperOpen = 0;
-	constexpr int kLeftGripperClose = 1;
-	constexpr int kRightGripperOpen = 2;
-	constexpr int kRightGripperClose = 3;
+	constexpr int kGripperOpen = 0; //Check
+	constexpr int kGripperClose = 1; //Check
 	constexpr int kIntakeLeft = 0;
 	constexpr int kIntakeRight = 1;
-	constexpr int kBackBanner = 2;
+	constexpr int kBackBanner = 9;
+	constexpr int kReleaseServo = 9;
 }
 
 namespace ClimberMap{

@@ -18,7 +18,7 @@ class AutoElevatorCommand : public CommandBase{
 	const double highHeight = 15;
 	const double normalHeight = 12;
 	const double lowHeight = 9;
-	const double switchHeight = 6;
+	const double switchHeight = 10;
 	const double bottomHeight = 0;
 
 public:

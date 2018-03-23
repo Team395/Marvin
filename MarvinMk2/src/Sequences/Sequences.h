@@ -11,6 +11,8 @@
 //Convenience header for autonomous sequence lists
 #include <Sequences/CrossAutonLine.h>
 #include <Sequences/ScoreSwitchFromCenter.h>
+#include <Sequences/ScoreLeftFromLeft.h>
+
 #include "SequenceBase.h"
 #include "Wait1Wait3Wait2.h"
 #include "Drive10Turn90Drive5.h"

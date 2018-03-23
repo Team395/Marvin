@@ -10,11 +10,11 @@
 ClimberSystem::ClimberSystem()
 	: SystemBase("ClimberSystem")
 {
-	// TODO Auto-generated constructor stub
+
 }
 
 ClimberSystem::~ClimberSystem() {
-	// TODO Auto-generated destructor stub
+
 }
 
 void ClimberSystem::startClimbing() {

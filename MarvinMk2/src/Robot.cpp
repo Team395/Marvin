@@ -86,11 +86,11 @@ class Robot: public frc::TimedRobot {
 
 	TankDriveCommand tankDriveCommand{&drivebase, &oi};
 	PneumaticGripperCommand pneumaticGripperCommand{&intake, &elevator, &oi};
-//	ElevatorPositionCommand elevatorPositionCommand{&elevator, 0.35, 0, 0.15};
-//	JoystickElevatorCommand joystickElevatorCommand{&elevator, &oi, &elevatorPositionCommand};
+	ElevatorPositionCommand elevatorPositionCommand{&elevator, 0.35, 0, 0.15};
+	JoystickElevatorCommand joystickElevatorCommand{&elevator, &oi, &elevatorPositionCommand};
 
 //  TrackPositionCommand positionCommand{&drivebaseSensors};
-	Turn__DegreesCommand turn__DegreesCommand{45, &drivebase, &gyroSensor};
+	Turn__DegreesCommand turn__DegreesCommand{90, &drivebase, &gyroSensor};
 //	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
 	InstrumentCommand instrumentCommand{&oi, &intake};
 	Drive__FeetCommand driveFeetCommand{10,&drivebase,&encoderSensors,&gyroSensor};
@@ -102,6 +102,7 @@ class Robot: public frc::TimedRobot {
 	auton::CrossAutonLine crossAutonLine{&drivebase, &encoderSensors, &gyroSensor, &pneumaticGripperCommand};
 	auton::ScoreSwitchFromCenter scoreLeftSwitchFromCenter{&drivebase, &encoderSensors, &gyroSensor, SwitchScalePositions::kLeft};
 	auton::ScoreSwitchFromCenter scoreRightSwitchFromCenter{&drivebase, &encoderSensors, &gyroSensor, SwitchScalePositions::kRight};
+	auton::ScoreLeftFromLeft scoreLeftFromLeft{&drivebase, &encoderSensors, &gyroSensor, &elevatorPositionCommand};
 	auton::SequenceBase* sequenceToExecute;
 
 	RobotStartPositions startPosition;
@@ -131,7 +132,7 @@ public:
 
 		SwitchScalePositions homeSwitchPosition = fieldData.getHomeSwitchPosition();
 		SwitchScalePositions scalePosition = fieldData.getScalePosition();
-
+		homeSwitchPosition = SwitchScalePositions::kLeft;
 		switch(scoringStrategy) {
 			case AutonomousScoringStrategy::kNone:
 				sequenceToExecute = &crossAutonLine;
@@ -153,6 +154,7 @@ public:
 						}
 						break;
 					case RobotStartPositions::kLeft:
+						sequenceToExecute = &scoreLeftFromLeft;
 						break;
 					case RobotStartPositions::kRight:
 						break;
@@ -167,6 +169,7 @@ public:
 		sequenceToExecute->initSequence();
 		climberSystem.lockClimber();
 		SmartDashboard::PutBoolean("Auton Complete", false);
+		elevatorPositionCommand.setSetpoint(0);
 	}
 
 	void AutonomousPeriodic() override {
@@ -186,8 +189,8 @@ public:
 
 		tankDriveCommand.init();
 		pneumaticGripperCommand.init();
-//		elevatorPositionCommand.init();
-//		joystickElevatorCommand.init();
+		elevatorPositionCommand.init();
+		joystickElevatorCommand.init();
 
 		turn__DegreesCommand.init();
 //		positionCommand.init();
@@ -196,6 +199,7 @@ public:
 		driveFeetCommand.init();
 		climberCommand.init();
 		climberSystem.lockClimber();
+		elevatorPositionCommand.setSetpoint(0);
 	}
 
 	void TeleopPeriodic() override {
@@ -222,18 +226,18 @@ public:
 			tankDriveCommand.update();
 		}
 #else
-//		tankDriveCommand.update();
-//		instrumentCommand.update();
+		tankDriveCommand.update();
+		instrumentCommand.update();
 #endif
 
 //		limelight.refreshNetworkTableValues();
 //		limelight.printToSmartDashboard();
 
 		pneumaticGripperCommand.update();
-		instrumentCommand.update();
+
 		climberCommand.update();
-//		joystickElevatorCommand.update();
-//		elevatorPositionCommand.update();
+		joystickElevatorCommand.update();
+		elevatorPositionCommand.update();
 	}
 
 	void TestPeriodic() override {
@@ -246,6 +250,7 @@ public:
 
 		frc::SmartDashboard::PutString("StartPos", stringifyRobotStartPositions(startPosition));
 		frc::SmartDashboard::PutString("ScoringStrat", stringifyAutonomousScoringStrategy(scoringStrategy));
+		intake.reset();
 	}
 };
 

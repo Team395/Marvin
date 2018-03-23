@@ -23,7 +23,6 @@ lastRightEncoder{0} {
 }
 
 TrackPositionCommand::~TrackPositionCommand() {
-	// TODO Auto-generated destructor stusb
 }
 
 void TrackPositionCommand::init(){

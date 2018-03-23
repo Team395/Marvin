@@ -13,6 +13,7 @@
 #include <Systems/SystemBase.h>
 #include <Solenoid.h>
 #include <DigitalInput.h>
+#include <Servo.h>
 
 enum class IntakeState{
 	automatic,
@@ -29,13 +30,15 @@ enum class GripperState{
 class Intake : SystemBase {
 	Spark leftIntake{IntakeMap::kIntakeLeft};
 	Spark rightIntake{IntakeMap::kIntakeRight};
-	Solenoid leftGripperOpen{IntakeMap::kLeftGripperOpen};
-	Solenoid leftGripperClose{IntakeMap::kLeftGripperClose};
-	Solenoid rightGripperOpen{IntakeMap::kRightGripperOpen};
-	Solenoid rightGripperClose{IntakeMap::kRightGripperClose};
+	Solenoid gripperOpen{IntakeMap::kGripperOpen};
+	Solenoid gripperClose{IntakeMap::kGripperClose};
 	DigitalInput backBannerSensor{IntakeMap::kBackBanner};
 	IntakeState intakeState{IntakeState::automatic};
 	GripperState gripperState{GripperState::open};
+	Servo releaseServo{IntakeMap::kReleaseServo};
+	double openPosition = 0;
+	double closedPosition = 1;
+
 
 public:
 	Intake();
@@ -53,6 +56,9 @@ public:
 
 	void setGripperState(GripperState);
 	GripperState getGripperState();
+
+	void release();
+	void reset();
 };
 
 #endif /* SRC_SYSTEMS_INTAKE_H_ */

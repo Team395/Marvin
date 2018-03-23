@@ -11,12 +11,11 @@ AutoElevatorCommand::AutoElevatorCommand(ElevatorPositionCommand* positionComman
 CommandBase("Auto Elevator Command"),
 positionCommand{positionCommand},
 height{height} {
-	// TODO Auto-generated constructor stub
 
 }
 
 AutoElevatorCommand::~AutoElevatorCommand() {
-	// TODO Auto-generated destructor stub
+
 }
 
 void AutoElevatorCommand::init(){

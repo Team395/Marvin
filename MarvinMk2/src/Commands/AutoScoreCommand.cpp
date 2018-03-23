@@ -8,12 +8,10 @@
 #include <Commands/AutoScoreCommand.h>
 
 AutoScoreCommand::AutoScoreCommand(PneumaticGripperCommand* gripperCommand) : CommandBase("Autoscore Command"), gripperCommand(gripperCommand){
-	// TODO Auto-generated constructor stub
 
 }
 
 AutoScoreCommand::~AutoScoreCommand() {
-	// TODO Auto-generated destructor stub
 }
 
 void AutoScoreCommand::init(){

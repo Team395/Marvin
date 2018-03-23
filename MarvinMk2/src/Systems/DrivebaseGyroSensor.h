@@ -25,7 +25,6 @@ class DrivebaseGyroSensor: SystemBase, public frc::PIDSource {
 
 public:
 	//PID Gains for Turn
-	//TODO: retune loop for degrees
 	double kP { 0.04 };
 	double kI { 0.00 };
 	double kD { 0.004 };

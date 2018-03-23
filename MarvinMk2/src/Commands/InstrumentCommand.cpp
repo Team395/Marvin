@@ -12,12 +12,10 @@
 InstrumentCommand::InstrumentCommand(OI* oi, Intake* intake) : CommandBase("InstrumentCommand")
 	, oi{oi}
 	, intake{intake} {
-	// TODO Auto-generated constructor stub
 
 }
 
 InstrumentCommand::~InstrumentCommand() {
-	// TODO Auto-generated destructor stub
 }
 
 void InstrumentCommand::init() {

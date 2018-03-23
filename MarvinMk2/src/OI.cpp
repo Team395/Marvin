@@ -61,19 +61,38 @@ OI::RequestedClawState OI::getRequestedIntakePosition(){
 }
 
 OI::ElevatorPreset OI::getElevatorPreset(){
-	if(xboxController.GetRawButtonPressed(OIMap::Xbox::kHighScalePreset)){
+//	if(xboxController.GetRawButtonPressed(OIMap::Xbox::kHighScalePreset)){
+//		return ElevatorPreset::kHighScale;
+//	}
+//	else if(xboxController.GetRawButtonPressed(OIMap::Xbox::kNormalScalePreset)){
+//		return ElevatorPreset::kNormalScale;
+//	}
+//	else if(xboxController.GetRawButtonPressed(OIMap::Xbox::kLowScalePreset)){
+//		return ElevatorPreset::kLowScale;
+//	}
+//	else if(xboxController.GetRawButtonPressed(OIMap::Xbox::kSwitchPreset)){
+//		return ElevatorPreset::kSwitch;
+//	}
+//	else if(xboxController.GetRawButtonPressed(OIMap::Xbox::kBottomPreset)){
+//		return ElevatorPreset::kBottom;
+//	}
+//	else{
+//		return ElevatorPreset::kNone;
+//	}
+
+	if(xboxController.GetYButton()){
 		return ElevatorPreset::kHighScale;
 	}
-	else if(xboxController.GetRawButtonPressed(OIMap::Xbox::kNormalScalePreset)){
+	else if(xboxController.GetBButton()){
 		return ElevatorPreset::kNormalScale;
 	}
-	else if(xboxController.GetRawButtonPressed(OIMap::Xbox::kLowScalePreset)){
+	else if(xboxController.GetAButton()){
 		return ElevatorPreset::kLowScale;
 	}
-	else if(xboxController.GetRawButtonPressed(OIMap::Xbox::kSwitchPreset)){
+	else if(xboxController.GetXButton()){
 		return ElevatorPreset::kSwitch;
 	}
-	else if(xboxController.GetRawButtonPressed(OIMap::Xbox::kBottomPreset)){
+	else if(xboxController.GetStickButton(frc::GenericHID::JoystickHand::kLeftHand)){
 		return ElevatorPreset::kBottom;
 	}
 	else{

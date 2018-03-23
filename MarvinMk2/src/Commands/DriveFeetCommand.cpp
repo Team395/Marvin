@@ -18,12 +18,10 @@ Drive__FeetCommand::Drive__FeetCommand(double feet, Drivebase* drivebase, Driveb
 	encoderSensors{encoderSensors},
 	gyroSensor{gyroSensor}
 	{
-	// TODO Auto-generated constructor stub
 
 }
 
 Drive__FeetCommand::~Drive__FeetCommand() {
-	// TODO Auto-generated destructor stub
 
 }
 

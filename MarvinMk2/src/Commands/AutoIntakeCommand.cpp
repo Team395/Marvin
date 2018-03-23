@@ -8,12 +8,10 @@
 #include <Commands/AutoIntakeCommand.h>
 
 AutoIntakeCommand::AutoIntakeCommand(PneumaticGripperCommand* gripperCommand) : CommandBase("Auto Intake Command"), gripperCommand{gripperCommand}{
-	// TODO Auto-generated constructor stub
 
 }
 
 AutoIntakeCommand::~AutoIntakeCommand() {
-	// TODO Auto-generated destructor stub
 }
 
 void AutoIntakeCommand::init(){

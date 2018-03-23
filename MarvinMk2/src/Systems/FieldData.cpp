@@ -10,12 +10,11 @@
 #include <SmartDashboard/SmartDashboard.h>
 
 FieldData::FieldData() : SystemBase("FieldData") {
-	// TODO Auto-generated constructor stub
 
 }
 
 FieldData::~FieldData() {
-	// TODO Auto-generated destructor stub
+
 }
 
 void FieldData::readSwitchScalePositions() {

@@ -9,7 +9,7 @@
 
 Intake::Intake() : SystemBase("Intake"){
 	leftIntake.SetInverted(false);
-	rightIntake.SetInverted(false);
+	rightIntake.SetInverted(true);
 }
 
 Intake::~Intake() {
@@ -26,20 +26,18 @@ void Intake::driveRight(double speed){
 
 void Intake::setClawOpen(bool open){
 	//leftGripperOpen and leftGripperClose are flipped
-	leftGripperOpen.Set(!open);
-	leftGripperClose.Set(open);
-	rightGripperOpen.Set(!open);
-	rightGripperClose.Set(open);
+	gripperOpen.Set(!open);
+	gripperClose.Set(open);
 
 	setGripperState(open ? GripperState::open : GripperState::close);
 }
 
 bool Intake::getClawOpen(){
-	return !leftGripperOpen.Get();
+	return !gripperOpen.Get();
 }
 
 bool Intake::getBackBanner(){
-	return !backBannerSensor.Get();
+	return backBannerSensor.Get();
 }
 
 void Intake::setState(IntakeState state){
@@ -56,4 +54,12 @@ void Intake::setGripperState(GripperState state){
 
 GripperState Intake::getGripperState(){
 	return gripperState;
+}
+
+void Intake::reset() {
+	releaseServo.Set(closedPosition);
+}
+
+void Intake::release() {
+	releaseServo.Set(openPosition);
 }

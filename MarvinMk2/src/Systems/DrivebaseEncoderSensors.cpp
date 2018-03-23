@@ -32,11 +32,8 @@ double DrivebaseEncoderSensors::PIDGet() {
 	return getAveragedEncoderPositions();
 }
 double DrivebaseEncoderSensors::getAveragedEncoderPositions() {
-	//TODO: bring back once encoders are fixed
-//	return (getLeftEncoder(DrivebaseEncoderSensors::returnType::kDisplacement) +
-//			getRightEncoder(DrivebaseEncoderSensors::returnType::kDisplacement)) / 2;
-
-	return (getRightEncoder(DrivebaseEncoderSensors::returnType::kDisplacement));
+	return (getLeftEncoder(DrivebaseEncoderSensors::returnType::kDisplacement) +
+			getRightEncoder(DrivebaseEncoderSensors::returnType::kDisplacement)) / 2;
 }
 double DrivebaseEncoderSensors::convertToNativeUnits(double feet) {
 	return (feet*INCHES_PER_FOOT*UNITS_PER_ROTATION/PI/WHEEL_DIAMETER_INCHES);
@@ -46,14 +43,14 @@ WPI_TalonSRX* DrivebaseEncoderSensors::getTalon(Drivebase* drivebase, int index)
 	return drivebase->talonIndex[index-1];
 }
 
-//double DrivebaseEncoderSensors::getLeftEncoder(returnType type){
-//	if(static_cast<int>(type) == 0){
-//		return leftEncoderTalon->GetSelectedSensorPosition(0);
-//	}
-//	else{
-//		return leftEncoderTalon->GetSelectedSensorVelocity(0);
-//	}
-//}
+double DrivebaseEncoderSensors::getLeftEncoder(returnType type){
+	if(static_cast<int>(type) == 0){
+		return leftEncoderTalon->GetSelectedSensorPosition(0);
+	}
+	else{
+		return leftEncoderTalon->GetSelectedSensorVelocity(0);
+	}
+}
 
 double DrivebaseEncoderSensors::getRightEncoder(returnType type){
 	if(static_cast<int>(type) == 0){
@@ -74,7 +71,6 @@ void DrivebaseEncoderSensors::setMinimumPidOutput(double minimum){
 }
 
 void DrivebaseEncoderSensors::resetEncoderSensors(){
-	//TODO: bring back once encoders are fixed
-	//leftEncoderTalon->SetSelectedSensorPosition(0, 0, 10);
+	leftEncoderTalon->SetSelectedSensorPosition(0, 0, 10);
 	rightEncoderTalon->SetSelectedSensorPosition(0, 0, 10);
 }

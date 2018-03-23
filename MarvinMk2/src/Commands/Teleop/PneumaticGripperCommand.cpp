@@ -126,18 +126,11 @@ void PneumaticGripperCommand::updateRetain(){
 
 void PneumaticGripperCommand::init(){
 	CommandBase::init();
+	intake->release();
 }
 
 void PneumaticGripperCommand::update(){
-	//TODO: remove
-	if(oi->getShiftDownSeventyFive())
-	{
-		elevator->currentPosition = 20;
-	}
-	else if(oi->getShiftDownHalf()) {
-		elevator->currentPosition = 1;
-	}
-
+	intake->release();
 	//Read in inputs
 	GripperState gripperState = intake->getGripperState();
 	OI::RequestedClawState actuate = oi->getRequestedIntakePosition();
@@ -157,10 +150,10 @@ void PneumaticGripperCommand::update(){
 	else if(intake->getState() == IntakeState::automatic && actuate != OI::RequestedClawState::kDoNothing){
 		intake->setState(IntakeState::manual);
 	}
-	else if(cubeInIntake && gripperState == GripperState::close){
-		intakeStatePriorToRetain = intake->getState();
-		intake->setState(IntakeState::retain);
-	}
+//	else if(cubeInIntake && gripperState == GripperState::close){
+//		intakeStatePriorToRetain = intake->getState();
+//		intake->setState(IntakeState::retain);
+//	}
 
 	if(intake->getState() != IntakeState::retain) {
 		retainTimerStarted = false;
