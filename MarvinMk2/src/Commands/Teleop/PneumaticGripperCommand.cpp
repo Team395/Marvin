@@ -54,6 +54,7 @@ bool PneumaticGripperCommand::updateAutomatic(double throttle){
 		else{
 			intake->driveLeft(throttle);
 			intake->driveRight(throttle);
+			intake->setState(IntakeState::manual);
 			return true;
 		}
 	}
