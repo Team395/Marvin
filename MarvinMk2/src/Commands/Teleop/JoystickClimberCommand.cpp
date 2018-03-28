@@ -25,6 +25,13 @@ void JoystickClimberCommand::init() {
 }
 
 void JoystickClimberCommand::update() {
+#if 1
+	if (oi->getWinchClimber()) {
+		climberSystem->startClimbing();
+	} else {
+		climberSystem->stopClimbing();
+	}
+#else
 	SmartDashboard::PutBoolean("ExtendClimber", oi->getExtendClimber());
 	SmartDashboard::PutBoolean("RetractClimber", oi->getRetractClimber());
 	SmartDashboard::PutBoolean("WinchClimber", oi->getWinchClimber());
@@ -46,6 +53,7 @@ void JoystickClimberCommand::update() {
 	if (oi->getTiltClimber()) {
 		climberSystem->releaseClimber();
 	}
+#endif
 }
 
 void JoystickClimberCommand::finish() {

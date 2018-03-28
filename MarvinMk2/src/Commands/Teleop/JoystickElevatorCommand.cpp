@@ -31,35 +31,35 @@ void JoystickElevatorCommand::update() {
 
 	switch(oi->getElevatorPreset()){
 		case(OI::ElevatorPreset::kHighScale):
-			std::cout << "Setting high: " << highHeight << std::endl;
-			setpoint = highHeight;
+			std::cout << "Setting high: " << ElevatorPresets::kHighHeight << std::endl;
+			setpoint = ElevatorPresets::kHighHeight;
 			break;
 		case(OI::ElevatorPreset::kNormalScale):
-			std::cout << "Setting normal: " << normalHeight << std::endl;
-			setpoint = normalHeight;
+			std::cout << "Setting normal: " << ElevatorPresets::kNormalHeight << std::endl;
+			setpoint = ElevatorPresets::kNormalHeight;
 			break;
 		case(OI::ElevatorPreset::kLowScale):
-			std::cout << "Setting low scale: " << lowHeight << std::endl;
-			setpoint = lowHeight;
+			std::cout << "Setting low scale: " << ElevatorPresets::kLowHeight << std::endl;
+			setpoint = ElevatorPresets::kLowHeight;
 			break;
 		case(OI::ElevatorPreset::kSwitch):
-			std::cout << "Setting switch: " << switchHeight << std::endl;
-			setpoint = switchHeight;
+			std::cout << "Setting switch: " << ElevatorPresets::kSwitchHeight << std::endl;
+			setpoint = ElevatorPresets::kSwitchHeight;
 			break;
 		case(OI::ElevatorPreset::kBottom):
-			std::cout << "Setting bottom: " << bottomHeight << std::endl;
-			setpoint = bottomHeight;
+			std::cout << "Setting bottom: " << ElevatorPresets::kBottomHeight << std::endl;
+			setpoint = ElevatorPresets::kBottomHeight;
 			break;
 		case(OI::ElevatorPreset::kNone):
 			std::cout << "Setting none: " << setpoint << std::endl;
 			break;
 	}
 	double setpointIncrement = 0;
-	if(elevatorPositionCommand->getAbsError() < errorThreshold){
+	if(elevatorPositionCommand->getAbsError() < ElevatorPresets::kErrorThreshold){
 		setpointIncrement = oi->getElevatorThrottle();
 	}
 	elevatorPositionCommand->setSetpoint(setpoint + 0.15*setpointIncrement);
-	std::cout<<setpoint<<std::endl;
+//	std::cout<<setpoint<<std::endl;
 }
 
 void JoystickElevatorCommand::finish() {

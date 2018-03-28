@@ -18,7 +18,7 @@ Drive__FeetCommand::Drive__FeetCommand(double feet, Drivebase* drivebase, Driveb
 	gyroSensor{gyroSensor},
 	requestedMovementFeet{feet}
 	{
-
+		linearPID.SetOutputRange(-0.6, 0.6);
 }
 
 Drive__FeetCommand::~Drive__FeetCommand() {
@@ -76,15 +76,15 @@ void Drive__FeetCommand::update(){
 		rotationalPID.Disable();
 	}
 
-	frc::SmartDashboard::PutData("Drive Feet linear PID Controller", &linearPID);
-	frc::SmartDashboard::PutData("Drive Feet rotational PID Controller", &rotationalPID);
-	frc::SmartDashboard::PutBoolean("Drive Feet Finished", linearPID.OnTarget());
-	frc::SmartDashboard::PutNumber("Drive Feet Average Encoder Positions", encoderSensors->getAveragedEncoderPositions());
-	frc::SmartDashboard::PutNumber("Drive Feet PIDError", linearPID.GetError());
-	frc::SmartDashboard::PutNumber("Drive Feet PIDSetpoint", linearPID.GetSetpoint());
-	frc::SmartDashboard::PutNumber("Drive Feet PIDWrite", linearGetter.getPIDValue());
-	frc::SmartDashboard::PutNumber("DF Right Output", drivebase->getRightMaster()->GetMotorOutputPercent());
-	frc::SmartDashboard::PutNumber("DF Left Output", drivebase->getLeftMaster()->GetMotorOutputPercent());
+//	frc::SmartDashboard::PutData("Drive Feet linear PID Controller", &linearPID);
+//	frc::SmartDashboard::PutData("Drive Feet rotational PID Controller", &rotationalPID);
+//	frc::SmartDashboard::PutBoolean("Drive Feet Finished", linearPID.OnTarget());
+//	frc::SmartDashboard::PutNumber("Drive Feet Average Encoder Positions", encoderSensors->getAveragedEncoderPositions());
+//	frc::SmartDashboard::PutNumber("Drive Feet PIDError", linearPID.GetError());
+//	frc::SmartDashboard::PutNumber("Drive Feet PIDSetpoint", linearPID.GetSetpoint());
+//	frc::SmartDashboard::PutNumber("Drive Feet PIDWrite", linearGetter.getPIDValue());
+//	frc::SmartDashboard::PutNumber("DF Right Output", drivebase->getRightMaster()->GetMotorOutputPercent());
+//	frc::SmartDashboard::PutNumber("DF Left Output", drivebase->getLeftMaster()->GetMotorOutputPercent());
 
 }
 void Drive__FeetCommand::finish(){

@@ -25,10 +25,11 @@ class PneumaticGripperCommand: public CommandBase {
 	OI* oi;
 	const double intakeTime = 0.5;
 	const double scoreTime = 0.5;
-	double timerStartedTime = 0;
+	double timerStartedTime = -1;
 	bool cubeInIntake = false;
 	bool bannerSensorTripped = false;
 	bool scoreTimerStarted = false;
+	double sensorDelay = 0.25;
 
 	double retainTimerPeriod = 1;
 	double retainTimerDuration = 0.25;
@@ -36,7 +37,7 @@ class PneumaticGripperCommand: public CommandBase {
 	double retainPeriodTimerStartedTime = 0;
 	bool retainTimerStarted = false;
 	double retainTimerStartedTime = 0;
-	IntakeState intakeStatePriorToRetain;
+	IntakeState intakeStatePriorToRetain = IntakeState::automatic;
 
 	//TODO: tune this
 	int kElevatorAutomaticThreshold = 10;

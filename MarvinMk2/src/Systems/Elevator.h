@@ -19,6 +19,15 @@
 
 class DrivebaseSensors;
 
+struct ElevatorPresets {
+	static constexpr double kHighHeight = 44;
+	static constexpr double kNormalHeight = 36.7;
+	static constexpr double kLowHeight = 30.7;
+	static constexpr double kSwitchHeight = 15;
+	static constexpr double kBottomHeight = 0;
+	static constexpr double kDeployHeight = 3.145;
+	static constexpr double kErrorThreshold = 3;
+};
 
 class Elevator : SystemBase, public PIDOutput, public PIDSource {
 	WPI_TalonSRX winchController{ElevatorMap::kWinch};
@@ -27,9 +36,11 @@ class Elevator : SystemBase, public PIDOutput, public PIDSource {
 	frc::Timer downTimer{};
 	bool driveUpLastCommand;
 	double percentOutputOffset = 0.19;
-	double minimumAcceptableOutput = .0;
+	double minimumAcceptableOutputBelowSwitchHeight = 0;
+	double minimumAcceptableOutputAboveSwitchHeight = -0.1;
 
 public:
+
 	const double inchesPerTick = 0.00182;
 	const double topPosition = 44;
 	const double bottomPosition = 0;

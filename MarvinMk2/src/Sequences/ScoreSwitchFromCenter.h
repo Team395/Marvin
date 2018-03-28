@@ -16,6 +16,8 @@
 #include <Systems/Drivebase.h>
 #include <Systems/FieldData.h>
 #include <Commands/TestCommand.h>
+#include <Commands/AutoElevatorCommand.h>
+#include <Commands/AutoScoreCommand.h>
 
 namespace auton {
 	class ScoreSwitchFromCenter: public SequenceBase {
@@ -25,6 +27,9 @@ namespace auton {
 		Drive__FeetCommand drive5_2;
 		Turn__DegreesCommand turnNegative45;
 		Drive__FeetCommand drive5_3;
+		AutoElevatorCommand autoElevatorCommand;
+		AutoScoreCommand autoscoreCommand;
+
 		SwitchScalePositions switchPosition;
 		TestCommand test1{0.1};
 		TestCommand test2{0.1};
@@ -43,15 +48,22 @@ namespace auton {
 		SequenceBase wait4;
 
 	public:
-		ScoreSwitchFromCenter(Drivebase* drivebase, DrivebaseEncoderSensors* encoders, DrivebaseGyroSensor* gyro, SwitchScalePositions switchPosition) :
-			drive5{5, drivebase, encoders, gyro},
+		ScoreSwitchFromCenter(Drivebase* drivebase, DrivebaseEncoderSensors* encoders, DrivebaseGyroSensor* gyro,
+				SwitchScalePositions switchPosition, ElevatorPositionCommand* elevatorPositionCommand,
+				PneumaticGripperCommand* pneumaticGripperCommand) :
+//			drive5{5, drivebase, encoders, gyro},
+			drive5{(switchPosition==SwitchScalePositions::kLeft) ? 2.7396 : 3.1771, drivebase, encoders, gyro},
 			turn45{((switchPosition==SwitchScalePositions::kLeft)? 1:-1)*45.0, drivebase, gyro},
-			drive5_2{5, drivebase, encoders, gyro},
+//			drive5_2{5, drivebase, encoders, gyro},
+			drive5_2{(switchPosition==SwitchScalePositions::kLeft) ? 4.0953 : 2.8579, drivebase, encoders, gyro},
 			turnNegative45{((switchPosition==SwitchScalePositions::kLeft)? 1:-1)*-45.0, drivebase, gyro},
-			drive5_3{5, drivebase, encoders, gyro},
+//			drive5_3{5, drivebase, encoders, gyro},
+			drive5_3{(switchPosition==SwitchScalePositions::kLeft) ? 2.7396 : 3.1771, drivebase, encoders, gyro},
+			autoElevatorCommand{elevatorPositionCommand, OI::ElevatorPreset::kSwitch},
+			autoscoreCommand{pneumaticGripperCommand},
 			switchPosition{switchPosition}
 			{
-				driveAwayFromWall.setCommandsToRun(std::list<CommandBase*>{&drive5});
+				driveAwayFromWall.setCommandsToRun(std::list<CommandBase*>{&drive5, &autoElevatorCommand});
 				wait1.setCommandsToRun(std::list<CommandBase*>{&test1});
 				turnTowardsSwitchPlate.setCommandsToRun(std::list<CommandBase*>{&turn45});
 				wait2.setCommandsToRun(std::list<CommandBase*>{&test2});
@@ -74,6 +86,48 @@ namespace auton {
 
 				};
 				sequenceQueue = sequences;
+			}
+
+			void execute() {
+				switch(currentStep) {
+				case 0: {
+					bool success = processCommand(&drive5);
+					bool success2 = processCommand(&autoElevatorCommand);
+					if(success && success2) currentStep++;
+				} break;
+				case 1: {
+					bool success = processCommand(&turn45);
+					if(success) currentStep++;
+				} break;
+				case 2: {
+					bool success = processCommand(&drive5_2);
+					if(success) currentStep++;
+				} break;
+				case 3: {
+					bool success = processCommand(&turnNegative45);
+					if(success) currentStep++;
+				} break;
+
+				case 4: {
+					bool success = processCommand(&drive5_3);
+					if(success) currentStep++;
+				} break;
+				case 5: {
+					bool success = processCommand(&autoscoreCommand);
+					if(success) currentStep++;
+				} break;
+				case 6: {
+					sequenceState = CommandState::kFinished;
+				} break;
+				}
+			}
+
+			void disable() {
+				drive5.disable();
+				turn45.disable();
+				drive5_2.disable();
+				turnNegative45.disable();
+				drive5_3.disable();
 			}
 
 			virtual ~ScoreSwitchFromCenter(){}

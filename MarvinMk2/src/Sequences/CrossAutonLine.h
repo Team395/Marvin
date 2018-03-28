@@ -18,17 +18,14 @@
 namespace auton {
 	class CrossAutonLine: public SequenceBase {
 
-		Drive__FeetCommand drive5;
-		AutoIntakeCommand intake;
+		Drive__FeetCommand drive15;
 		SequenceBase crossAutonLine{};
 	public:
 		CrossAutonLine(Drivebase* drivebase, DrivebaseEncoderSensors* encoders, DrivebaseGyroSensor* gyro, PneumaticGripperCommand* gripperCommand) :
-			drive5{5, drivebase, encoders, gyro},
-			intake{gripperCommand}
+			drive15{15, drivebase, encoders, gyro}
 			{
 				std::list<CommandBase*> sequenceOneCommands{
-					&drive5,
-					&intake
+					&drive15
 				};
 				crossAutonLine.setCommandsToRun(sequenceOneCommands);
 
@@ -38,6 +35,22 @@ namespace auton {
 
 				sequenceQueue = sequences;
 			}
+
+		void execute() {
+			switch(currentStep) {
+			case 0: {
+				bool success = processCommand(&drive15);
+				if(success) currentStep++;
+			} break;
+			case 1: {
+				sequenceState = CommandState::kFinished;
+			} break;
+			}
+		}
+
+		void disable() {
+			drive15.disable();
+		}
 
 			virtual ~CrossAutonLine(){}
 	};

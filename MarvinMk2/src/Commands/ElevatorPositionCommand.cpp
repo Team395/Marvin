@@ -27,8 +27,8 @@ void ElevatorPositionCommand::init(){
 }
 
 void ElevatorPositionCommand::update(){
-	frc::SmartDashboard::PutBoolean("bottomPressed", elevator->bottomPressed());
-	frc::SmartDashboard::PutBoolean("topPressed", elevator->topPressed());
+//	frc::SmartDashboard::PutBoolean("bottomPressed", elevator->bottomPressed());
+//	frc::SmartDashboard::PutBoolean("topPressed", elevator->topPressed());
 
 	if(elevator->bottomPressed()){
 		elevator->homeEncoder();
@@ -46,7 +46,7 @@ void ElevatorPositionCommand::update(){
 		pidController.Enable();
 	}
 
-	SmartDashboard::PutData("Elevator PID Controller", &pidController);
+//	SmartDashboard::PutData("Elevator PID Controller", &pidController);
 
 	double p = preferences->GetDouble("Elevator p", pidController.GetP());
 	double i = preferences->GetDouble("Elevator i", pidController.GetI());
@@ -58,10 +58,10 @@ void ElevatorPositionCommand::update(){
 	pidController.SetD(d);
 	elevator->setOffset(o);
 
-	SmartDashboard::PutNumber("PID P", pidController.GetP());
-	SmartDashboard::PutNumber("PID I", pidController.GetI());
-	SmartDashboard::PutNumber("PID D", pidController.GetD());
-	SmartDashboard::PutNumber("PIDError", pidController.GetError());
+//	SmartDashboard::PutNumber("PID P", pidController.GetP());
+//	SmartDashboard::PutNumber("PID I", pidController.GetI());
+//	SmartDashboard::PutNumber("PID D", pidController.GetD());
+//	SmartDashboard::PutNumber("PIDError", pidController.GetError());
 }
 
 void ElevatorPositionCommand::finish(){

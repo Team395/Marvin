@@ -22,10 +22,25 @@ DrivebaseGyroSensor::~DrivebaseGyroSensor() {
 }
 
 double DrivebaseGyroSensor::getAngleZ() {
-	double* returnArray = new double[3];
+#if 1
+	static double lastResponse = 0;
+	double returnArray[3] = {0,0,0};
 	int errorResponse = imu.GetAccumGyro(returnArray);
-	//TODO: what to do with errorResponse?
+	if (errorResponse == 0) {
+		lastResponse = returnArray[gyroMap::GyroIndex::kZIndex];
+	}
+
+	return lastResponse;
+#else
+	static double returnArray[3] = {0,0,0};
+	double lastResponse = returnArray[gyroMap::GyroIndex::kZIndex];
+	int errorResponse = imu.GetAccumGyro(returnArray);
+	if (errorResponse == -3) {
+		return lastResponse;
+	}
+
 	return returnArray[gyroMap::GyroIndex::kZIndex];
+#endif
 }
 
 frc::PIDSourceType DrivebaseGyroSensor::GetPIDSourceType() {

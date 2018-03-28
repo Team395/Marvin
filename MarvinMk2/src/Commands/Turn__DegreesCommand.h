@@ -21,7 +21,7 @@ class Turn__DegreesCommand : public CommandBase {
 	DrivebaseGyroSensor* gyroSensor;
 
 	double turnDegrees{0};
-	double kAcceptableError{1};
+	double kAcceptableError{1.5};
 	bool turnFinished{false};
 
 public:

@@ -13,6 +13,7 @@
 #include <Sequences/ScoreSwitchFromCenter.h>
 #include <Sequences/ScoreLeftFromLeft.h>
 #include <Sequences/PitTestSequence.h>
+#include <Sequences/ScaleLeftFromLeft.h>
 
 #include "SequenceBase.h"
 #include "Wait1Wait3Wait2.h"

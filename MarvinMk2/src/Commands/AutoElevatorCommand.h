@@ -15,12 +15,6 @@ class AutoElevatorCommand : public CommandBase{
 	ElevatorPositionCommand* positionCommand;
 	OI::ElevatorPreset height;
 
-	const double highHeight = 15;
-	const double normalHeight = 12;
-	const double lowHeight = 9;
-	const double switchHeight = 10;
-	const double bottomHeight = 0;
-
 public:
 	AutoElevatorCommand(ElevatorPositionCommand* positionCommand, OI::ElevatorPreset height);
 	virtual ~AutoElevatorCommand();

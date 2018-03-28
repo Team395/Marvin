@@ -33,7 +33,7 @@ class Intake : SystemBase {
 	Solenoid gripperOpen{IntakeMap::kGripperOpen};
 	Solenoid gripperClose{IntakeMap::kGripperClose};
 	DigitalInput backBannerSensor{IntakeMap::kBackBanner};
-	IntakeState intakeState{IntakeState::automatic};
+	IntakeState intakeState{IntakeState::manual};
 	GripperState gripperState{GripperState::open};
 	Servo releaseServo{IntakeMap::kReleaseServo};
 	double openPosition = 1;

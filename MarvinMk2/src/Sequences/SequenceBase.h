@@ -20,6 +20,7 @@ namespace auton {
 		std::list<SequenceBase*>::iterator sequenceQueueIterator;
 		int numberOfCommands = 0;
 		int numberOfFinishedCommands = 0;
+		int currentStep = 0;
 
 		std::list<CommandBase*> commandsToRun;
 
@@ -110,10 +111,12 @@ namespace auton {
 				command->init();
 			}
 
-			std::cout << "processCommand() 0:  " << command->getName() << std::endl;
-			//WHY DON'T YOU WORK
-			command->update();
-			std::cout << "processCommand() 1:  " << command->getName() << std::endl;
+			if(command->getCommandState() == CommandState::kInitialized) {
+				std::cout << "processCommand() 0:  " << command->getName() << std::endl;
+				//WHY DON'T YOU WORK
+				command->update();
+				std::cout << "processCommand() 1:  " << command->getName() << std::endl;
+			}
 
 			if(command->getCommandState() == CommandState::kFinished) {
 				return true;

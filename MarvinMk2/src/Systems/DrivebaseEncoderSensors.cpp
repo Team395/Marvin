@@ -14,9 +14,9 @@
 DrivebaseEncoderSensors::DrivebaseEncoderSensors(Drivebase* drivebasePointer) :
 	SystemBase("DrivebaseEncoderSensors"),
 	drivebase(drivebasePointer),
-	//leftEncoderTalon{getTalon(drivebase, TalonMap::kLeftEncoder)},
+	leftEncoderTalon{getTalon(drivebase, TalonMap::kLeftEncoder)},
 	rightEncoderTalon{getTalon(drivebase, TalonMap::kRightEncoder)} {
-		//leftEncoderTalon->SetSensorPhase(true);
+		leftEncoderTalon->SetSensorPhase(true);
 		rightEncoderTalon->SetSensorPhase(true);
 }
 

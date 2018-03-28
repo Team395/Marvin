@@ -31,6 +31,7 @@ public:
 		kLowScale,
 		kSwitch,
 		kBottom,
+		kDeploy,
 		kNone
 	};
 

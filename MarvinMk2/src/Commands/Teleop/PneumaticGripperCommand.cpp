@@ -24,12 +24,12 @@ PneumaticGripperCommand::~PneumaticGripperCommand() {
 bool PneumaticGripperCommand::updateAutomatic(double throttle){
 
 	//Claw Position
-	if(intake->getBackBanner() && Timer::GetFPGATimestamp() - timerStartedTime > 0.25){
+	if(intake->getBackBanner() && Timer::GetFPGATimestamp() - timerStartedTime > sensorDelay){
 		intake->setClawOpen(false);
 	}
-	else{
-		intake->setClawOpen(true);
-	}
+//	else if(timerStartedTime != -1){
+//		intake->setClawOpen(true);
+//	}
 
 	//Wheel Speed
 	if(!intake->getBackBanner()){
@@ -45,7 +45,7 @@ bool PneumaticGripperCommand::updateAutomatic(double throttle){
 				timerStartedTime = Timer::GetFPGATimestamp();
 			}
 
-			if(Timer::GetFPGATimestamp() - timerStartedTime > intakeTime + 0.25){
+			if(Timer::GetFPGATimestamp() - timerStartedTime > intakeTime + sensorDelay){
 				cubeInIntake = true;
 			}
 			intake->driveLeft(-1);
@@ -99,6 +99,13 @@ bool PneumaticGripperCommand::updateAutoscore(){
 }
 
 void PneumaticGripperCommand::updateRetain(){
+	if(!intake->getBackBanner()) {
+		cubeInIntake = false;
+		intake->setState(intakeStatePriorToRetain);
+		intake->driveLeft(0);
+		intake->driveRight(0);
+		return;
+	}
 	if(!retainPeriodTimerStarted){
 		retainPeriodTimerStartedTime = frc::Timer::GetFPGATimestamp();
 		retainPeriodTimerStarted = true;
@@ -106,14 +113,14 @@ void PneumaticGripperCommand::updateRetain(){
 
 	if(frc::Timer::GetFPGATimestamp() - retainPeriodTimerStartedTime > retainTimerPeriod) {
 		if(!retainTimerStarted){
-			retainTimerStarted = frc::Timer::GetFPGATimestamp();
+			retainTimerStartedTime = frc::Timer::GetFPGATimestamp();
 			retainTimerStarted = true;
 		}
 
 		intake->driveLeft(-1);
 		intake->driveRight(-1);
 
-		if(frc::Timer::GetFPGATimestamp() - retainTimerStarted > retainTimerDuration){
+		if(frc::Timer::GetFPGATimestamp() - retainTimerStartedTime > retainTimerDuration){
 			intake->driveLeft(0);
 			intake->driveRight(0);
 
@@ -127,11 +134,9 @@ void PneumaticGripperCommand::updateRetain(){
 
 void PneumaticGripperCommand::init(){
 	CommandBase::init();
-	intake->release();
 }
 
 void PneumaticGripperCommand::update(){
-	intake->release();
 	//Read in inputs
 	GripperState gripperState = intake->getGripperState();
 	OI::RequestedClawState actuate = oi->getRequestedIntakePosition();
@@ -142,17 +147,19 @@ void PneumaticGripperCommand::update(){
 		if(intake->getState() == IntakeState::automatic) intake->setState(IntakeState::manual);
 		else if(intake->getState() == IntakeState::manual) intake->setState(IntakeState::automatic);
 	}
-	else if(elevatorAutomaticThresholdState == ElevatorAutomaticThreshold::kBelow && elevator->currentPosition > kElevatorAutomaticThreshold) {
+	else if(elevatorAutomaticThresholdState == ElevatorAutomaticThreshold::kBelow && elevator->PIDGet() > kElevatorAutomaticThreshold) {
 		intake->setState(IntakeState::manual);
 	}
-	else if(elevatorAutomaticThresholdState == ElevatorAutomaticThreshold::kAbove && elevator->currentPosition < kElevatorAutomaticThreshold) {
+	else if(elevatorAutomaticThresholdState == ElevatorAutomaticThreshold::kAbove && elevator->PIDGet() < kElevatorAutomaticThreshold) {
 		intake->setState(IntakeState::automatic);
 	}
 	else if(intake->getState() == IntakeState::automatic && actuate != OI::RequestedClawState::kDoNothing){
 		intake->setState(IntakeState::manual);
 	}
 //	else if(cubeInIntake && gripperState == GripperState::close){
-//		intakeStatePriorToRetain = intake->getState();
+//		if(intake->getState() != IntakeState::retain) {
+//			intakeStatePriorToRetain = IntakeState::manual;
+//		}
 //		intake->setState(IntakeState::retain);
 //	}
 
@@ -161,9 +168,13 @@ void PneumaticGripperCommand::update(){
 		retainPeriodTimerStarted = false;
 	}
 
-	elevatorAutomaticThresholdState = elevator->currentPosition > kElevatorAutomaticThreshold
+	elevatorAutomaticThresholdState = elevator->PIDGet() > kElevatorAutomaticThreshold
 			? ElevatorAutomaticThreshold::kAbove
 			: ElevatorAutomaticThreshold::kBelow;
+
+	frc::SmartDashboard::PutNumber("elevatorThresholdState", (int)elevatorAutomaticThresholdState);
+	frc::SmartDashboard::PutNumber("intakeState", (int)intake->getState());
+	frc::SmartDashboard::PutNumber("elevatorPosition", elevator->PIDGet());
 
 	//TODO: probably needs to be fixed to account for placing a cube by opening the claw
 //	else if(intake->getState() == IntakeState::manual && actuate == OI::RequestedClawState::kOpen && intake->getClawOpen()){
@@ -190,13 +201,15 @@ void PneumaticGripperCommand::update(){
 			break;
 	}
 
-	SmartDashboard::PutBoolean("Banner Sensor", intake->getBackBanner());
-	SmartDashboard::PutNumber("IntakeState", (int)intake->getState());
-	SmartDashboard::PutNumber("RequestedIntakeState", (int)actuate);
+//	SmartDashboard::PutBoolean("Banner Sensor", intake->getBackBanner());
+//	SmartDashboard::PutNumber("IntakeState", (int)intake->getState());
+//	SmartDashboard::PutNumber("RequestedIntakeState", (int)actuate);
 }
 
 void PneumaticGripperCommand::finish(){
 	CommandBase::finish();
 }
 
-void PneumaticGripperCommand::disable(){}
+void PneumaticGripperCommand::disable(){
+
+}
