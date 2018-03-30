@@ -11,6 +11,7 @@
 #include <Systems/Systems.h>
 #include <Commands/Commands.h>
 #include <Sequences/Sequences.h>
+#include <AutonomousEnums.h>
 
 #include <Libraries/LimelightMap.h>
 #include <OI.h>
@@ -18,12 +19,6 @@
 #include <ctre/Phoenix.h>
 
 #include <sstream>
-
-enum class RobotStartPositions {
-	kLeft
-	, kRight
-	, kCenter
-};
 
 std::string stringifyRobotStartPositions(RobotStartPositions position) {
 	switch(position) {
@@ -105,22 +100,17 @@ class Robot: public frc::TimedRobot {
 		SwitchScalePositions::kLeft, &elevatorPositionCommand, &pneumaticGripperCommand};
 	auton::ScoreSwitchFromCenter scoreRightSwitchFromCenter{&drivebase, &encoderSensors, &gyroSensor,
 		SwitchScalePositions::kRight, &elevatorPositionCommand, &pneumaticGripperCommand};
-	auton::ScoreLeftFromLeft scoreLeftFromLeft{&drivebase, &encoderSensors, &gyroSensor,
-		&elevatorPositionCommand, &pneumaticGripperCommand, true};
-	auton::ScoreLeftFromLeft scoreRightFromRight{&drivebase, &encoderSensors, &gyroSensor,
-		&elevatorPositionCommand, &pneumaticGripperCommand, false};
+	auton::ScoreSwitchFromSide scoreSwitchFromSideLeft{&drivebase, &encoderSensors, &gyroSensor,
+		&elevatorPositionCommand, &pneumaticGripperCommand, RobotStartPositions::kLeft};
+	auton::ScoreSwitchFromSide scoreSwitchFromSideRight{&drivebase, &encoderSensors, &gyroSensor,
+		&elevatorPositionCommand, &pneumaticGripperCommand, RobotStartPositions::kRight};
 
 	//first bool is true if started on left, false if right
 	//second bool is true if scoring, false if not scoring
-	auton::ScaleLeftFromLeft scaleLeftFromLeft{&drivebase, &encoderSensors, &gyroSensor,
-		&elevatorPositionCommand, &pneumaticGripperCommand, true, true};
-	auton::ScaleLeftFromLeft scaleRightFromRight{&drivebase, &encoderSensors, &gyroSensor,
-		&elevatorPositionCommand, &pneumaticGripperCommand, false, true};
-
-	auton::ScaleLeftFromLeft driveScaleLeftFromLeft{&drivebase, &encoderSensors, &gyroSensor,
-		&elevatorPositionCommand, &pneumaticGripperCommand, true, false};
-	auton::ScaleLeftFromLeft driveScaleRightFromRight{&drivebase, &encoderSensors, &gyroSensor,
-		&elevatorPositionCommand, &pneumaticGripperCommand, false, false};
+	auton::ScoreNearScaleFromSide scoreNearScaleFromLeft{&drivebase, &encoderSensors, &gyroSensor,
+		&elevatorPositionCommand, &pneumaticGripperCommand, RobotStartPositions::kLeft};
+	auton::ScoreNearScaleFromSide scoreNearScaleFromRight{&drivebase, &encoderSensors, &gyroSensor,
+		&elevatorPositionCommand, &pneumaticGripperCommand, RobotStartPositions::kRight};
 
 	auton::PitTestSequence pitTestSequence;
 	auton::SequenceBase* sequenceToExecute = 0;
@@ -180,11 +170,10 @@ public:
 		case RobotStartPositions::kLeft:
 			if(scalePosition == SwitchScalePositions::kLeft) {
 							std::cout << "AutonomousInit():  scale left" << std::endl;
-							sequenceToExecute = &scaleLeftFromLeft;
+							sequenceToExecute = &scoreNearScaleFromLeft;
 			} else if(homeSwitchPosition == SwitchScalePositions::kLeft) {
-//				std::cout << "AutonomousInit():  switch left" << std::endl;
-//				sequenceToExecute = &scoreLeftFromLeft;
-				sequenceToExecute = &driveScaleLeftFromLeft;
+				std::cout << "AutonomousInit():  switch left" << std::endl;
+				sequenceToExecute = &scoreSwitchFromSideLeft;
 			}  else {
 				sequenceToExecute = &crossAutonLine;
 			}
@@ -192,12 +181,11 @@ public:
 
 		case RobotStartPositions::kRight:
 			if(scalePosition == SwitchScalePositions::kRight) {
-				std::cout << "AutonomousInit():  scale left" << std::endl;
-				sequenceToExecute = &scaleRightFromRight;
+				std::cout << "AutonomousInit():  scale right" << std::endl;
+				sequenceToExecute = &scoreNearScaleFromRight;
 			} else if(homeSwitchPosition == SwitchScalePositions::kRight) {
-//				std::cout << "AutonomousInit():  switch left" << std::endl;
-//				sequenceToExecute = &scoreRightFromRight;
-				sequenceToExecute = &driveScaleRightFromRight;
+				std::cout << "AutonomousInit():  switch right" << std::endl;
+				sequenceToExecute = &scoreSwitchFromSideRight;
 			}  else {
 				sequenceToExecute = &crossAutonLine;
 			}
