@@ -14,8 +14,10 @@
 #include <Sequences/ScoreSwitchFromCenter.h>
 #include <Sequences/ScoreSwitchFromSide.h>
 
-#include <Sequences/PitTestSequence.h>
 #include <Sequences/ScoreNearScaleFromSide.h>
+#include <Sequences/ScoreFarScaleFromSide.h>
+
+#include <Sequences/PitTestSequence.h>
 
 #include "SequenceBase.h"
 #include "Wait1Wait3Wait2.h"
