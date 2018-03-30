@@ -68,8 +68,8 @@ namespace auton {
 					, &wait2
 					, &approachSwitch
 					, &score
-
 				};
+
 				sequenceQueue = sequences;
 			}
 
