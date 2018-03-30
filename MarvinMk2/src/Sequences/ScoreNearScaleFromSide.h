@@ -11,7 +11,6 @@
 #include <Sequences/SequenceBase.h>
 
 #include <OI.h>
-#include <AutonomousEnums.h>
 
 #include <Systems/DrivebaseEncoderSensors.h>
 #include <Systems/DrivebaseGyroSensor.h>
@@ -53,9 +52,9 @@ namespace auton {
 	public:
 		ScoreNearScaleFromSide(Drivebase* drivebase, DrivebaseEncoderSensors* encoders,
 				DrivebaseGyroSensor* gyro, ElevatorPositionCommand* positionCommand,
-				PneumaticGripperCommand* pneumaticGripperCommand, RobotStartPositions startPosition) :
+				PneumaticGripperCommand* pneumaticGripperCommand, SwitchScalePositions scalePosition) :
 			drive1{21.3016, drivebase, encoders, gyro},
-			turn1{(startPosition == RobotStartPositions::kLeft ? -45.0 : 45.0), drivebase, gyro},
+			turn1{(scalePosition == SwitchScalePositions::kLeft ? -45.0 : 45.0), drivebase, gyro},
 			releaseCommand{positionCommand, OI::ElevatorPreset::kDeploy},
 			elevatorCommand{positionCommand, OI::ElevatorPreset::kHighScale},
 			autoscoreCommand{pneumaticGripperCommand},

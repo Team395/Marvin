@@ -105,12 +105,10 @@ class Robot: public frc::TimedRobot {
 	auton::ScoreSwitchFromSide scoreSwitchFromSideRight{&drivebase, &encoderSensors, &gyroSensor,
 		&elevatorPositionCommand, &pneumaticGripperCommand, RobotStartPositions::kRight};
 
-	//first bool is true if started on left, false if right
-	//second bool is true if scoring, false if not scoring
 	auton::ScoreNearScaleFromSide scoreNearScaleFromLeft{&drivebase, &encoderSensors, &gyroSensor,
-		&elevatorPositionCommand, &pneumaticGripperCommand, RobotStartPositions::kLeft};
+		&elevatorPositionCommand, &pneumaticGripperCommand, SwitchScalePositions::kLeft};
 	auton::ScoreNearScaleFromSide scoreNearScaleFromRight{&drivebase, &encoderSensors, &gyroSensor,
-		&elevatorPositionCommand, &pneumaticGripperCommand, RobotStartPositions::kRight};
+		&elevatorPositionCommand, &pneumaticGripperCommand, SwitchScalePositions::kRight};
 
 	auton::PitTestSequence pitTestSequence;
 	auton::SequenceBase* sequenceToExecute = 0;
