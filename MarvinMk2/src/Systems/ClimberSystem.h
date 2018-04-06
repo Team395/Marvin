@@ -17,7 +17,6 @@
 class ClimberSystem: public SystemBase {
 	Talon winchController{ClimberMap::kWinch};
 	Talon telescopeController{ClimberMap::kTelescope};
-	Servo tiltController{ClimberMap::kTilt};
 public:
 	ClimberSystem();
 	virtual ~ClimberSystem();
@@ -30,10 +29,6 @@ public:
 	void extendClimber();
 	void retractClimber();
 	void stopTelescopingClimber();
-
-	// tilt actions
-	void lockClimber();
-	void releaseClimber();
 };
 
 #endif /* SRC_SYSTEMS_CLIMBERSYSTEM_H_ */

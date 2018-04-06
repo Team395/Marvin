@@ -148,7 +148,6 @@ public:
 //		aimToTargetCommand.init();
 		instrumentCommand.init();
 		climberCommand.init();
-		climberSystem.lockClimber();
 		elevatorPositionCommand.setSetpoint(0);
 	}
 
@@ -156,13 +155,6 @@ public:
 	}
 
 	void AutonomousInit() override {
-#if 0
-		fieldData.readSwitchScalePositions();
-		driveFeetCommand.init();
-
-//		sequenceToExecute->initSequence();
-//		climberSystem.lockClimber();
-#else
 		fieldData.readSwitchScalePositions();
 
 		SwitchScalePositions homeSwitchPosition = fieldData.getHomeSwitchPosition();
@@ -246,8 +238,6 @@ public:
 				break;
 		}
 #else
-
-#endif
 		if(scoringStrategy == AutonomousScoringStrategy::kNone){
 			std::cout << "AutonomousInit():  AutonomousScoringStrategy::kNone" << std::endl;
 			sequenceToExecute = &crossAutonLine;

@@ -18,7 +18,7 @@ ClimberSystem::~ClimberSystem() {
 }
 
 void ClimberSystem::startClimbing() {
-	winchController.Set(1); // TODO:  1, -1, smaller value; determine direction
+	winchController.Set(1);
 }
 
 void ClimberSystem::stopClimbing() {
@@ -26,22 +26,14 @@ void ClimberSystem::stopClimbing() {
 }
 
 void ClimberSystem::extendClimber() {
-	telescopeController.Set(+0.4); // TODO:  1, -1, smaller value; determine direction
+	telescopeController.Set(+0.4); // TODO:  tune speed
 }
 
 void ClimberSystem::retractClimber() {
-	telescopeController.Set(-0.4); // TODO:  1, -1, smaller value; determine direction
+	telescopeController.Set(-0.4); // TODO:  tune speed
 }
 
 void ClimberSystem::stopTelescopingClimber() {
 	telescopeController.Set(0);
-}
-
-void ClimberSystem::lockClimber() {
-	tiltController.Set(0.45);
-}
-
-void ClimberSystem::releaseClimber() {
-	tiltController.Set(1); // TODO:  1, -1, smaller value; determine direction
 }
 

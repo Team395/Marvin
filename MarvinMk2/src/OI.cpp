@@ -138,21 +138,16 @@ bool OI::getRetractClimber() {
 	return (angle > 135 && angle < 225) || xboxController.GetBumper(frc::GenericHID::JoystickHand::kLeftHand);
 }
 
-bool OI::getTiltClimber() {
-	// True if user pushes left on D-PAD
-	int angle = xboxController.GetPOV();
-//	return (angle >= 225 || angle <= 315);
-	return (angle > 225 && angle < 315);
-}
-
 bool OI::getWinchClimber(){
 #if 0
-//	int angle = xboxController.GetPOV();
-//	return (angle != -1);
+	//	int angle = xboxController.GetPOV();
+	//	return (angle != -1) || xboxController.GetBumper(frc::GenericHID::JoystickHand::kRightHand);
 #else
 	// True if user pushes right on D-PAD or RB
 	int angle = xboxController.GetPOV();
-//	return (angle >= 45 || angle <= 135);
-	return (angle != -1) || xboxController.GetBumper(frc::GenericHID::JoystickHand::kRightHand);
+//		return (angle >= 45 || angle <= 135)
+		return (angle > 45 && angle < 135)
+				|| xboxController.GetBumper(frc::GenericHID::JoystickHand::kRightHand);
+
 #endif
 }
