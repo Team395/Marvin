@@ -44,12 +44,14 @@ namespace DrivebaseMap{
 };
 
 namespace ElevatorMap{
-	constexpr int kWinchInverted = 1; //TODO
+//	constexpr int kWinchOneInverted = 1; //TODO check
+//	constexpr int kWinchTwoInverted = 1;
 	constexpr int kLimitTop = 0;
 	constexpr int kLimitBottom = 1;
 	constexpr int kTopInverted = 1;
 	constexpr int kBottomInverted = 1;
-	constexpr int kWinch = 5; //WEBDB
+	constexpr int kWinchOne = 5;
+	constexpr int kWinchTwo = 6; //TODO flash talon
 };
 
 namespace IntakeMap{

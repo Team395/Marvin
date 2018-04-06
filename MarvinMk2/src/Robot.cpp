@@ -79,7 +79,7 @@ class Robot: public frc::TimedRobot {
 
 	TankDriveCommand tankDriveCommand{&drivebase, &oi};
 	PneumaticGripperCommand pneumaticGripperCommand{&intake, &elevator, &oi};
-	ElevatorPositionCommand elevatorPositionCommand{&elevator, 0.35, 0, 0.15};
+	ElevatorPositionCommand elevatorPositionCommand{&elevator, 0.35, 0, 0.15}; //TODO tune this
 	JoystickElevatorCommand joystickElevatorCommand{&elevator, &oi, &elevatorPositionCommand};
 
 //  TrackPositionCommand positionCommand{&drivebaseSensors};

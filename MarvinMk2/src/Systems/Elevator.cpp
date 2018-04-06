@@ -9,8 +9,10 @@
 #include <SmartDashboard/SmartDashboard.h>
 
 Elevator::Elevator() : SystemBase("elevator"), driveUpLastCommand(false) {
-	winchController.SetSensorPhase(false);
-	winchController.SetInverted(false);
+	winchOneController.SetSensorPhase(false);
+	winchOneController.SetInverted(false);
+	winchTwoController.SetInverted(false);
+	winchTwoController.Follow(winchOneController);
 }
 
 Elevator::~Elevator() {
@@ -38,7 +40,7 @@ void Elevator::setOffset(double offset){
 }
 
 double Elevator::PIDGet(){
-	double currentSensorPositionTicks = winchController.GetSelectedSensorPosition(0);
+	double currentSensorPositionTicks = winchOneController.GetSelectedSensorPosition(0);
 	double pidGet = currentSensorPositionTicks * inchesPerTick;
 //	frc::SmartDashboard::PutNumber("PIDGet", pidGet);
 	currentPosition = currentSensorPositionTicks;
@@ -53,9 +55,9 @@ void Elevator::PIDWrite(double throttle){
 			? minimumAcceptableOutputAboveSwitchHeight
 			: minimumAcceptableOutputBelowSwitchHeight;
 	pidWrite = pidWrite > minimum ? pidWrite : minimum;
-	winchController.Set(ControlMode::PercentOutput, pidWrite);
+	winchOneController.Set(ControlMode::PercentOutput, pidWrite);
 }
 
 void Elevator::homeEncoder(){
-	winchController.SetSelectedSensorPosition(0, 0, 0);
+	winchOneController.SetSelectedSensorPosition(0, 0, 0);
 }
