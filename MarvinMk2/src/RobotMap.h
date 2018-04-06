@@ -35,7 +35,7 @@ namespace OIMap{
 		constexpr int kDriveStickRight = 1;
 	}
 };
-//TODO webdb
+
 namespace DrivebaseMap{
 	constexpr int kLeftMaster = 1;
 	constexpr int kLeftSlave = 2;
@@ -72,4 +72,11 @@ namespace TalonMap{
 	constexpr int kLeftEncoder = 1;
 	constexpr int kRightEncoder = 3;
 	constexpr int kPigeon = 2;
+}
+
+namespace ChooserMap{
+	constexpr int kLeft = 4;
+	constexpr int kRight = 5;
+	constexpr int kNone = 6;
+	constexpr int kScale = 7;
 }

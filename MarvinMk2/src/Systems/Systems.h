@@ -18,5 +18,6 @@
 #include <Systems/Intake.h>
 #include <Systems/ClimberSystem.h>
 #include <Systems/FieldData.h>
+#include <Systems/AutonomousChooser.h>
 
 #endif /* SRC_SYSTEMS_SYSTEMS_H_ */

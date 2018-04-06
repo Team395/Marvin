@@ -87,10 +87,12 @@ namespace auton {
 			}
 
 			void disable() {
-				drive1.disable();
-				turn1.disable();
-				drive2.disable();
+				driveAwayFromWall.disable();
+				raiseElevator.disable();
+				turnTowardsScalePlate.disable();
 				score.disable();
+				driveBackFromScale.disable();
+				lowerElevator.disable();
 			}
 
 			virtual ~ScoreNearScaleFromSide(){}

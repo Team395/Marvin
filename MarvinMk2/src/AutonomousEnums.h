@@ -14,6 +14,11 @@ enum class RobotStartPositions {
 	, kCenter
 };
 
-
+enum class AutonomousScoringStrategy {
+	kNone
+	, kSwitch
+	, kScale
+	, kSwitchAndScale
+};
 
 #endif /* SRC_AUTONOMOUSENUMS_H_ */

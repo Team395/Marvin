@@ -38,21 +38,21 @@ namespace auton {
 
 		void execute() {
 			switch(currentStep) {
-			case 0: {
-				bool success = processCommand(&drive15);
-				if(success) currentStep++;
-			} break;
-			case 1: {
-				sequenceState = CommandState::kFinished;
-			} break;
+				case 0: {
+					bool success = processCommand(&drive15);
+					if(success) currentStep++;
+				} break;
+				case 1: {
+					sequenceState = CommandState::kFinished;
+				} break;
 			}
 		}
 
 		void disable() {
-			drive15.disable();
+			crossAutonLine.disable();
 		}
 
-			virtual ~CrossAutonLine(){}
+		virtual ~CrossAutonLine(){}
 	};
 }
 #endif /* SRC_SEQUENCES_CROSSAUTONLINE_H_ */

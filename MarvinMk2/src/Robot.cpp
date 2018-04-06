@@ -36,12 +36,6 @@ std::string stringifyRobotStartPositions(RobotStartPositions position) {
 	}
 }
 
-enum class AutonomousScoringStrategy {
-	kNone
-	, kSwitch
-	, kScale
-	, kSwitchAndScale
-};
 
 std::string stringifyAutonomousScoringStrategy(AutonomousScoringStrategy strategy) {
 	switch(strategy) {
@@ -65,8 +59,11 @@ std::string stringifyAutonomousScoringStrategy(AutonomousScoringStrategy strateg
 class Robot: public frc::TimedRobot {
 /*	frc::LiveWindow& liveWindow = *frc::LiveWindow::GetInstance();
 	frc::Preferences* preferences = frc::Preferences::GetInstance(); */
+#if 0
+
 	SendableChooser<RobotStartPositions> startPositionChooser;
 	SendableChooser<AutonomousScoringStrategy> scoringStrategyChooser;
+#endif
 
 	OI oi{};
 	Elevator elevator{};
@@ -78,6 +75,7 @@ class Robot: public frc::TimedRobot {
 	Limelight limelight{};
 	ClimberSystem climberSystem{};
 	FieldData fieldData{};
+	AutonomousChooser chooserSystem{};
 
 	TankDriveCommand tankDriveCommand{&drivebase, &oi};
 	PneumaticGripperCommand pneumaticGripperCommand{&intake, &elevator, &oi};
@@ -110,6 +108,12 @@ class Robot: public frc::TimedRobot {
 	auton::ScoreNearScaleFromSide scoreNearScaleFromRight{&drivebase, &encoderSensors, &gyroSensor,
 		&elevatorPositionCommand, &pneumaticGripperCommand, SwitchScalePositions::kRight};
 
+	auton::ScoreFarScaleFromSide scoreFarScaleFromLeft{&drivebase, &encoderSensors, &gyroSensor,
+		&elevatorPositionCommand, &pneumaticGripperCommand, SwitchScalePositions::kLeft};
+	auton::ScoreFarScaleFromSide scoreFarScaleFromRight{&drivebase, &encoderSensors, &gyroSensor,
+		&elevatorPositionCommand, &pneumaticGripperCommand, SwitchScalePositions::kRight};
+
+
 	auton::PitTestSequence pitTestSequence;
 	auton::SequenceBase* sequenceToExecute = 0;
 
@@ -121,6 +125,7 @@ class Robot: public frc::TimedRobot {
 public:
 
 	void RobotInit() {
+#if 0
 		startPositionChooser.AddDefault("Left", RobotStartPositions::kLeft);
 		startPositionChooser.AddObject("Center", RobotStartPositions::kCenter);
 		startPositionChooser.AddObject("Right", RobotStartPositions::kRight);
@@ -132,7 +137,7 @@ public:
 
 		SmartDashboard::PutData("Scoring Strategy", &scoringStrategyChooser);
 		SmartDashboard::PutData("Start Position", &startPositionChooser);
-
+#endif
 		tankDriveCommand.init();
 		pneumaticGripperCommand.init();
 		elevatorPositionCommand.init();
@@ -163,7 +168,7 @@ public:
 		SwitchScalePositions homeSwitchPosition = fieldData.getHomeSwitchPosition();
 		SwitchScalePositions scalePosition = fieldData.getScalePosition();
 
-#if 1
+#if 0
 		switch(startPosition) {
 		case RobotStartPositions::kLeft:
 			if(scalePosition == SwitchScalePositions::kLeft) {
@@ -191,7 +196,8 @@ public:
 		default:
 			sequenceToExecute = &crossAutonLine;
 		};
-#else
+#endif
+#if 0
 		switch(scoringStrategy) {
 			case AutonomousScoringStrategy::kNone:
 				std::cout << "AutonomousInit():  AutonomousScoringStrategy::kNone" << std::endl;
@@ -239,10 +245,61 @@ public:
 				std::cout << "AutonomousInit():  AutonomousScoringStrategy::kSwitchAndScale" << std::endl;
 				break;
 		}
+#else
+
 #endif
+		if(scoringStrategy == AutonomousScoringStrategy::kNone){
+			std::cout << "AutonomousInit():  AutonomousScoringStrategy::kNone" << std::endl;
+			sequenceToExecute = &crossAutonLine;
+		}
+		else{
+			switch(startPosition){
+				case RobotStartPositions::kCenter:
+					switch(homeSwitchPosition){
+						case SwitchScalePositions::kLeft:
+							std::cout << "AutonomousInit(): RobotStartPositions::kCenter, SwitchScalePositions::kLeft" << std::endl;
+							sequenceToExecute = &scoreLeftSwitchFromCenter;
+							break;
+						case SwitchScalePositions::kRight:
+							std::cout << "AutonomousInit(): RobotStartPositions::kCenter, SwitchScalePositions::kRight" << std::endl;
+							sequenceToExecute = &scoreRightSwitchFromCenter;
+							break;
+						default:
+							std::cout << "AutonomousInit(): RobotStartPositions::kCenter, SwitchScalePositions::defaukt" << std::endl;
+							sequenceToExecute = &crossAutonLine;
+							break;
+					}
+					break;
+				case RobotStartPositions::kLeft:
+					if(scoringStrategy == AutonomousScoringStrategy::kSwitch && homeSwitchPosition == SwitchScalePositions::kLeft){
+						std::cout << "AutonomousInit(): RobotStartPositions::kLeft, homeSwitchPosition kLeft, AutonomousScoringStrategy::kSwitch" << std::endl;
+						sequenceToExecute = &scoreSwitchFromSideLeft;
+					} else if(scalePosition == SwitchScalePositions::kLeft){
+						std::cout << "AutonomousInit(): RobotStartPositions::kLeft, scalePosition kLeft" << std::endl;
+						sequenceToExecute = &scoreNearScaleFromLeft;
+					} else {
+						std::cout << "AutonomousInit(): RobotStartPositions::kLeft, scalePosition kRight" << std::endl;
+						sequenceToExecute = &scoreFarScaleFromLeft;
+					}
+					break;
+				case RobotStartPositions::kRight:
+					if(scoringStrategy == AutonomousScoringStrategy::kSwitch && homeSwitchPosition == SwitchScalePositions::kRight){
+						std::cout << "AutonomousInit(): RobotStartPositions::kRight, homeSwitchPosition kRight, AutonomousScoringStrategy::kSwitch" << std::endl;
+						sequenceToExecute = &scoreSwitchFromSideRight;
+					} else if(scalePosition == SwitchScalePositions::kRight){
+						std::cout << "AutonomousInit(): RobotStartPositions::kRight, scalePosition kRight" << std::endl;
+						sequenceToExecute = &scoreNearScaleFromRight;
+					} else {
+						std::cout << "AutonomousInit(): RobotStartPositions::kRight, scalePosition kLeft" << std::endl;
+						sequenceToExecute = &scoreFarScaleFromRight;
+					}
+					break;
+			}
+		}
 
 		if(!sequenceToExecute){
 			std::cout << "sequenceToExecute was null" << std::endl;
+			sequenceToExecute = &crossAutonLine;
 		}
 
 		sequenceToExecute->initSequence();
@@ -253,60 +310,6 @@ public:
 	}
 
 	void AutonomousPeriodic() override {
-#if 0
-		SwitchScalePositions homeSwitchPosition = fieldData.getHomeSwitchPosition();
-//		SwitchScalePositions scalePosition = fieldData.getScalePosition();
-
-		switch(scoringStrategy) {
-			case AutonomousScoringStrategy::kNone:
-				std::cout << "AutonomousInit():  AutonomousScoringStrategy::kNone" << std::endl;
-				crossAutonLine.execute();
-				if(crossAutonLine.sequenceState) autonomousComplete = true;
-				break;
-			case AutonomousScoringStrategy::kSwitch:
-				switch(startPosition) {
-					case RobotStartPositions::kCenter:
-						switch(homeSwitchPosition) {
-							case SwitchScalePositions::kLeft:
-								std::cout << "AutonomousInit():  AutonomousScoringStrategy::kSwitch, RobotStartPositions::kCenter, SwitchScalePositions::kLeft" << std::endl;
-								scoreLeftSwitchFromCenter.execute();
-								if(scoreLeftSwitchFromCenter.sequenceState) autonomousComplete = true;
-								break;
-							case SwitchScalePositions::kRight:
-								std::cout << "AutonomousInit():  AutonomousScoringStrategy::kSwitch, RobotStartPositions::kCenter, SwitchScalePositions::kRight" << std::endl;
-								scoreRightSwitchFromCenter.execute();
-								if(scoreRightSwitchFromCenter.sequenceState) autonomousComplete = true;
-								break;
-							case SwitchScalePositions::kUnknown:
-								std::cout << "AutonomousInit():  AutonomousScoringStrategy::kSwitch, RobotStartPositions::kCenter, SwitchScalePositions::kUnknown" << std::endl;
-								//TODO: should not score or raise elevator. maybe define this behavior with a function/setter?
-								scoreLeftSwitchFromCenter.execute();
-								if(scoreLeftSwitchFromCenter.sequenceState) autonomousComplete = true;
-								break;
-						}
-						break;
-					case RobotStartPositions::kLeft:
-						std::cout << "AutonomousInit():  AutonomousScoringStrategy::kSwitch, RobotStartPositions::kLeft" << std::endl;
-						scoreLeftFromLeft.execute();
-						if(scoreLeftFromLeft.sequenceState) autonomousComplete = true;
-						break;
-					case RobotStartPositions::kRight:
-						std::cout << "AutonomousInit():  AutonomousScoringStrategy::kSwitch, RobotStartPositions::kRight" << std::endl;
-						autonomousComplete = true;
-						break;
-				}
-				break;
-			case AutonomousScoringStrategy::kScale:
-				std::cout << "AutonomousInit():  AutonomousScoringStrategy::kScale" << std::endl;
-				autonomousComplete = true;
-				break;
-			case AutonomousScoringStrategy::kSwitchAndScale:
-				std::cout << "AutonomousInit():  AutonomousScoringStrategy::kSwitchAndScale" << std::endl;
-				autonomousComplete = true;
-				break;
-		}
-#endif
-#if 1
 		if(sequenceToExecute) {
 			sequenceToExecute->execute();
 			if(sequenceToExecute->sequenceState == CommandState::kFinished){
@@ -315,63 +318,11 @@ public:
 		}
 
 		elevatorPositionCommand.update();
-#endif
-
-#if 0 //FULL STUPID
-		if(driveFeetCommand.getCommandState() == CommandState::kNotStarted) {
-			driveFeetCommand.init();
-		}
-		if(driveFeetCommand.getCommandState() == CommandState::kInitialized) {
-			driveFeetCommand.update();
-			}
-		if(driveFeetCommand.getCommandState() == CommandState::kFinished) {
-			autonomousComplete = true;
-		}
-#endif
 
 		SmartDashboard::PutBoolean("Auton Complete", autonomousComplete);
 	}
 
 	void TeleopInit() override {
-//		SwitchScalePositions homeSwitchPosition = fieldData.getHomeSwitchPosition();
-//		SwitchScalePositions scalePosition = fieldData.getScalePosition();
-
-#if 0
-		switch(scoringStrategy) {
-			case AutonomousScoringStrategy::kNone:
-				crossAutonLine.disable();
-				break;
-			case AutonomousScoringStrategy::kSwitch:
-				switch(startPosition) {
-					case RobotStartPositions::kCenter:
-						switch(homeSwitchPosition) {
-							case SwitchScalePositions::kLeft:
-								scoreLeftSwitchFromCenter.disable();
-								break;
-							case SwitchScalePositions::kRight:
-								scoreRightSwitchFromCenter.disable();
-								break;
-							case SwitchScalePositions::kUnknown:
-								scoreLeftSwitchFromCenter.disable();
-								break;
-						}
-						break;
-					case RobotStartPositions::kLeft:
-						scoreLeftFromLeft.disable();
-						break;
-					case RobotStartPositions::kRight:
-						break;
-				}
-				break;
-			case AutonomousScoringStrategy::kScale:
-				break;
-			case AutonomousScoringStrategy::kSwitchAndScale:
-				break;
-		}
-#endif
-#if 0 //FULL STUPID
-		driveFeetCommand.disable();
-#endif
 		if(sequenceToExecute) {
 			sequenceToExecute->disable();
 		}
@@ -382,7 +333,7 @@ public:
 
 	void TeleopPeriodic() override {
 //		frc::SmartDashboard::PutNumber("XboxPOV", oi.xboxController.GetPOV(0));
-#if 1
+#if 0
 		if(oi.getTurnButton()){
 			turn__DegreesCommand.update();
 		}
@@ -408,9 +359,6 @@ public:
 		instrumentCommand.update();
 #endif
 
-//		limelight.refreshNetworkTableValues();
-//		limelight.printToSmartDashboard();
-
 		pneumaticGripperCommand.update();
 
 		climberCommand.update();
@@ -423,8 +371,8 @@ public:
 	}
 
 	void DisabledPeriodic() override {
-		startPosition = startPositionChooser.GetSelected();
-		scoringStrategy = scoringStrategyChooser.GetSelected();
+		startPosition = chooserSystem.getRobotStartPosition();//startPositionChooser.GetSelected();
+		scoringStrategy = chooserSystem.getAutonomousScoringStrategy();//scoringStrategyChooser.GetSelected();
 
 		frc::SmartDashboard::PutString("StartPos", stringifyRobotStartPositions(startPosition));
 		frc::SmartDashboard::PutString("ScoringStrat", stringifyAutonomousScoringStrategy(scoringStrategy));

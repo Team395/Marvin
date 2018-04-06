@@ -51,6 +51,7 @@ void JoystickElevatorCommand::update() {
 			setpoint = ElevatorPresets::kBottomHeight;
 			break;
 		case(OI::ElevatorPreset::kNone):
+		default:
 			std::cout << "Setting none: " << setpoint << std::endl;
 			break;
 	}

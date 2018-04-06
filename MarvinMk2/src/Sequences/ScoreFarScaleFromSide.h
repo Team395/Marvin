@@ -31,6 +31,8 @@ namespace auton {
 		Drive__FeetCommand driveAcrossPlatformZone;
 		Turn__DegreesCommand rotateToScale;
 		Turn__DegreesCommand rotateAwayFromScale;
+		Drive__FeetCommand driveToScale;
+		Drive__FeetCommand driveAwayFromScale;
 
 		AutoElevatorCommand releaseIntake;
 		AutoElevatorCommand raiseElevatorToScaleHeight;
@@ -46,7 +48,8 @@ namespace auton {
 		SequenceBase crossPlatformZone;
 		SequenceBase alignWithScale;
 		SequenceBase turnAwayFromScale;
-
+		SequenceBase approachScale;
+		SequenceBase backUpFromScale;
 		SequenceBase raiseElevator;
 		SequenceBase score;
 		SequenceBase lowerElevator;
@@ -59,11 +62,13 @@ namespace auton {
 		ScoreFarScaleFromSide(Drivebase* drivebase, DrivebaseEncoderSensors* encoders,
 						DrivebaseGyroSensor* gyro, ElevatorPositionCommand* positionCommand,
 						PneumaticGripperCommand* pneumaticGripperCommand, SwitchScalePositions scalePosition) :
-				driveToPlatformZone{0, drivebase, encoders, gyro},
+				driveToPlatformZone{18.34, drivebase, encoders, gyro},
 				rotateToPlatformZone{(scalePosition == SwitchScalePositions::kRight ? -90.0 : 90.0), drivebase, gyro},
-				driveAcrossPlatformZone{0, drivebase, encoders, gyro},
+				driveAcrossPlatformZone{16.5, drivebase, encoders, gyro},
 				rotateToScale{(scalePosition == SwitchScalePositions::kRight ? 90.0 : -90.0), drivebase, gyro},
 				rotateAwayFromScale{(scalePosition == SwitchScalePositions::kRight ? -180.0 : 180.0), drivebase, gyro},
+				driveToScale{3.375, drivebase, encoders, gyro},
+				driveAwayFromScale{-3.375, drivebase, encoders, gyro},
 				releaseIntake{positionCommand, OI::ElevatorPreset::kDeploy},
 				raiseElevatorToScaleHeight{positionCommand, OI::ElevatorPreset::kHighScale},
 				lowerElevatorToBottom{positionCommand, OI::ElevatorPreset::kBottom},
@@ -74,6 +79,8 @@ namespace auton {
 			crossPlatformZone.setCommandsToRun(std::list<CommandBase*>{&driveAcrossPlatformZone});
 			alignWithScale.setCommandsToRun(std::list<CommandBase*>{&rotateToScale});
 			turnAwayFromScale.setCommandsToRun(std::list<CommandBase*>{&rotateAwayFromScale});
+			approachScale.setCommandsToRun(std::list<CommandBase*>{&driveToScale});
+			backUpFromScale.setCommandsToRun(std::list<CommandBase*>{&driveAwayFromScale});
 
 			raiseElevator.setCommandsToRun(std::list<CommandBase*>{&raiseElevatorToScaleHeight});
 			score.setCommandsToRun(std::list<CommandBase*>{&autoscoreCommand});
@@ -89,19 +96,27 @@ namespace auton {
 				, &alignWithPlatformZone
 				, &wait2
 				, &crossPlatformZone
+				, &alignWithScale
 				, &raiseElevator
 				, &wait3
-				, &alignWithScale
+				, &approachScale
 				, &score
-				, &turnAwayFromScale
+				, &backUpFromScale
 				, &lowerElevator
+				, &turnAwayFromScale
 			};
 
 			sequenceQueue = sequences;
 		}
 
 		void disable() {
-
+			approachPlatformZone.disable();
+			alignWithPlatformZone.disable();
+			crossPlatformZone.disable();
+			alignWithScale.disable();
+			approachScale.disable();
+			backUpFromScale.disable();
+			turnAwayFromScale.disable();
 		}
 
 		virtual ~ScoreFarScaleFromSide(){}

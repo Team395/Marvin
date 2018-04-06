@@ -30,6 +30,11 @@ namespace auton {
 		Drive__FeetCommand drive3;
 		AutoElevatorCommand autoElevatorCommand;
 		AutoScoreCommand autoscoreCommand;
+		AutoElevatorCommand zeroCommand;
+		Drive__FeetCommand driveBackFromSwitch;
+		Turn__DegreesCommand turnAwayFromSwitch;
+		Drive__FeetCommand driveBackFinal;
+		Turn__DegreesCommand turnStraight;
 
 		SwitchScalePositions switchPosition;
 		TestCommand test1{0.1};
@@ -43,6 +48,10 @@ namespace auton {
 		SequenceBase alignWithSwitch;
 		SequenceBase approachSwitch;
 		SequenceBase score;
+		SequenceBase backUpFromSwitch;
+		SequenceBase turnAwaySwitchPlate;
+		SequenceBase driveBackFinalSequence;
+		SequenceBase centeringTurn;
 
 		SequenceBase wait1;
 		SequenceBase wait2;
@@ -61,6 +70,11 @@ namespace auton {
 			drive3{(switchPosition==SwitchScalePositions::kLeft) ? 2.7396 : 3.1771, drivebase, encoders, gyro},
 			autoElevatorCommand{elevatorPositionCommand, OI::ElevatorPreset::kSwitch},
 			autoscoreCommand{pneumaticGripperCommand},
+			zeroCommand{elevatorPositionCommand, OI::ElevatorPreset::kBottom},
+			driveBackFromSwitch{(switchPosition==SwitchScalePositions::kLeft) ? -2.7396 : -3.1771, drivebase, encoders, gyro},
+			turnAwayFromSwitch{((switchPosition==SwitchScalePositions::kLeft)? 1:-1)*45.0, drivebase, gyro},
+			driveBackFinal{(switchPosition==SwitchScalePositions::kLeft) ? -4.0953 : -2.8579, drivebase, encoders, gyro},
+			turnStraight{((switchPosition==SwitchScalePositions::kLeft)? 1:-1)*-45.0, drivebase, gyro},
 			switchPosition{switchPosition}
 			{
 				driveAwayFromWall.setCommandsToRun(std::list<CommandBase*>{&drive1, &releaseCommand});
@@ -73,6 +87,10 @@ namespace auton {
 				wait4.setCommandsToRun(std::list<CommandBase*>{&test4, &autoElevatorCommand});
 				approachSwitch.setCommandsToRun(std::list<CommandBase*>{&drive3});
 				score.setCommandsToRun(std::list<CommandBase*>{&autoscoreCommand});
+				backUpFromSwitch.setCommandsToRun(std::list<CommandBase*>{&driveBackFromSwitch});
+				turnAwaySwitchPlate.setCommandsToRun(std::list<CommandBase*>{&turnAwayFromSwitch, &zeroCommand});
+				driveBackFinalSequence.setCommandsToRun(std::list<CommandBase*>{&driveBackFinal});
+				centeringTurn.setCommandsToRun(std::list<CommandBase*>{&turnStraight});
 
 				std::list<SequenceBase*> sequences{
 					&driveAwayFromWall
@@ -85,16 +103,25 @@ namespace auton {
 					, &wait4
 					, &approachSwitch
 					, &score
+					, &backUpFromSwitch
+					, &turnAwaySwitchPlate
+					, &driveBackFinalSequence
+					, &centeringTurn
 				};
 				sequenceQueue = sequences;
 			}
 
 			void disable() {
-				drive1.disable();
-				turn45.disable();
-				drive2.disable();
-				turnNegative45.disable();
-				drive3.disable();
+				driveAwayFromWall.disable();
+				turnTowardsSwitchPlate.disable();
+				driveTowardsSwitchPlate.disable();
+				alignWithSwitch.disable();
+				approachSwitch.disable();
+				score.disable();
+				backUpFromSwitch.disable();
+				turnAwaySwitchPlate.disable();
+				driveBackFinalSequence.disable();
+				centeringTurn.disable();
 			}
 
 			virtual ~ScoreSwitchFromCenter(){}
