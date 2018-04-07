@@ -30,10 +30,10 @@ void JoystickElevatorCommand::update() {
 	double setpoint = elevatorPositionCommand->getSetpoint();
 
 	switch(oi->getElevatorPreset()){
-		case(OI::ElevatorPreset::kHighScale):
-			std::cout << "Setting high: " << ElevatorPresets::kHighHeight << std::endl;
-			setpoint = ElevatorPresets::kHighHeight;
-			break;
+//		case(OI::ElevatorPreset::kHighScale):
+//			std::cout << "Setting high: " << ElevatorPresets::kHighHeight << std::endl;
+//			setpoint = ElevatorPresets::kHighHeight;
+//			break;
 		case(OI::ElevatorPreset::kNormalScale):
 			std::cout << "Setting normal: " << ElevatorPresets::kNormalHeight << std::endl;
 			setpoint = ElevatorPresets::kNormalHeight;
@@ -56,9 +56,13 @@ void JoystickElevatorCommand::update() {
 			break;
 	}
 	double setpointIncrement = 0;
+#if 0
 	if(elevatorPositionCommand->getAbsError() < ElevatorPresets::kErrorThreshold){
 		setpointIncrement = oi->getElevatorThrottle();
 	}
+#else
+	setpointIncrement = oi->getElevatorThrottle();
+#endif
 	elevatorPositionCommand->setSetpoint(setpoint + 0.15*setpointIncrement);
 //	std::cout<<setpoint<<std::endl;
 }

@@ -21,7 +21,7 @@ class DrivebaseSensors;
 
 struct ElevatorPresets {
 	//TODO tune all
-	static constexpr double kHighHeight = 44;
+	static constexpr double kHighHeight = 43;
 	static constexpr double kNormalHeight = 36.7;
 	static constexpr double kLowHeight = 30.7;
 	static constexpr double kSwitchHeight = 15;
@@ -37,13 +37,14 @@ class Elevator : SystemBase, public PIDOutput, public PIDSource {
 	frc::DigitalInput bottomLimit{ElevatorMap::kLimitBottom};
 	frc::Timer downTimer{};
 	bool driveUpLastCommand;
-	double percentOutputOffset = 0.19; //TODO tune
+	double percentOutputOffset = 0.1; //TODO tune
 	double minimumAcceptableOutputBelowSwitchHeight = 0;
 	double minimumAcceptableOutputAboveSwitchHeight = -0.1; //TODO tune
 
 public:
 
-	const double inchesPerTick = 0.00182*4096/128; //TODO check by hand
+//	const double inchesPerTick = 0.00182*4096/128; //TODO check by hand
+	const double inchesPerTick = 0.00182;
 	const double topPosition = 44; //TODO check before sending to top
 	const double bottomPosition = 0;
 	double currentPosition;

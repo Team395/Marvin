@@ -42,7 +42,7 @@ void Elevator::setOffset(double offset){
 double Elevator::PIDGet(){
 	double currentSensorPositionTicks = winchOneController.GetSelectedSensorPosition(0);
 	double pidGet = currentSensorPositionTicks * inchesPerTick;
-//	frc::SmartDashboard::PutNumber("PIDGet", pidGet);
+	frc::SmartDashboard::PutNumber("PIDGet", pidGet);
 	currentPosition = currentSensorPositionTicks;
 	return pidGet;
 }
@@ -51,13 +51,19 @@ void Elevator::PIDWrite(double throttle){
 	double pidWrite = throttle + percentOutputOffset;
 //	frc::SmartDashboard::PutNumber("PIDWrite", pidWrite);
 //	frc::SmartDashboard::PutNumber("PID O", percentOutputOffset);
-	double minimum = currentPosition > ElevatorPresets::kSwitchHeight
-			? minimumAcceptableOutputAboveSwitchHeight
-			: minimumAcceptableOutputBelowSwitchHeight;
+//	double minimum = currentPosition > ElevatorPresets::kSwitchHeight
+//			? minimumAcceptableOutputAboveSwitchHeight
+//			: minimumAcceptableOutputBelowSwitchHeight;
+	double minimum = -.1;
+//	double minimum = 0;
 	pidWrite = pidWrite > minimum ? pidWrite : minimum;
 	winchOneController.Set(ControlMode::PercentOutput, pidWrite);
 }
 
 void Elevator::homeEncoder(){
 	winchOneController.SetSelectedSensorPosition(0, 0, 0);
+}
+
+void Elevator::driveWinch(double throttle){
+	winchOneController.Set(ControlMode::PercentOutput, 0);
 }

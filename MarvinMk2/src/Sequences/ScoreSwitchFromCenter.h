@@ -65,15 +65,18 @@ namespace auton {
 			drive1{(switchPosition==SwitchScalePositions::kLeft) ? 2.7396 : 3.1771, drivebase, encoders, gyro},
 			releaseCommand{elevatorPositionCommand, OI::ElevatorPreset::kDeploy},
 			turn45{((switchPosition==SwitchScalePositions::kLeft)? 1:-1)*45.0, drivebase, gyro},
-			drive2{(switchPosition==SwitchScalePositions::kLeft) ? 4.0953 : 2.8579, drivebase, encoders, gyro},
+//			drive2{(switchPosition==SwitchScalePositions::kLeft) ? 4.0953 : 2.8579, drivebase, encoders, gyro},
+			drive2{(switchPosition==SwitchScalePositions::kLeft) ? 4.0953 : 3.8579, drivebase, encoders, gyro},
 			turnNegative45{((switchPosition==SwitchScalePositions::kLeft)? 1:-1)*-45.0, drivebase, gyro},
-			drive3{(switchPosition==SwitchScalePositions::kLeft) ? 2.7396 : 3.1771, drivebase, encoders, gyro},
+//			drive3{(switchPosition==SwitchScalePositions::kLeft) ? 2.7396 : 3.1771, drivebase, encoders, gyro},
+			drive3{(switchPosition==SwitchScalePositions::kLeft) ? 2.7396 : 2.4671
+					, drivebase, encoders, gyro},
 			autoElevatorCommand{elevatorPositionCommand, OI::ElevatorPreset::kSwitch},
 			autoscoreCommand{pneumaticGripperCommand},
 			zeroCommand{elevatorPositionCommand, OI::ElevatorPreset::kBottom},
-			driveBackFromSwitch{(switchPosition==SwitchScalePositions::kLeft) ? -2.7396 : -3.1771, drivebase, encoders, gyro},
+			driveBackFromSwitch{(switchPosition==SwitchScalePositions::kLeft) ? -2.7396 : -2.4671, drivebase, encoders, gyro},
 			turnAwayFromSwitch{((switchPosition==SwitchScalePositions::kLeft)? 1:-1)*45.0, drivebase, gyro},
-			driveBackFinal{(switchPosition==SwitchScalePositions::kLeft) ? -4.0953 : -2.8579, drivebase, encoders, gyro},
+			driveBackFinal{(switchPosition==SwitchScalePositions::kLeft) ? -4.0953 : -3.8579, drivebase, encoders, gyro},
 			turnStraight{((switchPosition==SwitchScalePositions::kLeft)? 1:-1)*-45.0, drivebase, gyro},
 			switchPosition{switchPosition}
 			{
@@ -83,8 +86,8 @@ namespace auton {
 				wait2.setCommandsToRun(std::list<CommandBase*>{&test2});
 				driveTowardsSwitchPlate.setCommandsToRun(std::list<CommandBase*>{&drive2});
 				wait3.setCommandsToRun(std::list<CommandBase*>{&test3});
-				alignWithSwitch.setCommandsToRun(std::list<CommandBase*>{&turnNegative45});
-				wait4.setCommandsToRun(std::list<CommandBase*>{&test4, &autoElevatorCommand});
+				alignWithSwitch.setCommandsToRun(std::list<CommandBase*>{&turnNegative45, &autoElevatorCommand});
+				wait4.setCommandsToRun(std::list<CommandBase*>{&test4});
 				approachSwitch.setCommandsToRun(std::list<CommandBase*>{&drive3});
 				score.setCommandsToRun(std::list<CommandBase*>{&autoscoreCommand});
 				backUpFromSwitch.setCommandsToRun(std::list<CommandBase*>{&driveBackFromSwitch});

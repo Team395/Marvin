@@ -79,7 +79,7 @@ class Robot: public frc::TimedRobot {
 
 	TankDriveCommand tankDriveCommand{&drivebase, &oi};
 	PneumaticGripperCommand pneumaticGripperCommand{&intake, &elevator, &oi};
-	ElevatorPositionCommand elevatorPositionCommand{&elevator, 0.35, 0, 0.15}; //TODO tune this
+	ElevatorPositionCommand elevatorPositionCommand{&elevator, 0.1, 0, 0.02}; //TODO tune this
 	JoystickElevatorCommand joystickElevatorCommand{&elevator, &oi, &elevatorPositionCommand};
 
 //  TrackPositionCommand positionCommand{&drivebaseSensors};
@@ -238,6 +238,9 @@ public:
 				break;
 		}
 #else
+		startPosition = RobotStartPositions::kCenter;
+		scoringStrategy = AutonomousScoringStrategy::kSwitch;
+
 		if(scoringStrategy == AutonomousScoringStrategy::kNone){
 			std::cout << "AutonomousInit():  AutonomousScoringStrategy::kNone" << std::endl;
 			sequenceToExecute = &crossAutonLine;

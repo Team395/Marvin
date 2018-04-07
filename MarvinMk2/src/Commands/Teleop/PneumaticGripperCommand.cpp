@@ -83,8 +83,8 @@ bool PneumaticGripperCommand::updateAutoscore(){
 		timerStartedTime = Timer::GetFPGATimestamp();
 		scoreTimerStarted = true;
 	}
-	intake->driveLeft(1);
-	intake->driveRight(1);
+	intake->driveLeft(0.4);
+	intake->driveRight(0.4);
 	if(Timer::GetFPGATimestamp() - timerStartedTime > scoreTime){
 		intake->setClawOpen(true);
 		intake->driveLeft(0);
