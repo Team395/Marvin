@@ -21,7 +21,7 @@ class DrivebaseSensors;
 
 struct ElevatorPresets {
 	//TODO tune all
-	static constexpr double kHighHeight = 43;
+	static constexpr double kHighHeight = 42.25;
 	static constexpr double kNormalHeight = 36.7;
 	static constexpr double kLowHeight = 30.7;
 	static constexpr double kSwitchHeight = 15;
@@ -45,7 +45,7 @@ public:
 
 //	const double inchesPerTick = 0.00182*4096/128; //TODO check by hand
 	const double inchesPerTick = 0.00182;
-	const double topPosition = 44; //TODO check before sending to top
+	const double topPosition = 45; //TODO check before sending to top
 	const double bottomPosition = 0;
 	double currentPosition;
 

@@ -79,12 +79,16 @@ void PneumaticGripperCommand::updateManual(OI::RequestedClawState actuate, doubl
 }
 
 bool PneumaticGripperCommand::updateAutoscore(){
+	return updateAutoscore(0.4);
+}
+
+bool PneumaticGripperCommand::updateAutoscore(double throttle){
 	if(!scoreTimerStarted){
 		timerStartedTime = Timer::GetFPGATimestamp();
 		scoreTimerStarted = true;
 	}
-	intake->driveLeft(0.4);
-	intake->driveRight(0.4);
+	intake->driveLeft(throttle);
+	intake->driveRight(throttle);
 	if(Timer::GetFPGATimestamp() - timerStartedTime > scoreTime){
 		intake->setClawOpen(true);
 		intake->driveLeft(0);

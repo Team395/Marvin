@@ -13,7 +13,7 @@ namespace OIMap{
 	namespace Xbox{
 		constexpr int kXboxController = 2;
 		constexpr int kElevator = 1;
-#if 0
+#if 1
 		constexpr int kIntakeThrottle = 5; // axis - xboxcontroller
 		constexpr int kIntakeOpen = 2; // axis - xboxcontroller
 		constexpr int kIntakeClose = 3; // axis - xboxcontroller
@@ -28,7 +28,7 @@ namespace OIMap{
 		constexpr int kSwitchPreset = 3;
 		constexpr int kBottomPreset = 9 ;
 
-#if 0
+#if 1
 		constexpr int kAutoScore = 10;
 #else
 		constexpr int kAutoScore = 12;
@@ -86,7 +86,7 @@ namespace TalonMap{
 
 namespace ChooserMap{
 	constexpr int kLeft = 4;
-	constexpr int kRight = 5;
-	constexpr int kNone = 6;
-	constexpr int kScale = 7;
+	constexpr int kRight = 7;
+	constexpr int kSwitch = 5;
+	constexpr int kScale = 6;
 }

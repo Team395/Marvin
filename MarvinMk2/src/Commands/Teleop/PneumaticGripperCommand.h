@@ -48,6 +48,7 @@ class PneumaticGripperCommand: public CommandBase {
 
 public:
 	bool updateAutomatic(double);
+	bool updateAutoscore(double);
 	bool updateAutoscore();
 	void updateRetain();
 

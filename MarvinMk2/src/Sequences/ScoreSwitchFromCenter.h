@@ -62,22 +62,30 @@ namespace auton {
 		ScoreSwitchFromCenter(Drivebase* drivebase, DrivebaseEncoderSensors* encoders, DrivebaseGyroSensor* gyro,
 				SwitchScalePositions switchPosition, ElevatorPositionCommand* elevatorPositionCommand,
 				PneumaticGripperCommand* pneumaticGripperCommand) :
-			drive1{(switchPosition==SwitchScalePositions::kLeft) ? 2.7396 : 3.1771, drivebase, encoders, gyro},
+			drive1{(switchPosition==SwitchScalePositions::kLeft) ? 2.7396 : 3.1771
+					, drivebase, encoders, gyro, 2},
 			releaseCommand{elevatorPositionCommand, OI::ElevatorPreset::kDeploy},
-			turn45{((switchPosition==SwitchScalePositions::kLeft)? 1:-1)*45.0, drivebase, gyro},
+			turn45{((switchPosition==SwitchScalePositions::kLeft)? 1:-1)*45.0
+				, drivebase, gyro, 1.5},
 //			drive2{(switchPosition==SwitchScalePositions::kLeft) ? 4.0953 : 2.8579, drivebase, encoders, gyro},
-			drive2{(switchPosition==SwitchScalePositions::kLeft) ? 4.0953 : 3.8579, drivebase, encoders, gyro},
-			turnNegative45{((switchPosition==SwitchScalePositions::kLeft)? 1:-1)*-45.0, drivebase, gyro},
+			drive2{(switchPosition==SwitchScalePositions::kLeft) ? 5.0953 : 3.8579
+					, drivebase, encoders, gyro, 3},
+			turnNegative45{((switchPosition==SwitchScalePositions::kLeft)? 1:-1)*-45.0
+				, drivebase, gyro, 1.5},
 //			drive3{(switchPosition==SwitchScalePositions::kLeft) ? 2.7396 : 3.1771, drivebase, encoders, gyro},
-			drive3{(switchPosition==SwitchScalePositions::kLeft) ? 2.7396 : 2.4671
-					, drivebase, encoders, gyro},
+			drive3{(switchPosition==SwitchScalePositions::kLeft) ? 2.0396 : 2.4671
+					, drivebase, encoders, gyro, 2},
 			autoElevatorCommand{elevatorPositionCommand, OI::ElevatorPreset::kSwitch},
 			autoscoreCommand{pneumaticGripperCommand},
 			zeroCommand{elevatorPositionCommand, OI::ElevatorPreset::kBottom},
-			driveBackFromSwitch{(switchPosition==SwitchScalePositions::kLeft) ? -2.7396 : -2.4671, drivebase, encoders, gyro},
-			turnAwayFromSwitch{((switchPosition==SwitchScalePositions::kLeft)? 1:-1)*45.0, drivebase, gyro},
-			driveBackFinal{(switchPosition==SwitchScalePositions::kLeft) ? -4.0953 : -3.8579, drivebase, encoders, gyro},
-			turnStraight{((switchPosition==SwitchScalePositions::kLeft)? 1:-1)*-45.0, drivebase, gyro},
+			driveBackFromSwitch{(switchPosition==SwitchScalePositions::kLeft) ? -2.7396 : -2.4671
+					, drivebase, encoders, gyro, 2},
+			turnAwayFromSwitch{((switchPosition==SwitchScalePositions::kLeft)? 1:-1)*45.0
+						, drivebase, gyro, 1.5},
+			driveBackFinal{(switchPosition==SwitchScalePositions::kLeft) ? -4.0953 : -3.8579
+					, drivebase, encoders, gyro, 3},
+			turnStraight{((switchPosition==SwitchScalePositions::kLeft)? 1:-1)*-45.0
+						, drivebase, gyro, 1.5},
 			switchPosition{switchPosition}
 			{
 				driveAwayFromWall.setCommandsToRun(std::list<CommandBase*>{&drive1, &releaseCommand});

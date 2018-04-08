@@ -83,10 +83,10 @@ class Robot: public frc::TimedRobot {
 	JoystickElevatorCommand joystickElevatorCommand{&elevator, &oi, &elevatorPositionCommand};
 
 //  TrackPositionCommand positionCommand{&drivebaseSensors};
-	Turn__DegreesCommand turn__DegreesCommand{90, &drivebase, &gyroSensor};
+	Turn__DegreesCommand turn__DegreesCommand{90, &drivebase, &gyroSensor, 0};
 //	AimToTargetCommand aimToTargetCommand{&drivebase, &limelight, limelightMap::PipeLine::kPipeline0};
 	InstrumentCommand instrumentCommand{&oi, &intake};
-	Drive__FeetCommand driveFeetCommand{5,&drivebase,&encoderSensors,&gyroSensor};
+	Drive__FeetCommand driveFeetCommand{5,&drivebase,&encoderSensors,&gyroSensor,0};
 	JoystickClimberCommand climberCommand{&oi, &climberSystem};
 	TestCommand testCommand{1};
 
@@ -109,9 +109,9 @@ class Robot: public frc::TimedRobot {
 		&elevatorPositionCommand, &pneumaticGripperCommand, SwitchScalePositions::kRight};
 
 	auton::ScoreFarScaleFromSide scoreFarScaleFromLeft{&drivebase, &encoderSensors, &gyroSensor,
-		&elevatorPositionCommand, &pneumaticGripperCommand, SwitchScalePositions::kLeft};
-	auton::ScoreFarScaleFromSide scoreFarScaleFromRight{&drivebase, &encoderSensors, &gyroSensor,
 		&elevatorPositionCommand, &pneumaticGripperCommand, SwitchScalePositions::kRight};
+	auton::ScoreFarScaleFromSide scoreFarScaleFromRight{&drivebase, &encoderSensors, &gyroSensor,
+		&elevatorPositionCommand, &pneumaticGripperCommand, SwitchScalePositions::kLeft};
 
 
 	auton::PitTestSequence pitTestSequence;
@@ -159,6 +159,7 @@ public:
 
 		SwitchScalePositions homeSwitchPosition = fieldData.getHomeSwitchPosition();
 		SwitchScalePositions scalePosition = fieldData.getScalePosition();
+
 
 #if 0
 		switch(startPosition) {
@@ -238,9 +239,6 @@ public:
 				break;
 		}
 #else
-		startPosition = RobotStartPositions::kCenter;
-		scoringStrategy = AutonomousScoringStrategy::kSwitch;
-
 		if(scoringStrategy == AutonomousScoringStrategy::kNone){
 			std::cout << "AutonomousInit():  AutonomousScoringStrategy::kNone" << std::endl;
 			sequenceToExecute = &crossAutonLine;

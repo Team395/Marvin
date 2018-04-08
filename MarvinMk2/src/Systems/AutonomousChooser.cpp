@@ -8,7 +8,6 @@
 #include <Systems/AutonomousChooser.h>
 
 AutonomousChooser::AutonomousChooser() : SystemBase("Auton Chooser"){
-	// TODO Auto-generated constructor stub
 
 }
 
@@ -17,7 +16,7 @@ AutonomousChooser::~AutonomousChooser() {
 }
 
 RobotStartPositions AutonomousChooser::getRobotStartPosition(){
-	int startPosition = startPositionLeft.Get()*1 + startPositionRight.Get()*2;
+	int startPosition = (!startPositionLeft.Get())*1 + (!startPositionRight.Get())*2;
 
 	switch(startPosition){
 		case 0:
@@ -36,14 +35,14 @@ RobotStartPositions AutonomousChooser::getRobotStartPosition(){
 }
 
 AutonomousScoringStrategy AutonomousChooser::getAutonomousScoringStrategy(){
-	int scoringStrategy = scoringStrategyNone.Get() * 1 + scoringStrategyScale.Get() * 2;
+	int scoringStrategy = (!scoringStrategySwitch.Get()) * 1 + (!scoringStrategyScale.Get()) * 2;
 
 	switch(scoringStrategy){
 		case 0:
 			return AutonomousScoringStrategy::kSwitch;
 			break;
 		case 1:
-			return AutonomousScoringStrategy::kNone;
+			return AutonomousScoringStrategy::kSwitch;
 			break;
 		case 2:
 			return AutonomousScoringStrategy::kScale;

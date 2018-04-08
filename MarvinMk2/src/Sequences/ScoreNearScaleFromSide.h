@@ -53,12 +53,12 @@ namespace auton {
 		ScoreNearScaleFromSide(Drivebase* drivebase, DrivebaseEncoderSensors* encoders,
 				DrivebaseGyroSensor* gyro, ElevatorPositionCommand* positionCommand,
 				PneumaticGripperCommand* pneumaticGripperCommand, SwitchScalePositions scalePosition) :
-			drive1{21.3016, drivebase, encoders, gyro},
-			turn1{(scalePosition == SwitchScalePositions::kLeft ? -45.0 : 45.0), drivebase, gyro},
+			drive1{21.3016, drivebase, encoders, gyro, 7},
+			turn1{(scalePosition == SwitchScalePositions::kLeft ? -45.0 : 45.0), drivebase, gyro, 2},
 			releaseCommand{positionCommand, OI::ElevatorPreset::kDeploy},
 			elevatorCommand{positionCommand, OI::ElevatorPreset::kHighScale},
 			autoscoreCommand{pneumaticGripperCommand},
-			drive2{-2, drivebase, encoders, gyro},
+			drive2{-2, drivebase, encoders, gyro, 3},
 			zeroCommand{positionCommand, OI::ElevatorPreset::kBottom}
 			{
 				driveAwayFromWall.setCommandsToRun(std::list<CommandBase*>{&drive1, &releaseCommand});

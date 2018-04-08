@@ -8,8 +8,8 @@
 #include "Intake.h"
 
 Intake::Intake() : SystemBase("Intake"){
-	leftIntake.SetInverted(false);
-	rightIntake.SetInverted(true);
+	leftIntake.SetInverted(true);
+	rightIntake.SetInverted(false);
 }
 
 Intake::~Intake() {

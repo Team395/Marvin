@@ -11,11 +11,14 @@
 
 #include "Turn__DegreesCommand.h"
 
-Turn__DegreesCommand::Turn__DegreesCommand(double turnDegrees, Drivebase* drivebase, DrivebaseGyroSensor* gyroSensor)
+Turn__DegreesCommand::Turn__DegreesCommand(double turnDegrees, Drivebase* drivebase, DrivebaseGyroSensor* gyroSensor, double timeout)
 : CommandBase("Turn_DegreesCommand"),
   pidController{gyroSensor->kP, gyroSensor->kI, gyroSensor->kD, gyroSensor, drivebase},
   gyroSensor{gyroSensor},
-  turnDegrees{turnDegrees} {
+  turnDegrees{turnDegrees},
+  timeout{timeout},
+  commandStartedTime{0}
+  {
 	  pidController.SetOutputRange(-0.6,0.6);
 }
 
@@ -25,10 +28,17 @@ Turn__DegreesCommand::~Turn__DegreesCommand() {
 
 void Turn__DegreesCommand::init() {
 	CommandBase::init();
+	commandStartedTime = frc::Timer::GetFPGATimestamp();
 }
 
 void Turn__DegreesCommand::update() {
 
+	if(frc::Timer::GetFPGATimestamp() - commandStartedTime > timeout && timeout != 0){
+		finish();
+		std::cout << "Turn__DegreesCommand(" << turnDegrees << ") timed out with timeout set to: " << timeout << std::endl;
+		return;
+
+	}
 	gyroSensor->kP = gyroSensor->preferences->GetDouble("TurnDegreesKp", -0.046);
 	gyroSensor->kI = gyroSensor->preferences->GetDouble("TurnDegreesKi", 0);
 	gyroSensor->kD = gyroSensor->preferences->GetDouble("TurnDegreesKd", -0.0035);

@@ -48,9 +48,9 @@ namespace auton {
 		ScoreSwitchFromSide(Drivebase* drivebase, DrivebaseEncoderSensors* encoders,
 				DrivebaseGyroSensor* gyro, ElevatorPositionCommand* positionCommand,
 				PneumaticGripperCommand* pneumaticGripperCommand, RobotStartPositions startPosition) :
-			drive1{12.3125, drivebase, encoders, gyro},
-			turn1{startPosition == RobotStartPositions::kLeft ? -90.0 : 90.0, drivebase, gyro},
-			drive2{1, drivebase, encoders, gyro},
+			drive1{12.3125, drivebase, encoders, gyro, 6},
+			turn1{startPosition == RobotStartPositions::kLeft ? -90.0 : 90.0, drivebase, gyro, 2},
+			drive2{1, drivebase, encoders, gyro, 1},
 			releaseCommand{positionCommand, OI::ElevatorPreset::kDeploy},
 			elevatorCommand{positionCommand, OI::ElevatorPreset::kSwitch},
 			autoscoreCommand{pneumaticGripperCommand}

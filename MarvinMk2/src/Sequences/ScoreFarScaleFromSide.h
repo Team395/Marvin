@@ -62,13 +62,13 @@ namespace auton {
 		ScoreFarScaleFromSide(Drivebase* drivebase, DrivebaseEncoderSensors* encoders,
 						DrivebaseGyroSensor* gyro, ElevatorPositionCommand* positionCommand,
 						PneumaticGripperCommand* pneumaticGripperCommand, SwitchScalePositions scalePosition) :
-				driveToPlatformZone{18.34, drivebase, encoders, gyro},
-				rotateToPlatformZone{(scalePosition == SwitchScalePositions::kRight ? -90.0 : 90.0), drivebase, gyro},
-				driveAcrossPlatformZone{16.5, drivebase, encoders, gyro},
-				rotateToScale{(scalePosition == SwitchScalePositions::kRight ? 90.0 : -90.0), drivebase, gyro},
-				rotateAwayFromScale{(scalePosition == SwitchScalePositions::kRight ? -180.0 : 180.0), drivebase, gyro},
-				driveToScale{3.375, drivebase, encoders, gyro},
-				driveAwayFromScale{-3.375, drivebase, encoders, gyro},
+				driveToPlatformZone{18.34, drivebase, encoders, gyro, 6},
+				rotateToPlatformZone{(scalePosition == SwitchScalePositions::kRight ? -90.0 : 90.0), drivebase, gyro, 2},
+				driveAcrossPlatformZone{16.5, drivebase, encoders, gyro, 3.75},
+				rotateToScale{(scalePosition == SwitchScalePositions::kRight ? 90.0 : -90.0), drivebase, gyro, 2},
+				rotateAwayFromScale{(scalePosition == SwitchScalePositions::kRight ? -180.0 : 180.0), drivebase, gyro, 2},
+				driveToScale{3.375, drivebase, encoders, gyro, 1.5},
+				driveAwayFromScale{-3.375, drivebase, encoders, gyro, 1.5},
 				releaseIntake{positionCommand, OI::ElevatorPreset::kDeploy},
 				raiseElevatorToScaleHeight{positionCommand, OI::ElevatorPreset::kHighScale},
 				lowerElevatorToBottom{positionCommand, OI::ElevatorPreset::kBottom},
@@ -87,8 +87,8 @@ namespace auton {
 			lowerElevator.setCommandsToRun(std::list<CommandBase*>{&lowerElevatorToBottom});
 
 			wait1.setCommandsToRun(std::list<CommandBase*>{&test1});
-			wait2.setCommandsToRun(std::list<CommandBase*>{&test1});
-			wait3.setCommandsToRun(std::list<CommandBase*>{&test1});
+			wait2.setCommandsToRun(std::list<CommandBase*>{&test2});
+			wait3.setCommandsToRun(std::list<CommandBase*>{&test3});
 
 			std::list<SequenceBase*> sequences{
 				&approachPlatformZone

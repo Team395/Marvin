@@ -13,6 +13,7 @@
 #include <OI.h>
 #include <Systems/Drivebase.h>
 #include <Systems/DrivebaseGyroSensor.h>
+#include <iostream>
 
 class Turn__DegreesCommand : public CommandBase {
 	const double PI  =3.141592653589793238463;
@@ -24,8 +25,10 @@ class Turn__DegreesCommand : public CommandBase {
 	double kAcceptableError{1.5};
 	bool turnFinished{false};
 
+	double timeout;
+	double commandStartedTime;
 public:
-	Turn__DegreesCommand(double, Drivebase*, DrivebaseGyroSensor*);
+	Turn__DegreesCommand(double, Drivebase*, DrivebaseGyroSensor*, double);
 	virtual ~Turn__DegreesCommand();
 
 	void init() override;

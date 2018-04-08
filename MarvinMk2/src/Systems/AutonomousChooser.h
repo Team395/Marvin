@@ -17,7 +17,7 @@ class AutonomousChooser: public SystemBase {
 
 	DigitalInput startPositionLeft{ChooserMap::kLeft};
 	DigitalInput startPositionRight{ChooserMap::kRight};
-	DigitalInput scoringStrategyNone{ChooserMap::kNone};
+	DigitalInput scoringStrategySwitch{ChooserMap::kSwitch};
 	DigitalInput scoringStrategyScale{ChooserMap::kScale};
 
 public:

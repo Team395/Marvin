@@ -19,7 +19,7 @@ void AutoScoreCommand::init(){
 }
 
 void AutoScoreCommand::update(){
-	bool finished = gripperCommand->updateAutoscore();
+	bool finished = gripperCommand->updateAutoscore(0.75);
 	if(finished) finish();
 }
 

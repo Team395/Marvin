@@ -9,14 +9,16 @@
 #include <SmartDashboard/SmartDashboard.h>
 #include <iostream>
 
-Drive__FeetCommand::Drive__FeetCommand(double feet, Drivebase* drivebase, DrivebaseEncoderSensors* encoderSensors, DrivebaseGyroSensor* gyroSensor) :
+Drive__FeetCommand::Drive__FeetCommand(double feet, Drivebase* drivebase, DrivebaseEncoderSensors* encoderSensors, DrivebaseGyroSensor* gyroSensor, double) :
 	CommandBase("Drive Feet Command"),
 	linearPID{encoderSensors->kP, encoderSensors->kI,encoderSensors->kD, encoderSensors, &linearGetter},
 	rotationalPID{gyroSensor->kP, gyroSensor->kI, gyroSensor->kD, gyroSensor, &rotationalGetter},
 	drivebase{drivebase},
 	encoderSensors{encoderSensors},
 	gyroSensor{gyroSensor},
-	requestedMovementFeet{feet}
+	requestedMovementFeet{feet},
+	timeout{timeout},
+	commandStartedTime{0}
 	{
 		linearPID.SetOutputRange(-0.6, 0.6);
 }
@@ -27,9 +29,16 @@ Drive__FeetCommand::~Drive__FeetCommand() {
 
 void Drive__FeetCommand::init(){
    CommandBase::init();
+   commandStartedTime = frc::Timer::GetFPGATimestamp();
 }
 
 void Drive__FeetCommand::update(){
+	if(frc::Timer::GetFPGATimestamp() - commandStartedTime > timeout && timeout != 0){
+		finish();
+		std::cout << "Drive__FeetCommand(" << requestedMovementFeet << ") timed out with timeout set to: " << timeout << std::endl;
+		return;
+	}
+
 	encoderSensors->kP = encoderSensors->preferences->GetDouble("DriveFeetKp", 0.03);
 	encoderSensors->kI = encoderSensors->preferences->GetDouble("DriveFeetKi", 0);
 	encoderSensors->kD = encoderSensors->preferences->GetDouble("DriveFeetKd", 0.02);

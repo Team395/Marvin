@@ -28,9 +28,9 @@ namespace auton {
 
 	public:
 		Drive10Turn90Drive5(Drivebase* drivebase, DrivebaseEncoderSensors* encoders, DrivebaseGyroSensor* gyro) :
-			drive10{10, drivebase, encoders, gyro},
-			turn90{90, drivebase, gyro},
-			drive5{5, drivebase, encoders, gyro}
+			drive10{10, drivebase, encoders, gyro, 0},
+			turn90{90, drivebase, gyro, 0},
+			drive5{5, drivebase, encoders, gyro, 0}
 			{
 				drive10sequence.setCommandsToRun(std::list<CommandBase*>{&drive10});
 				turn90sequence.setCommandsToRun(std::list<CommandBase*>{&turn90});

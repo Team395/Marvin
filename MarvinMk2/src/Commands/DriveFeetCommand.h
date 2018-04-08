@@ -12,6 +12,7 @@
 #include <PIDController.h>
 #include <Systems/DrivebaseEncoderSensors.h>
 #include <Systems/DrivebaseGyroSensor.h>
+#include <iostream>
 
 class PIDGetter : public PIDOutput{
 		double pidValue;
@@ -35,9 +36,12 @@ class Drive__FeetCommand: public CommandBase{
 	bool movementFinished = false;
 	double requestedMovementFeet = 0;
 	double kAcceptableError=651.9; //actually two inches
+	double timeout;
+	double commandStartedTime;
 
 public:
-	Drive__FeetCommand(double, Drivebase*, DrivebaseEncoderSensors*, DrivebaseGyroSensor*);
+	Drive__FeetCommand(double, Drivebase*, DrivebaseEncoderSensors*, DrivebaseGyroSensor*, double timeout=0);
+
 	virtual ~Drive__FeetCommand();
 
 	void init() override;
