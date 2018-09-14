@@ -16,14 +16,19 @@
 #include <Preferences.h>
 #include <ctre/Phoenix.h>
 #include <Systems/Drivebase.h>
+#include <Systems/NewTalonMap.h>
 
 using PigeonIMU = ctre::phoenix::sensors::PigeonIMU;
 class Drivebase;
 
 class DrivebaseEncoderSensors : SystemBase, public frc::PIDSource {
 	Drivebase* drivebase;
+	NewTalonMap* newTalonMap_;
+	//  TODO:  Java backport cleanup
+#if 0
 	WPI_TalonSRX* leftEncoderTalon;
 	WPI_TalonSRX* rightEncoderTalon;
+#endif
 
 public:
 	//PID Gains for Turn
@@ -32,7 +37,7 @@ public:
 	double kD{0.004};
 	frc::Preferences* preferences = frc::Preferences::GetInstance();
 
-	DrivebaseEncoderSensors(Drivebase*);
+	DrivebaseEncoderSensors(Drivebase*,NewTalonMap*);
 	virtual ~DrivebaseEncoderSensors();
 
 	frc::PIDSourceType GetPIDSourceType();

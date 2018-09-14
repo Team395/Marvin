@@ -56,7 +56,7 @@ namespace ElevatorMap{
 //	constexpr int kWinchOneInverted = 1; //TODO check
 //	constexpr int kWinchTwoInverted = 1;
 	constexpr int kLimitTop = 0;
-	constexpr int kLimitBottom = 1;
+	constexpr int kLimitBottom = 8;
 	constexpr int kTopInverted = 1;
 	constexpr int kBottomInverted = 1;
 	constexpr int kWinchOne = 5;
@@ -78,10 +78,12 @@ namespace ClimberMap{
 };
 
 //Maps out gadgeteer ports on talons
+// Equivalent to SensorMap in Java code
 namespace TalonMap{
 	constexpr int kLeftEncoder = 1;
 	constexpr int kRightEncoder = 3;
 	constexpr int kPigeon = 2;
+	constexpr int kWinchEncoder = 1;
 }
 
 namespace ChooserMap{

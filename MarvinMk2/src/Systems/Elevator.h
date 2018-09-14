@@ -16,6 +16,7 @@
 #include <PIDOutput.h>
 #include <PIDSource.h>
 #include <Systems/DrivebaseEncoderSensors.h>
+#include <Systems/NewTalonMap.h>
 
 class DrivebaseSensors;
 
@@ -31,8 +32,12 @@ struct ElevatorPresets {
 };
 
 class Elevator : SystemBase, public PIDOutput, public PIDSource {
+	NewTalonMap* newTalonMap_;
+	// TODO:  Java backport cleanup
+#if 0
 	WPI_TalonSRX winchOneController{ElevatorMap::kWinchOne};
 	WPI_TalonSRX winchTwoController{ElevatorMap::kWinchTwo};
+#endif
 	frc::DigitalInput topLimit{ElevatorMap::kLimitTop};
 	frc::DigitalInput bottomLimit{ElevatorMap::kLimitBottom};
 	frc::Timer downTimer{};
@@ -49,7 +54,7 @@ public:
 	const double bottomPosition = 0;
 	double currentPosition;
 
-	Elevator();
+	Elevator(NewTalonMap*);
 	virtual ~Elevator();
 
 	void driveWinch(double);

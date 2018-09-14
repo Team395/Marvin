@@ -10,9 +10,10 @@
 #include <Libraries/GyroMap.h>
 
 
-DrivebaseGyroSensor::DrivebaseGyroSensor(Drivebase* drivebasePointer) :
+DrivebaseGyroSensor::DrivebaseGyroSensor(Drivebase* drivebasePointer,NewTalonMap* newTalonMap) :
 	SystemBase("DrivebaseGyroSensor"),
 	drivebase(drivebasePointer),
+	newTalonMap_(newTalonMap),
 	imu(getTalon(drivebase, TalonMap::kPigeon))
 {
 }
@@ -53,7 +54,12 @@ double DrivebaseGyroSensor::PIDGet() {
 }
 
 WPI_TalonSRX* DrivebaseGyroSensor::getTalon(Drivebase* drivebase, int index){
+	// TODO:  Java backport cleanup
+#if 0
 	return drivebase->talonIndex[index-1];
+#else
+	return newTalonMap_->getTalonByID(index);
+#endif
 }
 
 void DrivebaseGyroSensor::setMinimumPidOutput(double minimum){

@@ -65,13 +65,14 @@ class Robot: public frc::TimedRobot {
 	SendableChooser<AutonomousScoringStrategy> scoringStrategyChooser;
 #endif
 
+	NewTalonMap newTalonMap{};
 	OI oi{};
-	Elevator elevator{};
-	Drivebase drivebase{};
+	Elevator elevator{&newTalonMap};
+	Drivebase drivebase{&newTalonMap};
 	Intake intake{};
 	PneumaticSystem pneumaticSystem{};
-	DrivebaseEncoderSensors encoderSensors{&drivebase};
-	DrivebaseGyroSensor gyroSensor{&drivebase};
+	DrivebaseEncoderSensors encoderSensors{&drivebase,&newTalonMap};
+	DrivebaseGyroSensor gyroSensor{&drivebase,&newTalonMap};
 	Limelight limelight{};
 	ClimberSystem climberSystem{};
 	FieldData fieldData{};

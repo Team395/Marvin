@@ -15,12 +15,14 @@
 #include <Preferences.h>
 #include <ctre/Phoenix.h>
 #include <Systems/Drivebase.h>
+#include <Systems/NewTalonMap.h>
 
 class Drivebase;
 
 
 class DrivebaseGyroSensor: SystemBase, public frc::PIDSource {
 	Drivebase* drivebase;
+	NewTalonMap* newTalonMap_;
 	PigeonIMU imu;
 
 public:
@@ -30,7 +32,7 @@ public:
 	double kD { 0.004 };
 	frc::Preferences* preferences = frc::Preferences::GetInstance();
 
-	DrivebaseGyroSensor(Drivebase*);
+	DrivebaseGyroSensor(Drivebase*,NewTalonMap* newTalonMap);
 	virtual ~DrivebaseGyroSensor();
 
 	double getAngleZ();

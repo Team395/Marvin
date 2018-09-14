@@ -19,5 +19,6 @@
 #include <Systems/ClimberSystem.h>
 #include <Systems/FieldData.h>
 #include <Systems/AutonomousChooser.h>
+#include <Systems/NewTalonMap.h>
 
 #endif /* SRC_SYSTEMS_SYSTEMS_H_ */
