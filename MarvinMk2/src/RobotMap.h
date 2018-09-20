@@ -55,8 +55,8 @@ namespace DrivebaseMap{
 namespace ElevatorMap{
 //	constexpr int kWinchOneInverted = 1; //TODO check
 //	constexpr int kWinchTwoInverted = 1;
-	constexpr int kLimitTop = 0;
-	constexpr int kLimitBottom = 8;
+	constexpr int kLimitTop = 7;
+	constexpr int kLimitBottom = 5;
 	constexpr int kTopInverted = 1;
 	constexpr int kBottomInverted = 1;
 	constexpr int kWinchOne = 5;
@@ -64,8 +64,8 @@ namespace ElevatorMap{
 };
 
 namespace IntakeMap{
-	constexpr int kGripperOpen = 0; //Check
-	constexpr int kGripperClose = 1; //Check
+	constexpr int kGripperOpen = 1; //Check
+	constexpr int kGripperClose = 0; //Check
 	constexpr int kIntakeLeft = 0;
 	constexpr int kIntakeRight = 1;
 	constexpr int kBackBanner = 9;
@@ -80,15 +80,16 @@ namespace ClimberMap{
 //Maps out gadgeteer ports on talons
 // Equivalent to SensorMap in Java code
 namespace TalonMap{
-	constexpr int kLeftEncoder = 1;
+	constexpr int kLeftEncoder = 2;
 	constexpr int kRightEncoder = 3;
-	constexpr int kPigeon = 2;
+	constexpr int kPigeon = 5;
 	constexpr int kWinchEncoder = 1;
 }
 
+
 namespace ChooserMap{
-	constexpr int kLeft = 4;
-	constexpr int kRight = 7;
-	constexpr int kSwitch = 5;
-	constexpr int kScale = 6;
+	constexpr int kLeft = 3;
+	constexpr int kRight = 2;
+	constexpr int kSwitch = 1;
+	constexpr int kScale = 0;
 }
