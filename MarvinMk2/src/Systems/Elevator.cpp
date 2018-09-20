@@ -19,8 +19,8 @@ Elevator::Elevator(NewTalonMap* newTalonMap)
 	winchTwoController.SetInverted(false);
 	winchTwoController.Follow(winchOneController);
 #else
-	newTalonMap_->getTalonByID(TalonMap::kWinchEncoder)->SetSensorPhase(true);
-	newTalonMap_->getTalonByID(ElevatorMap::kWinchOne)->SetInverted(true);
+	newTalonMap_->getTalonByID(TalonMap::kWinchEncoder)->SetSensorPhase(false);
+	newTalonMap_->getTalonByID(ElevatorMap::kWinchOne)->SetInverted(false);
 #endif
 }
 
