@@ -35,6 +35,7 @@ bool PneumaticGripperCommand::updateAutomatic(double throttle){
 	if(!intake->getBackBanner()){
 		intake->driveLeft(throttle);
 		intake->driveRight(throttle);
+		intake->setClawOpen(true);
 		cubeInIntake = false;
 		bannerSensorTripped = false;
 	}
