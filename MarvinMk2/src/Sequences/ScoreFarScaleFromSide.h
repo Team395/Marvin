@@ -67,8 +67,8 @@ namespace auton {
 				driveAcrossPlatformZone{16.5, drivebase, encoders, gyro, 3.75},
 				rotateToScale{(scalePosition == SwitchScalePositions::kRight ? 90.0 : -90.0), drivebase, gyro, 2},
 				rotateAwayFromScale{(scalePosition == SwitchScalePositions::kRight ? -180.0 : 180.0), drivebase, gyro, 2},
-				driveToScale{3.375, drivebase, encoders, gyro, 1.5},
-				driveAwayFromScale{-3.375, drivebase, encoders, gyro, 1.5},
+				driveToScale{3.375, drivebase, encoders, gyro, 1.5, true},
+				driveAwayFromScale{-3.375, drivebase, encoders, gyro, 1.5, true},
 				releaseIntake{positionCommand, OI::ElevatorPreset::kDeploy},
 				raiseElevatorToScaleHeight{positionCommand, OI::ElevatorPreset::kHighScale},
 				lowerElevatorToBottom{positionCommand, OI::ElevatorPreset::kBottom},
@@ -103,7 +103,6 @@ namespace auton {
 				, &score
 				, &backUpFromScale
 				, &lowerElevator
-				, &turnAwayFromScale
 			};
 
 			sequenceQueue = sequences;

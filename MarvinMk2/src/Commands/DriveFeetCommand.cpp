@@ -9,7 +9,7 @@
 #include <SmartDashboard/SmartDashboard.h>
 #include <iostream>
 
-Drive__FeetCommand::Drive__FeetCommand(double feet, Drivebase* drivebase, DrivebaseEncoderSensors* encoderSensors, DrivebaseGyroSensor* gyroSensor, double) :
+Drive__FeetCommand::Drive__FeetCommand(double feet, Drivebase* drivebase, DrivebaseEncoderSensors* encoderSensors, DrivebaseGyroSensor* gyroSensor, double timeout, bool elevatorUp) :
 	CommandBase("Drive Feet Command"),
 	linearPID{encoderSensors->kP, encoderSensors->kI,encoderSensors->kD, encoderSensors, &linearGetter},
 	rotationalPID{gyroSensor->kP, gyroSensor->kI, gyroSensor->kD, gyroSensor, &rotationalGetter},
@@ -20,7 +20,8 @@ Drive__FeetCommand::Drive__FeetCommand(double feet, Drivebase* drivebase, Driveb
 	timeout{timeout},
 	commandStartedTime{0}
 	{
-		linearPID.SetOutputRange(-0.6, 0.6);
+		double maxval = elevatorUp ? 0.4 : 0.6;
+		linearPID.SetOutputRange(-maxval, maxval);
 }
 
 Drive__FeetCommand::~Drive__FeetCommand() {
@@ -85,8 +86,8 @@ void Drive__FeetCommand::update(){
 		rotationalPID.Disable();
 	}
 
-//	frc::SmartDashboard::PutData("Drive Feet linear PID Controller", &linearPID);
-//	frc::SmartDashboard::PutData("Drive Feet rotational PID Controller", &rotationalPID);
+	frc::SmartDashboard::PutData("Drive Feet linear PID Controller", &linearPID);
+	frc::SmartDashboard::PutData("Drive Feet rotational PID Controller", &rotationalPID);
 //	frc::SmartDashboard::PutBoolean("Drive Feet Finished", linearPID.OnTarget());
 //	frc::SmartDashboard::PutNumber("Drive Feet Average Encoder Positions", encoderSensors->getAveragedEncoderPositions());
 //	frc::SmartDashboard::PutNumber("Drive Feet PIDError", linearPID.GetError());
@@ -106,8 +107,6 @@ void Drive__FeetCommand::disable(){
 	linearPID.Disable();
 	rotationalPID.Disable();
 	drivebase->tankDrive(0,0);
-
-	frc::SmartDashboard::PutData("Drive Feet PID Controller", &linearPID);
 }
 void Drive__FeetCommand::startNewMovement(){
 	movementFinished = false;

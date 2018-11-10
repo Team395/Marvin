@@ -22,7 +22,7 @@ class Turn__DegreesCommand : public CommandBase {
 	DrivebaseGyroSensor* gyroSensor;
 
 	double turnDegrees{0};
-	double kAcceptableError{1.5};
+	double kAcceptableError{0.25};
 	bool turnFinished{false};
 
 	double timeout;

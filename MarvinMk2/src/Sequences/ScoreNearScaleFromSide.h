@@ -58,7 +58,7 @@ namespace auton {
 			releaseCommand{positionCommand, OI::ElevatorPreset::kDeploy},
 			elevatorCommand{positionCommand, OI::ElevatorPreset::kHighScale},
 			autoscoreCommand{pneumaticGripperCommand},
-			drive2{-2, drivebase, encoders, gyro, 3},
+			drive2{-2, drivebase, encoders, gyro, 3, true},
 			zeroCommand{positionCommand, OI::ElevatorPreset::kBottom}
 			{
 				driveAwayFromWall.setCommandsToRun(std::list<CommandBase*>{&drive1, &releaseCommand});

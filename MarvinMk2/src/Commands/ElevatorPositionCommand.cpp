@@ -28,7 +28,6 @@ void ElevatorPositionCommand::init(){
 
 void ElevatorPositionCommand::update(){
 	frc::SmartDashboard::PutBoolean("bottomPressed", elevator->bottomPressed());
-	frc::SmartDashboard::PutBoolean("topPressed", elevator->topPressed());
 
 	if(elevator->bottomPressed()){
 		elevator->homeEncoder();
@@ -63,7 +62,7 @@ void ElevatorPositionCommand::update(){
 //	SmartDashboard::PutNumber("PID P", pidController.GetP());
 //	SmartDashboard::PutNumber("PID I", pidController.GetI());
 //	SmartDashboard::PutNumber("PID D", pidController.GetD());
-//	SmartDashboard::PutNumber("PIDError", pidController.GetError());
+	SmartDashboard::PutNumber("PIDError", pidController.GetError());
 }
 
 void ElevatorPositionCommand::finish(){

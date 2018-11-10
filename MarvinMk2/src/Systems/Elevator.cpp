@@ -13,15 +13,8 @@ Elevator::Elevator(NewTalonMap* newTalonMap)
 	  newTalonMap_(newTalonMap),
 	  driveUpLastCommand(false)
 {
-#if 0
-	winchOneController.SetSensorPhase(false);
-	winchOneController.SetInverted(false);
-	winchTwoController.SetInverted(false);
-	winchTwoController.Follow(winchOneController);
-#else
 	newTalonMap_->getTalonByID(TalonMap::kWinchEncoder)->SetSensorPhase(false);
 	newTalonMap_->getTalonByID(ElevatorMap::kWinchOne)->SetInverted(false);
-#endif
 }
 
 Elevator::~Elevator() {

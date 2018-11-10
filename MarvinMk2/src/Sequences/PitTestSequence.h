@@ -11,20 +11,23 @@
 #include <Sequences/SequenceBase.h>
 
 #include <Commands/TestCommand.h>
-
+#include <Commands/Turn__DegreesCommand.h>
+#include <Systems/DrivebaseGyroSensor.h>
+#include <Systems/Drivebase.h>
 
 namespace auton {
 
 class PitTestSequence: public SequenceBase {
 	TestCommand test1;
-
+	Turn__DegreesCommand turnDegreesCommand;
 	SequenceBase sequence1;
 
 public:
-	PitTestSequence()
-		: test1{0.1}
+	PitTestSequence(Drivebase* drivebase, DrivebaseGyroSensor* gyro)
+		: test1{0.1},
+		  turnDegreesCommand{90, drivebase, gyro, 0}
     {
-    	sequence1.setCommandsToRun(std::list<CommandBase*>{&test1});
+    	sequence1.setCommandsToRun(std::list<CommandBase*>{&turnDegreesCommand});
 
 		std::list<SequenceBase*> sequences{
 			&sequence1

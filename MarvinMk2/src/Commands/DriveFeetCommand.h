@@ -40,7 +40,7 @@ class Drive__FeetCommand: public CommandBase{
 	double commandStartedTime;
 
 public:
-	Drive__FeetCommand(double, Drivebase*, DrivebaseEncoderSensors*, DrivebaseGyroSensor*, double timeout=0);
+	Drive__FeetCommand(double, Drivebase*, DrivebaseEncoderSensors*, DrivebaseGyroSensor*, double timeout=0, bool elevatorUp=false);
 
 	virtual ~Drive__FeetCommand();
 

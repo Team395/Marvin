@@ -80,7 +80,7 @@ class Robot: public frc::TimedRobot {
 
 	TankDriveCommand tankDriveCommand{&drivebase, &oi};
 	PneumaticGripperCommand pneumaticGripperCommand{&intake, &elevator, &oi};
-	ElevatorPositionCommand elevatorPositionCommand{&elevator, 0.1, 0, 0.02}; //TODO tune this
+	ElevatorPositionCommand elevatorPositionCommand{&elevator, 0.15, 0, 0.0225}; //TODO tune this
 	JoystickElevatorCommand joystickElevatorCommand{&elevator, &oi, &elevatorPositionCommand};
 
 //  TrackPositionCommand positionCommand{&drivebaseSensors};
@@ -115,7 +115,7 @@ class Robot: public frc::TimedRobot {
 		&elevatorPositionCommand, &pneumaticGripperCommand, SwitchScalePositions::kLeft};
 
 
-	auton::PitTestSequence pitTestSequence;
+	auton::PitTestSequence pitTestSequence{&drivebase, &gyroSensor};
 	auton::SequenceBase* sequenceToExecute = 0;
 
 	RobotStartPositions startPosition;
@@ -150,9 +150,12 @@ public:
 		instrumentCommand.init();
 		climberCommand.init();
 		elevatorPositionCommand.setSetpoint(0);
+		limelight.setLedMode(limelightMap::LedMode::kOff);
+		limelight.setCamMode(limelightMap::CamMode::kDriverCamera);
 	}
 
 	void DisabledInit() {
+
 	}
 
 	void AutonomousInit() override {
@@ -162,84 +165,6 @@ public:
 		SwitchScalePositions scalePosition = fieldData.getScalePosition();
 
 
-#if 0
-		switch(startPosition) {
-		case RobotStartPositions::kLeft:
-			if(scalePosition == SwitchScalePositions::kLeft) {
-							std::cout << "AutonomousInit():  scale left" << std::endl;
-							sequenceToExecute = &scoreNearScaleFromLeft;
-			} else if(homeSwitchPosition == SwitchScalePositions::kLeft) {
-				std::cout << "AutonomousInit():  switch left" << std::endl;
-				sequenceToExecute = &scoreSwitchFromSideLeft;
-			}  else {
-				sequenceToExecute = &crossAutonLine;
-			}
-			break;
-
-		case RobotStartPositions::kRight:
-			if(scalePosition == SwitchScalePositions::kRight) {
-				std::cout << "AutonomousInit():  scale right" << std::endl;
-				sequenceToExecute = &scoreNearScaleFromRight;
-			} else if(homeSwitchPosition == SwitchScalePositions::kRight) {
-				std::cout << "AutonomousInit():  switch right" << std::endl;
-				sequenceToExecute = &scoreSwitchFromSideRight;
-			}  else {
-				sequenceToExecute = &crossAutonLine;
-			}
-			break;
-		default:
-			sequenceToExecute = &crossAutonLine;
-		};
-#endif
-#if 0
-		switch(scoringStrategy) {
-			case AutonomousScoringStrategy::kNone:
-				std::cout << "AutonomousInit():  AutonomousScoringStrategy::kNone" << std::endl;
-				sequenceToExecute = &crossAutonLine;
-				break;
-			case AutonomousScoringStrategy::kSwitch:
-				switch(startPosition) {
-					case RobotStartPositions::kCenter:
-						switch(homeSwitchPosition) {
-							case SwitchScalePositions::kLeft:
-								std::cout << "AutonomousInit():  AutonomousScoringStrategy::kSwitch, RobotStartPositions::kCenter, SwitchScalePositions::kLeft" << std::endl;
-								sequenceToExecute = &scoreLeftSwitchFromCenter;
-								break;
-							case SwitchScalePositions::kRight:
-								std::cout << "AutonomousInit():  AutonomousScoringStrategy::kSwitch, RobotStartPositions::kCenter, SwitchScalePositions::kRight" << std::endl;
-								sequenceToExecute = &scoreRightSwitchFromCenter;
-								break;
-							case SwitchScalePositions::kUnknown:
-								std::cout << "AutonomousInit():  AutonomousScoringStrategy::kSwitch, RobotStartPositions::kCenter, SwitchScalePositions::kUnknown" << std::endl;
-								//TODO: should not score or raise elevator. maybe define this behavior with a function/setter?
-								sequenceToExecute = &scoreLeftSwitchFromCenter;
-								break;
-						}
-						break;
-					case RobotStartPositions::kLeft:
-						std::cout << "AutonomousInit():  AutonomousScoringStrategy::kSwitch, RobotStartPositions::kLeft" << std::endl;
-						switch(homeSwitchPosition){
-							case(SwitchScalePositions::kLeft):
-								sequenceToExecute = &scoreLeftFromLeft;
-								break;
-							default:
-								sequenceToExecute= &crossAutonLine;
-								break;
-						}
-						break;
-					case RobotStartPositions::kRight:
-						std::cout << "AutonomousInit():  AutonomousScoringStrategy::kSwitch, RobotStartPositions::kRight" << std::endl;
-						break;
-				}
-				break;
-			case AutonomousScoringStrategy::kScale:
-				std::cout << "AutonomousInit():  AutonomousScoringStrategy::kScale" << std::endl;
-				break;
-			case AutonomousScoringStrategy::kSwitchAndScale:
-				std::cout << "AutonomousInit():  AutonomousScoringStrategy::kSwitchAndScale" << std::endl;
-				break;
-		}
-#else
 		if(scoringStrategy == AutonomousScoringStrategy::kNone){
 			std::cout << "AutonomousInit():  AutonomousScoringStrategy::kNone" << std::endl;
 			sequenceToExecute = &crossAutonLine;
@@ -294,11 +219,11 @@ public:
 			sequenceToExecute = &crossAutonLine;
 		}
 
+		//sequenceToExecute= &auton::PitTestSequence(&drivebase, &gyroSensor);
 		sequenceToExecute->initSequence();
 
 		SmartDashboard::PutBoolean("Auton Complete", false);
 		elevatorPositionCommand.setSetpoint(0);
-#endif
 	}
 
 	void AutonomousPeriodic() override {
