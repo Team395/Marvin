@@ -15,6 +15,7 @@ class OI {
 	frc::Joystick driveStickRight{OIMap::RightStick::kDriveStickRight};
 
 	bool intakeTriggerPressed;
+        bool testingAddition;
 
 public:
 	frc::XboxController xboxController{OIMap::Xbox::kXboxController};
@@ -22,7 +23,6 @@ public:
 	OI();
 	enum class RequestedClawState {
 		kOpen,
-		kClose,
 		kDoNothing
 	};
 	enum class ElevatorPreset{
